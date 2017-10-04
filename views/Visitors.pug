@@ -1,0 +1,35 @@
+extends layout
+
+append body    
+  script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+  script(src='/javascripts/visitorlist.js')
+
+  
+
+  // Wrapper  
+  #wrapper      
+  // VISITOR INFO
+  .container-fluid
+      .vistor-info.col-sm-3.sidebar
+        #visitorInfo
+          .visitor-title Info
+          .side-bar-header Name:
+          .visitor-detail <span id='visitorInfoName' ></span><br>
+          .side-bar-header Contact Number:
+          .visitor-detail <span id='visitorInfoContactNumber'></span><br>
+          .side-bar-header Company Name:
+          .visitor-detail <span id='visitorInfoCompanyName'></span><br>
+          .side-bar-header Visiting With Children:
+          .visitor-detail <span id='visitorInfoSupervisingChild'></span><br>
+
+      // VISITOR LIST
+      .visitor-list
+        .col-sm-offset-3
+          .visitor-title Visitors
+          #visitorList
+            table.table-hover
+                thead
+                  th Date
+                  th Full Name
+                  th Visiting
+                tbody

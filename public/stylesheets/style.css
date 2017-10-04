@@ -1,0 +1,38 @@
+.side-bar-header {
+  font-weight: normal;
+  margin-top:10px;
+  font-size: 18px;
+}
+
+.visitor-list {
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.visitor-detail {
+  font-size: 18px;
+  font-weight: 200;
+}
+
+.visitor-title {
+  font-size: 30px;
+  font-weight: bold;
+  background-color: grey;
+  color: white;
+}
+
+tbody {
+  color: #00B7FF;
+}
+
+th {
+  display: table-cell;
+  vertical-align: inherit;
+  font-weight: normal;
+  text-align: left;
+}
+
+
+a {
+  color: #00B7FF;
+}

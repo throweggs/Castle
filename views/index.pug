@@ -1,0 +1,109 @@
+extends layout
+			
+append body    
+	.container
+		.row
+			.col-md-12
+				.Welcome
+					<p>
+					text-left.h4 For the safe enjoyment of our facilities for all users, please read our conditions below before signing in:
+					<p>
+					ul.text-left
+						li <b> Climbing is a dangerous activity. </b>
+						li <b> You, and any children you are supervising, may NOT climb on this visit to the centre. </b>
+						li <b> DO NOT stand in the climbing areas or distract climbers/belayers. </b>
+						li <b> Children must be supervised at all times. </b>
+						ul.text-left
+							li They must remain with you at all times and may NOT climb anywhere within in the centre or the garden.
+							li They must NOT go on the soft matting – these areas are landing zones for climbers.
+							li You are responsible for the safety of children under your supervision.
+						li <b>Unauthorised photography is not permitted</b> - please speak to a Duty Manager if you’d like to take photos.
+
+		.container
+		form#formAddVisitor(name="addVisitor",method="post",action="/addVisitor")
+			
+			// Visitors Name
+			.row
+				.form-horizontal
+				.form-group
+				.col-sm-3.text-right
+					label(for='visitor-name') Visitor Name
+				.col-sm-3.text-left
+					input(type='text' name='firstName' placeholder='First Name' class='form-control')
+				.col-sm-4.text-left
+					input(type='text' name='lastName' placeholder='Last Name' class='form-control')
+
+			// Contact Number
+			.row
+				.form-horizontal
+				.form-group
+				.col-sm-3.text-right
+					label(for='contactNumber') Contact Number
+				.col-sm-7.text-left
+					input(type='text' name='contactNumber' placeholder='Number' class='form-control')
+
+			// Company Name
+			.row
+				.form-horizontal
+				.form-group
+				.col-sm-3.text-right
+					label(for='visitor-name') Company Name
+				.col-sm-7.text-left
+					input(type='text' name='companyName' placeholder='Only If Applicable' class='form-control')
+
+			// Supervising Children
+			.row
+				.form-horizontal
+				.form-group
+				.col-sm-3.text-right
+					label(for='supervising-child') Are you supervising any children? <br> Maximum of 3 per adult.
+				.col-sm-1.text-left
+					input(type='checkbox' name='supervisingChild'  class='form-control')
+				.col-sm-3.text-left
+					input(type='text' name='kid1' placeholder='child 1' class='form-control')
+				.col-sm-3.text-left
+					input(type='text' name='kid2' placeholder='child 2' class='form-control')
+
+			//Reason for Visit
+			.row
+				.form-horizontal
+				.form-group
+				.col-sm-3.text-right
+					label.control-label.requiredField(for='reasonForVisit') Reason for Visit:
+				.col-sm-3.text-left
+					select#propertyType.select.form-control.input-lg(name='reasonForVisit')
+						option -- Select --
+						option(value='Cafe') Cafe
+						option(value='Contractor') Contractor
+						option(value='Garden')  Garden
+						option(value='Geckos')  Geckos
+						option(value='Castle Climbing')  Castle Climbing
+						option(value='Passing By')  Passing By
+						option(value='Shop')  Shop
+						option(value='Staff Member')  Staff Member
+						option(value='Other')  OTHER - please state
+
+				// Reason
+			.row
+				.form-horizontal
+				.form-group
+				.col-sm-3.text-right
+					label.text-left(for='OtherReasonForVisiting') Other reason for visiting:
+				.col-sm-7.text-left
+					textarea(type='text' name='otherReason' placeholder='Please enter the reason you are visitings, if none of the reason above apply.' class='form-control')
+
+
+			//Disclaimer
+			.row
+				.form-horizontal
+				.form-group
+				.col-sm-3.text-right
+					label(for='disclaimer') I have read and understood the above conditions:
+				.col-sm-2
+					input(type='checkbox' name='disclaimer'  class='form-control')
+
+				//Submit and Cancel
+				.col.sm-1
+				input.btn.btn-default.btn-xl.submit-btn(type='Submit')
+				a.btn.btn-default.btn-xl.submit-btn(href='/home') Cancel
+				

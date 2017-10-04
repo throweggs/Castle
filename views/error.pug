@@ -1,0 +1,10 @@
+extends layout
+append body		
+
+  .container
+    .row
+      .col-md-12
+        .Welcome
+          .h1= message
+          .h2= error.status
+          pre #{error.stack}

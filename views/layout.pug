@@ -1,0 +1,13 @@
+extends ../node_modules/pug-bootstrap/_bootstrap.pug
+
+block body
+	.navbar
+	+navbar-fixed( title,"navbar","inverse")
+	
+append styles
+	// Custom styles for this template
+	link(href='/stylesheets/style.css', rel='stylesheet')
+
+	append body
+		script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+		script(src='/javascripts/visitorlist.js')
