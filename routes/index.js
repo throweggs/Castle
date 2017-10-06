@@ -7,10 +7,14 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET user List page. */
-router.get('/Visitors', function(req, res) {
-    res.render('Visitors', { title: 'Visitor List' });
+router.get('/confirmation', function(req, res) {
+    res.render('confirmation', { title: 'thanks' });
 });
 
+/* GET user List page. */
+router.get('/visitors', function(req, res) {
+    res.render('visitors', { title: 'Visitor List' });
+});
 
 
 /* POST to Add Visitor Service */
@@ -68,7 +72,7 @@ router.post('/addVisitor', function(req, res) {
         else {
             // And forward to success page
             // res.redirect("visitorlist");
-            res.redirect("/");
+            res.redirect("/confirmation");
         }
     });
 });

@@ -1,0 +1,11 @@
+extends layout
+
+append body
+  h1= title
+  p Welcome to #{title}
+  
+  p You will be redirected in 3 seconds
+  script.
+    var timer = setTimeout(function() {
+    window.location='http://localhost:3000/'
+    }, 3000);
