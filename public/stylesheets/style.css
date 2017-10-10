@@ -11,7 +11,7 @@
   height: 100%;
   padding: 5px;
   margin-top: 10px;
-  top: 52px;
+  top: 55px;
 }
 
 .visitor-list {
@@ -19,6 +19,7 @@
   margin-left: 20px;
   font-size: 18px;
   font-weight: 300;
+  top: 52px;
 }
 
 .visitor-detail {
@@ -40,11 +41,12 @@
   }
 
 tbody {
+  padding-right: 10px;
   color: #00B7FF;
 }
 
 th {
-  color: #666;
+  color: black;
   display: table-cell;
   vertical-align: inherit;
   font-weight: normal;
@@ -56,5 +58,6 @@ tbody {
 }
 
 a {
+  padding-right: 10px;
   color: black;
 }
