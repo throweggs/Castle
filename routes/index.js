@@ -6,9 +6,14 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Welcome to the Castle Climbing Centre' });
 });
 
-/* GET user List page. */
-router.get('/confirmation', function(req, res) {
-    res.render('confirmation', { title: 'thanks' });
+// /* GET user List page. */
+// router.get('/confirmation', function(req, res) {
+//     res.render('confirmation', { title: 'thanks' });
+// });
+
+/* GET confirmation name and page. */
+router.get('/confirmation/:firstName', function(req, res) {
+  res.render('confirmation', {firstName: req.param("firstName"), title: 'thanks'});
 });
 
 /* GET user List page. */
@@ -72,7 +77,7 @@ router.post('/addVisitor', function(req, res) {
         else {
             // And forward to success page
             // res.redirect("visitorlist");
-            res.redirect("/confirmation");
+            res.redirect("/confirmation/" + req.body.firstName);
         }
     });
 });

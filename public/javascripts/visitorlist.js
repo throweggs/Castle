@@ -69,6 +69,11 @@ console.log("Show Visitor Info");
    $('#visitorInfoContactNumber').text(thisVisitorObject.contactNumber);
    $('#visitorInfoCompanyName').text(thisVisitorObject.companyName);
    $('#visitorInfoSupervisingChild').text(thisVisitorObject.supervisingChild);
+   $('#visitorInfoKid1').text(thisVisitorObject.Kid1);
+   $('#visitorInfoKid2').text(thisVisitorObject.Kid2);
+   $('#visitorInfoReasonForVisit').text(thisVisitorObject.reasonForVisit);
+   $('#visitorInfoOtherReason').text(thisVisitorObject.otherReason);
+   $('#visitorInfoDisclaimer').text(thisVisitorObject.disclaimer);
 
 console.log(thisVisitorObject.fullName);
 }
