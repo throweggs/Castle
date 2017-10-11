@@ -30,7 +30,7 @@ append body
 				.form-horizontal
 				.form-group
 				.col-sm-3.text-right
-					label(for='visitor-name') Visitor Name
+					label(for='visitor-name') Visitor Name*
 				.col-sm-3.text-left
 					input(type='text' name='firstName' required minlength="2" placeholder='First Name' class='form-control')
 				.col-sm-4.text-left
@@ -41,9 +41,9 @@ append body
 				.form-horizontal
 				.form-group
 				.col-sm-3.text-right
-					label(for='contactNumber') Contact Number
+					label(for='contactNumber') Phone Number*
 				.col-sm-7.text-left
-					input(type='text' name='contactNumber' required minlength="11" maxlength="11" placeholder='Number' class='form-control')
+					input(type='text' name='contactNumber' required minlength="11" maxlength="11" placeholder='Phone Number' class='form-control')
 
 			// Company Name
 			.row
@@ -72,7 +72,7 @@ append body
 				.form-horizontal
 				.form-group
 				.col-sm-3.text-right
-					label.control-label.requiredField(for='reasonForVisit') Reason for Visit:
+					label.control-label.requiredField(for='reasonForVisit') Reason for Visit*:
 				.col-sm-3.text-left
 					select#propertyType.select.form-control.input-lg(name='reasonForVisit' required='')
 						option
@@ -80,7 +80,7 @@ append body
 						option(value='Contractor') Contractor
 						option(value='Garden')  Garden
 						option(value='Geckos')  Geckos
-						option(value='Castle Climbing')  Castle Climbing
+						option(value='Castle Climbing')  Castle Climbing Club
 						option(value='Passing By')  Passing By
 						option(value='Shop')  Shop
 						option(value='Staff Member')  Staff Member
@@ -101,7 +101,7 @@ append body
 				.form-horizontal
 				.form-group
 				.col-sm-3.text-right
-					label(for='disclaimer') I have read and understood the above conditions:
+					label(for='disclaimer') I have read and understood the above conditions*:
 				.col-sm-2
 					input(type='checkbox' name='disclaimer' required=''  class='form-control')
 
