@@ -30,14 +30,15 @@ function populateTable() {
 
       // Stick our visitor data array into a visitorlist variable in the visitorlist object
       visitorListData = data;
-console.log(visitorListData);
+
+$('#ListCount').text(visitorListData.length);
 
         // For each item in our JSON, add a table row and cells to the content string
         $.each(data, function(){
             tableContent += '<tr>';
-            tableContent += '<td><a href="#" class="linkShowVisitor" rel="' + this.fullName + '">' + this.createdDate + '</a></td>';
-            tableContent += '<td><a href="#" class="linkShowVisitor" rel="' + this.fullName + '">' + this.fullName + '</a></td>';
-            tableContent += '<td><a href="#" class="linkShowVisitor" rel="' + this.fullName + '">' + this.reasonForVisit + '</a></td>';
+            tableContent += '<td><a href="#" class="linkShowVisitor" rel="' + this._id + '">' + this.createdDate + '</a></td>';
+            tableContent += '<td><a href="#" class="linkShowVisitor" rel="' + this._id + '">' + this.fullName + '</a></td>';
+            tableContent += '<td><a href="#" class="linkShowVisitor" rel="' + this._id + '">' + this.reasonForVisit + '</a></td>';
             // tableContent += '<td><a href="#" class="linkdeletevisitor " rel="' + this._id + '">delete</a></td>';
             tableContent += '</tr>';
         });
@@ -50,7 +51,7 @@ console.log(visitorListData);
 // Show Visitor Info
 function showVisitorInfo(event) {
 
-console.log("Show Visitor Info");
+
 
     // Prevent Link from Firing
     event.preventDefault();
@@ -59,7 +60,7 @@ console.log("Show Visitor Info");
     var thisFullName = $(this).attr('rel');
 
     // Get Index of object based on id value
-    var arrayPosition = visitorListData.map(function(arrayItem) { return arrayItem.fullName; }).indexOf(thisFullName);
+    var arrayPosition = visitorListData.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisFullName);
 
     // Get our User Object
    var thisVisitorObject = visitorListData[arrayPosition];
@@ -69,8 +70,8 @@ console.log("Show Visitor Info");
    $('#visitorInfoContactNumber').text(thisVisitorObject.contactNumber);
    $('#visitorInfoCompanyName').text(thisVisitorObject.companyName);
    $('#visitorInfoSupervisingChild').text(thisVisitorObject.supervisingChild);
-   $('#visitorInfoKid1').text(thisVisitorObject.Kid1);
-   $('#visitorInfoKid2').text(thisVisitorObject.Kid2);
+   $('#visitorInfoKid1').text(thisVisitorObject.ChildNames.Kid1);
+   $('#visitorInfoKid2').text(thisVisitorObject.ChildNames.Kid2);
    $('#visitorInfoReasonForVisit').text(thisVisitorObject.reasonForVisit);
    $('#visitorInfoOtherReason').text(thisVisitorObject.otherReason);
    $('#visitorInfoDisclaimer').text(thisVisitorObject.disclaimer);

@@ -4,7 +4,7 @@ append body
   script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
   script(src='/javascripts/visitorlist.js')
 
-  
+  //Visitor List
 
   // Wrapper  
   #wrapper      
@@ -12,7 +12,7 @@ append body
   .container-fluid
       .vistor-info.col-sm-3.sidebar
         #visitorInfo
-          .visitor-title Info
+          .visitor-title Info 
           .side-bar-header Name:
           .visitor-detail <span id='visitorInfoName' ></span><br>
           .side-bar-header Contact Number:
@@ -33,11 +33,11 @@ append body
       // VISITOR LIST
       .visitor-list
         .col-sm-offset-3
-          .visitor-title Visitors
+          .visitor-title Visitors #<span id='ListCount'></span>
           #visitorList
             table.table-hover
                 thead
                   th Date
                   th Full Name
-                  th Visiting
+                  th Reason
                 tbody

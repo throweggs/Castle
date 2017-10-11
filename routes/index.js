@@ -41,9 +41,8 @@ router.post('/addVisitor', function(req, res) {
     var contactNumber = req.body.contactNumber;
     var companyName = req.body.companyName;
     var supervisingChild = req.body.supervisingChild;
-    var Kid1 = req.body.kid1;
-    var Kid2 = req.body.kid2;
-    var Kid3 = req.body.kid3;
+    var Kid1 = req.body.Kid1;
+    var Kid2 = req.body.Kid2;
     var reasonForVisit = req.body.reasonForVisit;
     var otherReason = req.body.otherReason;
     var disclaimer = req.body.disclaimer;
@@ -63,7 +62,6 @@ router.post('/addVisitor', function(req, res) {
         "ChildNames" :  {
           "Kid1" : Kid1,
           "Kid2" : Kid2,
-          "Kid3" : Kid3,
         },
         "reasonForVisit" : reasonForVisit,
         "otherReason" : otherReason,
