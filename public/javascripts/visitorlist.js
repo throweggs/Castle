@@ -30,7 +30,6 @@ function populateTable() {
 
       // Stick our visitor data array into a visitorlist variable in the visitorlist object
       visitorListData = data;
-console.log(visitorListData);
 
 $('#ListCount').text(visitorListData.length);
 
@@ -52,7 +51,7 @@ $('#ListCount').text(visitorListData.length);
 // Show Visitor Info
 function showVisitorInfo(event) {
 
-console.log("Show Visitor Info");
+
 
     // Prevent Link from Firing
     event.preventDefault();
