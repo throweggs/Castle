@@ -63,3 +63,11 @@ a {
   padding-right: 10px;
   color: black;
 }
+
+.forms, .button.btn.btn-primary.btn-block {
+  font-size: 300%;
+}
+
+.forms {
+  font-size: 300%;
+}

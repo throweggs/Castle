@@ -17,8 +17,18 @@ router.get('/confirmation/:firstName', function(req, res) {
 });
 
 /* GET user List page. */
-router.get('/visitors', function(req, res) {
-    res.render('visitors', { title: 'Visitor List' });
+router.get('/visitorlist', function(req, res) {
+    res.render('visitorlist', { title: 'Visitor List' });
+});
+
+/* GET visitors page page. */
+router.get('/visitor', function(req, res) {
+    res.render('visitor', { title: 'Visitor Form' });
+});
+
+/* GET visitors page page. */
+router.get('/1', function(req, res) {
+    res.render('homepage', { title: 'Welcome to the Castle Climbing Centre' });
 });
 
 

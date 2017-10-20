@@ -17,20 +17,23 @@ append body
       br
       br
       p  Have a great day.
-      progress#progressBar(value='0', max='5')
       br
-      p  the page will refresh in 5 seconds.
+      a.btn.btn-default.btn-xl.btn-success(href='/') DONE
+      br
+      //- progress#progressBar(value='0', max='5')
+      br
+      p  the page will refresh in 3 seconds.
         
   script.
     var Redriect = setTimeout(function() {
-    window.location='http://co-visitorform:3000/'
-    }, 5000);
+    document.location.href="/";
+    }, 3000);
     
-    var timeleft = 5;
-    var downloadTimer = setInterval(function(){
-    document.getElementById("progressBar").value = 5 - --timeleft;
-    if(timeleft <= 0)
-    clearInterval(downloadTimer);
-    },1000);
+    //- var timeleft = 5;
+    //- var downloadTimer = setInterval(function(){
+    //- document.getElementById("progressBar").value = 5 - --timeleft;
+    //- if(timeleft <= 0)
+    //- clearInterval(downloadTimer);
+    //- },1000);
     
     //- O Boy
