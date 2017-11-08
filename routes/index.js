@@ -77,6 +77,8 @@ router.post('/addVisitor', function(req, res) {
         "otherReason" : otherReason,
         "disclaimer" : disclaimer,
         "createdDate" : createdDate
+
+
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
