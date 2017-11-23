@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var simpleDate = require('simple-date');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -37,9 +38,30 @@ router.post('/addVisitor', function(req, res) {
 
   console.log(req.body);
 
-  var dt = new Date();
-  var curDate = dt.toString();
-  console.log("New Visitors added at :" + curDate);
+  // var dt = new Date();
+  // var curDate = dt.toString();
+  // console.log("New Visitors added at :" + curDate);
+
+  var dateObj = new Date();
+  var month = ("0" + (dateObj.getMonth() + 1)).slice(-2);
+  var day = ("0" + dateObj.getDate()).slice(-2);
+  var year = dateObj.getFullYear();
+  var curDate = day + "/" + month + "/" + year;
+
+    if (req.body.supervisingChild === "") {
+      var supervisingChild = false;
+    }
+      else if (req.body.supervisingChild === "on") {
+        var supervisingChild = true;
+      };
+
+    if (req.body.disclaimer === "") {
+      var disclaimer = false;
+    }
+      else if (req.body.disclaimer === "on") {
+        var disclaimer = true;
+      };
+
 
     // Set our internal DB variable
     var db = req.db;
@@ -50,12 +72,12 @@ router.post('/addVisitor', function(req, res) {
     var fullName = req.body.firstName + " " + req.body.lastName;
     var contactNumber = req.body.contactNumber;
     var companyName = req.body.companyName;
-    var supervisingChild = req.body.supervisingChild;
+    var supervisingChild = supervisingChild;
     var Kid1 = req.body.Kid1;
     var Kid2 = req.body.Kid2;
     var reasonForVisit = req.body.reasonForVisit;
     var otherReason = req.body.otherReason;
-    var disclaimer = req.body.disclaimer;
+    var disclaimer = disclaimer;
     var createdDate = curDate;
 
     // Set our collection
@@ -69,10 +91,7 @@ router.post('/addVisitor', function(req, res) {
         "contactNumber" : contactNumber,
         "companyName" : companyName,
         "supervisingChild" : supervisingChild,
-        "ChildNames" :  {
-          "Kid1" : Kid1,
-          "Kid2" : Kid2,
-        },
+        "ChildNames" :  [ Kid1, Kid2 ],
         "reasonForVisit" : reasonForVisit,
         "otherReason" : otherReason,
         "disclaimer" : disclaimer,
@@ -88,8 +107,10 @@ router.post('/addVisitor', function(req, res) {
             // And forward to success page
             // res.redirect("visitorlist");
             res.redirect("/confirmation/" + req.body.firstName);
+            console.log("New Visitors added at :" + current_date);
         }
     });
 });
+
 
 module.exports = router;

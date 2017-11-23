@@ -3,6 +3,8 @@ extends layout
 append body  
 	script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
 	script(src='/javascripts/index.js') 
+	script(src=''/jquery/dist/jquery.js')
+	script(src=''/parsley.min.js')
 	 
 	.container
 		.row
@@ -32,9 +34,9 @@ append body
 				.col-sm-3.text-right
 					label(for='visitor-name') Visitor Name*
 				.col-sm-3.text-left
-					input(type='text' name='firstName' required minlength="2" placeholder='First Name' class='form-control')
+					input(type='text' name='firstName' placeholder='First Name' class='form-control')
 				.col-sm-4.text-left
-					input(type='text' name='lastName' required minlength="2" placeholder='Last Name' class='form-control')
+					input(type='text' name='lastName' placeholder='Last Name' class='form-control')
 
 			// Contact Number
 			.row
@@ -74,7 +76,7 @@ append body
 				.col-sm-3.text-right
 					label.control-label.requiredField(for='reasonForVisit') Reason for Visit*:
 				.col-sm-3.text-left
-					select#propertyType.select.form-control.input-lg(name='reasonForVisit' required='')
+					select#propertyType.select.form-control.input-lg(name='reasonForVisit')
 						option
 						option(value='Cafe') Cafe
 						option(value='Contractor') Contractor
@@ -103,7 +105,7 @@ append body
 				.col-sm-3.text-right
 					label(for='disclaimer') I have read and understood the above conditions*:
 				.col-sm-2
-					input(type='checkbox' name='disclaimer' required=''  class='form-control' onchange='checkBoxClicked();')
+					input(type='checkbox' name='disclaimer' class='form-control' onchange='checkBoxClicked();')
 
 				//Submit and Cancel
 				.col-sm-4.text-right
