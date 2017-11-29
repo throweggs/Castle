@@ -83,12 +83,26 @@ $('#contactNumber').keyup(function() {
       } else if (Count != 3){
         $('#disclaimer').prop('disabled', true);
         $('#disclaimer').prop('checked', false);
+        alertGiven = false;
       }
     });
+
+
+ var alertGiven = false;
+
+ function DisclaimerPrompt(Name)
+{
+    var CName = Name.charAt(0).toUpperCase() + Name.slice(1);
+      alert("Thanks " + CName + ". Please return the tablet to the receptionist");
+    alertGiven = true;
+}
 
     $('#formAddVisitor').on('keydown keyup change',function(){
       if ($('#disclaimer').is(':checked')){
          $('#submit').prop('disabled', false);
+            if (alertGiven === false) {
+            DisclaimerPrompt($('#firstName').val());
+            }
       } else if ($('#disclaimer').not(':checked')){
         $('#submit').prop('disabled', true);
       }
