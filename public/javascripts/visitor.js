@@ -66,13 +66,13 @@ $('#contactNumber').keyup(function() {
       if ($('#reasonForVisit').val() === "Other"){
         otherReason = '<textarea id="otherReason" name="otherReason" placeholder="Please enter the reason you are visitings, if none of the reason above apply." class="form-control"></textarea>';
       $('#otherReason').html(otherReason);
-    } if ($('#reasonForVisit').val() === "Contractor"){
+    } else if ($('#reasonForVisit').val() === "Contractor"){
         otherReason = '<input class="form-control" id="companyName" type="text" name="companyName" placeholder="Company Name" autocomplete="off">';
       $('#otherReason').html(otherReason);
-    } else if ($('#reasonForVisit').val() === "Staff"){
+    } else if ($('#reasonForVisit').val() === "Staff Member"){
           otherReason = '<input class="form-control" id="otherReason" type="text" name="otherReason" placeholder="Which Staff Member" autocomplete="off">';
         $('#otherReason').html(otherReason);
-        }{
+      } else {
         otherReason = '';
         $('#otherReason').html(otherReason);
       }
