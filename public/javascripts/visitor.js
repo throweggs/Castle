@@ -39,9 +39,9 @@ $('#contactNumber').keyup(function() {
   $('#supervisingChildYes').change(function() {
     var kid1;
     var kid2;
-        kid1 = '<input type"text" id="Kid1 name="Kid1" class="form-control" placeholder="Child 1"></input>';
+        kid1 = '<input type"text" id="Kid1" name="Kid1" class="form-control" placeholder="Child 1"></input>';
           $('#Kid1').html(kid1);
-        kid2 = '<input type"text" id="Kid2 name="Kid2" class="form-control" placeholder="Child 2"></input>';
+        kid2 = '<input type"text" id="Kid2" name="Kid2" class="form-control" placeholder="Child 2"></input>';
           $('#Kid2').html(kid2);
       });
 
@@ -66,7 +66,7 @@ $('#contactNumber').keyup(function() {
       if ($('#reasonForVisit').val() === "Other"){
         otherReason = '<textarea id="otherReason" name="otherReason" placeholder="Please enter the reason you are visitings, if none of the reason above apply." class="form-control"></textarea>';
       $('#otherReason').html(otherReason);
-    } else if ($('#reasonForVisit').val() === "Contractor"){
+    } if ($('#reasonForVisit').val() === "Contractor"){
         otherReason = '<input class="form-control" id="companyName" type="text" name="companyName" placeholder="Company Name" autocomplete="off">';
       $('#otherReason').html(otherReason);
     } else if ($('#reasonForVisit').val() === "Staff"){
