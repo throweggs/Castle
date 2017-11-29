@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Welcome to the Castle Climbing Centre' });
+  res.render('visitor', { title: 'Visitor Form' });
 });
 
 // /* GET user List page. */

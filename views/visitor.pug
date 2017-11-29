@@ -2,11 +2,11 @@ extends layout
 
 append body  
 	script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
-	script(src='/javascripts/index.js') 
-	 
-	.container
-		.row
-			.col-md-12
+	script(src='/javascripts/visitor.js') 
+
+	#Disclaimer.container
+		.col
+			.row
 				.Welcome
 					<p>
 					text-left.h4 For the safe enjoyment of our facilities for all users, please read our conditions below before signing in:
@@ -22,91 +22,79 @@ append body
 							li You are responsible for the safety of children under your supervision.
 						li <b>Unauthorised photography is not permitted</b> - please speak to a Duty Manager if you’d like to take photos.
 
-		.container
-		form#formAddVisitor(name="addVisitor",method="post",action="/addVisitor")
-			
-			// Visitors Name
-			.row
-				.form-horizontal
-				.form-group
-				.col-sm-3.text-right
-					label(for='visitor-name') Visitor Name*
-				.col-sm-3.text-left
-					input(type='text' name='firstName' required minlength="2" placeholder='First Name' class='form-control')
-				.col-sm-4.text-left
-					input(type='text' name='lastName' required minlength="2" placeholder='Last Name' class='form-control')
+	
+	form#formAddVisitor.container(name="addVisitor",method="post",action="/addVisitor")
+		
+		// Visitors Name
+		.form-group.row
+			label.col-md-2.col-xs-12.col-form-label(for='firstName') Visitor Name*
+			.col-md-3.col-sm-6.col-xs-6
+				input#firstName.form-control(type='text' placeholder='First Name' autofocus="autofocus" autocomplete='off')
+			.col-md-5.col-sm-6.col-xs-6
+				input#lastName.form-control(type='text' placeholder='Last Name' autocomplete='off')
+				
 
-			// Contact Number
-			.row
-				.form-horizontal
-				.form-group
-				.col-sm-3.text-right
-					label(for='contactNumber') Phone Number*
-				.col-sm-7.text-left
-					input(type='text' name='contactNumber' required minlength="11" maxlength="11" placeholder='Phone Number' class='form-control')
-
-			// Company Name
-			.row
-				.form-horizontal
-				.form-group
-				.col-sm-3.text-right
-					label(for='visitor-name') Company Name
-				.col-sm-7.text-left
-					input(type='text' name='companyName' placeholder='Only If Applicable' class='form-control')
-
-			// Supervising Children
-			.row
-				.form-horizontal
-				.form-group
-				.col-sm-3.text-right
-					label(for='supervising-child') Are you supervising any children? <br> Maximum of 2 per adult.
-				.col-sm-1.text-left
-					input(type='checkbox' name='supervisingChild'  class='form-control')
-				.col-sm-3.text-left
-					input(type='text' name='Kid1' placeholder='child 1' class='form-control')
-				.col-sm-3.text-left
-					input(type='text' name='Kid2' placeholder='child 2' class='form-control')
-
-			//Reason for Visit
-			.row
-				.form-horizontal
-				.form-group
-				.col-sm-3.text-right
-					label.control-label.requiredField(for='reasonForVisit') Reason for Visit*:
-				.col-sm-3.text-left
-					select#propertyType.select.form-control.input-lg(name='reasonForVisit' required='')
-						option
-						option(value='Cafe') Cafe
-						option(value='Contractor') Contractor
-						option(value='Garden')  Garden
-						option(value='Geckos')  Geckos
-						option(value='Castle Climbing')  Castle Climbing Club
-						option(value='Passing By')  Passing By
-						option(value='Shop')  Shop
-						option(value='Staff Member')  Staff Member
-						option(value='Other')  OTHER - please state
-
-				// Reason
-			.row
-				.form-horizontal
-				.form-group
-				.col-sm-3.text-right
-					label.text-left(for='OtherReasonForVisiting') Other reason for visiting:
-				.col-sm-7.text-left
-					textarea(type='text' name='otherReason' placeholder='Please enter the reason you are visitings, if none of the reason above apply.' class='form-control')
+		// Contact Number
+		.form-group.row
+				label.col-md-2.col-form-label(for='contactNumber') Phone Number
+				.col-md-8
+					input#contactNumber.form-control(type='text' minlength="11" maxlength="11" placeholder='Phone Number' autocomplete='off')
 
 
-			//Disclaimer
-			.row
-				.form-horizontal
-				.form-group
-				.col-sm-3.text-right
-					label(for='disclaimer') I have read and understood the above conditions*:
-				.col-sm-2
-					input(type='checkbox' name='disclaimer' required=''  class='form-control')
+		// Supervising Children
+		.form-group.row
+				label.col-md-2.col-sm-7.col-xs-7.form-check-label(for='supervisingChild') Are you supervising children? <br> Maximum of 2 per adult.
+				.btn-group(data-toggle='buttons').col-md-2.col-sm-5.col-xs-5
+					label.btn.btn-primary.active
+						input#supervisingChildNo(type='radio', name='supervisingChild', autocomplete='off', checked='')
+						|  No
+					label.btn.btn-primary
+						input#supervisingChildYes(type='radio', name='supervisingChild', autocomplete='off')
+						|  Yes		
+				.col-md-3.col-xs-6
+						#Kid1
+				.col-md-3.col-xs-6
+						#Kid2
 
-				//Submit and Cancel
-				.col-sm-4.text-right
-				input.btn.btn-default.btn-xl.submit-btn(type='Submit')
-				.col-sm-6.text-right
-				a.btn.btn-default.btn-xl.submit-btn(href='/') Cancel
+		//Reason for Visit
+		.form-group.row
+			.col-md-2.col-xs-12
+				label.control-label.requiredField(for='reasonForVisit') Reason for Visit*:
+			.col-md-3.col-xs-12
+				select#reasonForVisit.select.form-control.input-lg(name='reasonForVisit' required='')
+					option
+					option(value='Cafe') Cafe
+					option(value='Contractor') Contractor
+					option(value='Garden')  Garden
+					option(value='Geckos')  Geckos
+					option(value='Castle Climbing')  Castle Climbing Club
+					option(value='Passing By')  Passing By
+					option(value='Shop')  Shop
+					option(value='Staff Member')  Staff Member
+					option(value='Other')  OTHER - please state
+			.col-md-5.col-sm-12
+				#otherReason
+				//- textarea(type='text' name='otherReason' placeholder='Please enter the reason you are visitings, if none of the reason above apply.' class='form-control')
+
+
+		//Disclaimer
+		.form-check.row
+			.col-md-2.col-xs-7
+				label.form-check-label
+					|     I have read and understood the above conditions*:
+			.col-md-1.col-xs-1
+				input#disclaimer.form-check-input(type='checkbox', value='', name='disclaimer', required='', disabled='true')
+		
+			//Submit and Cancel
+			.col-md-2.col-xs-2
+				input#submit.btn.btn-default.btn-xl.submit-btn(type='Submit', disabled='true')
+			.col-md-1.col-xs-1
+				a#cancel.btn.btn-default.btn-xl.submit-btn(href='/') Cancel
+
+
+	//- .footer.col-md-12
+	//- 	.container
+	//- 			#alert
+	//- 			.alert#alertfooter.alert-danger(role='alert')
+	//- 				strong Oh snap!
+	//- 				|  #alertMessage

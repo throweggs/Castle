@@ -36,8 +36,6 @@
   color: black;
 }
 
-
-
   .side-bar-header {
     color: black;
   }
@@ -70,4 +68,24 @@ a {
 
 .forms {
   font-size: 300%;
+}
+
+.navbar img {
+  height: 100%;
+}
+
+.navbar-logo {
+    float: left;
+    height: 50px;
+    padding: 0 30px 0 15px;
+    font-size: 18px;
+    line-height: 20px;
+}
+
+.footer {
+    position: fixed;
+    margin-bottom: 0px;
+    left: 0;
+    bottom: 0;
+    text-align: center;
 }
