@@ -4,27 +4,25 @@ append body
 	script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
 	script(src='/javascripts/visitor.js') 
 
-	#Disclaimer.container
-		.col
-			.row
-				.Welcome
-					<p>
-					text-left.h4 For the safe enjoyment of our facilities for all users, please read our conditions below before signing in:
-					<p>
+	#Disclaimer.container-fluid
+		.disclaimer-text.row.align-centre
+			.col-md-10
+				<p>
+				text-left.h4 For the safe enjoyment of our facilities for all users, please read our conditions below before signing in:
+				<p>
+				ul.text-left
+					li <b> Climbing is a dangerous activity. </b>
+					li <b> You, and any children you are supervising, may NOT climb on this visit to the centre. </b>
+					li <b> DO NOT stand in the climbing areas or distract climbers/belayers. </b>
+					li <b> Children must be supervised at all times. </b>
 					ul.text-left
-						li <b> Climbing is a dangerous activity. </b>
-						li <b> You, and any children you are supervising, may NOT climb on this visit to the centre. </b>
-						li <b> DO NOT stand in the climbing areas or distract climbers/belayers. </b>
-						li <b> Children must be supervised at all times. </b>
-						ul.text-left
-							li They must remain with you at all times and may NOT climb anywhere within in the centre or the garden.
-							li They must NOT go on the soft matting – these areas are landing zones for climbers.
-							li You are responsible for the safety of children under your supervision.
-						li <b>Unauthorised photography is not permitted</b> - please speak to a Duty Manager if you’d like to take photos.
-
+						li They must remain with you at all times and may NOT climb anywhere within in the centre or the garden.
+						li They must NOT go on the soft matting – these areas are landing zones for climbers.
+						li You are responsible for the safety of children under your supervision.
+					li <b>Unauthorised photography is not permitted</b> - please speak to a Duty Manager if you’d like to take photos.
+						<p>
 	
-	form#formAddVisitor.container(name="addVisitor",method="post",action="/addVisitor")
-		
+	form#formAddVisitor.container-fluid(name="addVisitor",method="post",action="/addVisitor")
 		// Visitors Name
 		.form-group.row
 			label.col-md-2.col-xs-12.col-form-label(for='firstName') Visitor Name*
@@ -43,18 +41,22 @@ append body
 
 		// Supervising Children
 		.form-group.row
-				label.col-md-2.col-sm-7.col-xs-7.form-check-label(for='supervisingChild') Are you supervising children? <br> Maximum of 2 per adult.
-				.btn-group(data-toggle='buttons').col-md-2.col-sm-5.col-xs-5
+				label.col-md-7.col-sm-7.col-xs-7.form-check-label(for='supervisingChild') Are you supervising children? Maximum of 3 per adult.
+				.btn-group(data-toggle='buttons').col-md-5.col-sm-5.col-xs-5
 					label.btn.btn-primary.active
 						input#supervisingChildNo(type='radio', name='supervisingChild', autocomplete='off', checked='')
 						|  No
 					label.btn.btn-primary
 						input#supervisingChildYes(type='radio', name='supervisingChild', autocomplete='off')
-						|  Yes		
-				.col-md-3.col-xs-6
-						#Kid1
-				.col-md-3.col-xs-6
-						#Kid2
+						|  Yes
+		.form-group.row
+			.col-md-1.col-xs-0
+			.col-md-3.col-sm-4.col-xs-12
+					#Kid1
+			.col-md-3.col-sm-4.col-xs-12
+					#Kid2
+			.col-md-3.col-sm-4.col-xs-12
+					#Kid3
 
 		//Reason for Visit
 		.form-group.row
@@ -62,7 +64,7 @@ append body
 				label.control-label.requiredField(for='reasonForVisit') Reason for Visit*:
 			.col-md-3.col-xs-12
 				select#reasonForVisit.select.form-control.input-lg(name='reasonForVisit' required='')
-					option
+					option(value='')
 					option(value='Cafe') Cafe
 					option(value='Contractor') Contractor
 					option(value='Garden')  Garden
@@ -70,31 +72,28 @@ append body
 					option(value='Castle Climbing')  Castle Climbing Club
 					option(value='Passing By')  Passing By
 					option(value='Shop')  Shop
-					option(value='Staff Member')  Staff Member
+					option(value='Staff Member')  Visiting a staff member
 					option(value='Other')  Other
 			.col-md-5.col-sm-12
 				#otherReason
-				//- textarea(type='text' name='otherReason' placeholder='Please enter the reason you are visitings, if none of the reason above apply.' class='form-control')
-
 
 		//Disclaimer
 		.form-check.row
-			.col-md-2.col-xs-7
-				label.form-check-label
-					|     I have read and understood the above conditions*:
-			.col-md-1.col-xs-1
-				input#disclaimer.form-check-input(type='checkbox', name='disclaimer', required='', disabled='true')
-		
-			//Submit and Cancel
-			.col-md-2.col-xs-2
-				input#submit.btn.btn-default.btn-xl.submit-btn(type='Submit', disabled='true')
-			.col-md-1.col-xs-1
-				a#cancel.btn.btn-default.btn-xl.submit-btn(href='/') Cancel
+			label.col-md-7.col-sm-7.col-xs-7.checkbox
+				|     I have read and agree to the above conditions*:
+			.col-md-5.col-xs-5
+				input#disclaimer.checkbox-inline.big-checkbox(type='checkbox', disabled='', name='disclaimer' value='Agreed')
 
+			
+		//Submit and Cancel
+		.form-check.row.col-md-10
+			.col-md-1.col-sm-2.col-xs-2.pull-right
+				input#submit.btn.btn-success.btn-xl.submit-btn(type='Submit', disabled='true')
+			.col-md-1.col-sm-2.col-xs-2.pull-right
+				a#cancel.btn.btn-danger.btn-xl.submit-btn(href='/') Cancel
 
-	//- .footer.col-md-12
-	//- 	.container
-	//- 			#alert
-	//- 			.alert#alertfooter.alert-danger(role='alert')
-	//- 				strong Oh snap!
-	//- 				|  #alertMessage
+		//Footer
+		.footer.col-md-12.col-xs-12
+			.container-fluid
+					#failAlert
+					#successAlert
