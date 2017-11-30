@@ -9,6 +9,7 @@ var Count = 0,
 
 
 function successAlert(theText, alertType, removeMe){
+  console.log(theText,alertType, removeMe);
   if (removeMe === false){
         output = '<div class="alert '+ alertType +' alert-dismissable fade in">';
         output += '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
@@ -22,6 +23,7 @@ function successAlert(theText, alertType, removeMe){
 }
 
 function failAlert(theText, alertType, removeMe){
+  console.log(theText,alertType, removeMe);
   if (removeMe === false){
         output = '<div class="alert '+ alertType +' alert-dismissable fade in">';
         output += '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
@@ -37,7 +39,7 @@ function failAlert(theText, alertType, removeMe){
 
 $(function(){ // this will be called when the DOM is ready
     $('#firstName').keydown(function() {
-        if ($('#firstName').val().length >= 2){
+        if ($('#firstName').val().length >= 1){
           $(this).css({'color' : 'inherit' });
           FirstName = 1;
         } else {
@@ -47,7 +49,7 @@ $(function(){ // this will be called when the DOM is ready
       });
 
     $('#lastName').keydown(function() {
-        if ($('#lastName').val().length >= 2){
+        if ($('#lastName').val().length >= 1){
           $(this).css({'color' : 'inherit' });
           LastName = 1;
         } else {
@@ -132,13 +134,14 @@ $(function(){ // this will be called when the DOM is ready
       }
     });
 
-    $('#disclaimer').is(':checked', function(){
-      if ($('#disclaimer').val()==='I Agree'){
+    $('#disclaimer').change(function(){
+      if ($('#disclaimer').is(':checked')){
+        console.log("checked");
         var CName = ($('#firstName').val());
             CName = CName.charAt(0).toUpperCase() + CName.slice(1);
         var theText = '<strong>Thanks ' + CName + '. </strong> Please had the tablet back to the receptionist.';
         successAlert(theText, 'alert-success', false);
-      } else if ($('#disclaimer').val() !='I Agree'){
+      } else if ($('#disclaimer').not(':checked')){
 
         successAlert("", 'alert-success', true);
       }

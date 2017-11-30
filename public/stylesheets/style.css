@@ -82,11 +82,11 @@ a {
     line-height: 20px;
 }
 
-.footer {
+.header {
     position: fixed;
-    margin-bottom: 0px;
+    margin-top: 0px;
     left: 0;
-    bottom: 0;
+    top: 55px;
     text-align: center;
 }
 
