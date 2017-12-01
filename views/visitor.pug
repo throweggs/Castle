@@ -3,6 +3,7 @@ extends layout
 append body  
 	script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
 	script(src='/javascripts/visitor.js') 
+	
 
 	#Disclaimer.container-fluid
 		.disclaimer-text.row.align-centre
@@ -23,6 +24,7 @@ append body
 						<p>
 	
 	form#formAddVisitor.container-fluid(name="addVisitor",method="post",action="/addVisitor")
+		#successAlert
 		// Visitors Name
 		.form-group.row
 			label.col-md-2.col-xs-12.col-form-label(for='firstName') Visitor Name*
@@ -96,4 +98,4 @@ append body
 		.header.col-md-12.col-xs-12
 			.container-fluid
 					#failAlert
-					#successAlert
+					

@@ -90,4 +90,14 @@ a {
     text-align: center;
 }
 
+#successAlert {
+    font-size: 150%;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    width: 100%;
+    z-index: 5000;
+}
+
  .big-checkbox {width: 30px; height: 30px;}

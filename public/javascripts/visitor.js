@@ -12,8 +12,13 @@ function successAlert(theText, alertType, removeMe){
   console.log(theText,alertType, removeMe);
   if (removeMe === false){
         output = '<div class="alert '+ alertType +' alert-dismissable fade in">';
+        output += '<br>';
+        output += '<br>';
         output += '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
         output += theText;
+        output += '<br>';
+        output += '<br>';
+        output += '<br>';
         output += '</div>';
     $('#successAlert').html(output);
   } else if (removeMe === true){
@@ -139,7 +144,7 @@ $(function(){ // this will be called when the DOM is ready
         console.log("checked");
         var CName = ($('#firstName').val());
             CName = CName.charAt(0).toUpperCase() + CName.slice(1);
-        var theText = '<strong>Thanks ' + CName + '. </strong> Please had the tablet back to the receptionist.';
+        var theText = '<strong>Thanks ' + CName + '. </strong> Please hand this tablet back to the receptionist.';
         successAlert(theText, 'alert-success', false);
       } else if ($('#disclaimer').not(':checked')){
 
