@@ -72,6 +72,7 @@ function showVisitorInfo(event) {
    $('#visitorInfoSupervisingChild').text(thisVisitorObject.supervisingChild);
    $('#visitorInfoKid1').text(thisVisitorObject.ChildNames.Kid1);
    $('#visitorInfoKid2').text(thisVisitorObject.ChildNames.Kid2);
+   $('#visitorInfoKid3').text(thisVisitorObject.ChildNames.Kid3);
    $('#visitorInfoReasonForVisit').text(thisVisitorObject.reasonForVisit);
    $('#visitorInfoOtherReason').text(thisVisitorObject.otherReason);
    $('#visitorInfoDisclaimer').text(thisVisitorObject.disclaimer);

@@ -1,0 +1,42 @@
+extends layout
+
+block content  
+  script(src='/javascripts/visitorlist.js')
+
+  //Visitor List
+
+  // Wrapper  
+  #wrapper      
+  // VISITOR INFO
+  .container-fluid
+      .vistor-info.col-sm-3.sidebar
+        #visitorInfo
+          .visitor-title Info 
+          .side-bar-header Name:
+          .visitor-detail <span id='visitorInfoName' ></span><br>
+          .side-bar-header Contact Number:
+          .visitor-detail <span id='visitorInfoContactNumber'></span><br>
+          .side-bar-header Company Name:
+          .visitor-detail <span id='visitorInfoCompanyName'></span><br>
+          .side-bar-header Visiting With Children:
+          .visitor-detail <span id='visitorInfoSupervisingChild'></span><br>
+          .side-bar-header Child Name(s):
+          .visitor-detail <span id='visitorInfoKid1'></span><br>
+          .visitor-detail <span id='visitorInfoKid2'></span><br>
+          .side-bar-header Reason For Visit:
+          .visitor-detail <span id='visitorInfoReasonForVisit'></span><br>
+          .visitor-detail <span id='visitorInfoOtherReason'></span><br>
+          .side-bar-header Disclaimer:
+          .visitor-detail <checkbox id='visitorInfoDisclaimer'></checkbox>
+
+      // VISITOR LIST
+      .visitor-list
+        .col-sm-offset-3
+          .visitor-title Visitors #<span id='ListCount'></span>
+          #visitorList
+            table.table-hover
+                thead
+                  th Date
+                  th Full Name
+                  th Reason
+                tbody

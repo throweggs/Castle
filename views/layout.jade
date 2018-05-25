@@ -1,0 +1,45 @@
+doctype html
+html
+	head
+		append styles
+			link(rel='stylesheet', href='/css/bootstrap.min.css')
+			link(rel='stylesheet', href='/stylesheets/style.css')
+			script(src='/js/jquery.min.js')
+			script(src='/js/bootstrap.min.js')
+			//- script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+			script(src='/javascripts/global.js')
+		
+						
+body
+	// Image and text
+	nav.navbar.navbar-inverse.bg-inverse.col-12
+		.container-fluid.col-12
+			a.navbar-brand.col-5(href="/")
+				img.d-inline-block.align-centre(src='logo.png', width='50px', alt='')
+				| Castle Climbing Centre
+			.navbar-text.col-6
+				.text-right #{title}
+
+	//Header
+	.header.col-md-12.col-xs-12
+	#failAlert
+		
+	//- // Button trigger modal
+	//- button.btn.btn-primary(type='button', data-toggle='modal', data-target='#SuccessModal')
+	//- 	| Launch demo modal
+	// Modal
+	#SuccessModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalCenterTitle', aria-hidden='true')
+		.modal-dialog(role='document')
+			.modal-content
+				.modal-header
+					h5#Title.modal-title Success
+					button.close(type='button', data-dismiss='modal', aria-label='Close')
+						span(aria-hidden='true') ×
+				.modal-body
+					#TheText
+
+					
+	block content
+	
+	
+	include footer
