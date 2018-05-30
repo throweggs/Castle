@@ -26,7 +26,7 @@ var BoulderingAreas = [
     'Panels',
     'Pen',
     'Mez',
-    'Travere_Boulders',
+    'Traverse_Boulders',
     'Outdoor_Boulders'
   ];
 
