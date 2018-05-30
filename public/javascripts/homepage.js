@@ -23,6 +23,9 @@ function createList(results){
       $('#formList').html(output);
   }
 
-  $(function(){
+  $(function(){ // this will be called when the DOM is ready
+
+      $( document ).ready(function() {
     getList();
+      });
   });
