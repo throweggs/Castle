@@ -247,6 +247,11 @@ $.ajax({
 // this will be called when the DOM is ready
 $(function(){
 
+  //Load GDPR statment
+    $( document ).ready(function() {
+        $("#dataProtection").modal('show');
+    });
+
 getSession();//GET SESSION!
 // CALL FUNCTION TO CHANGE OPTIONS ACCORDING TO SESSION TYPE CHOICE
 $('#SessionClimbingType').change(function(SessionAreas) {

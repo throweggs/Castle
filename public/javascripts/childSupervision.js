@@ -9,6 +9,11 @@ var Count = 0,
 
 
 $(function(){ // this will be called when the DOM is ready
+  //Load GDPR statment
+    $( document ).ready(function() {
+        $("#dataProtection").modal('show');
+    });
+
     $('#submit').on('click', addSupervisor);
 
     $('#childName').keydown(function() {
