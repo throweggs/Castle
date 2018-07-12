@@ -84,8 +84,8 @@ var SessionDetails = '<div class="col-12">';
     SessionDetails += ' <h3>It is a '+ SessionType +' session, starting in the ' + (StartLocation.replace("_"," ")) + '.</h3>';
     SessionDetails += ' <ul>';
     SessionDetails += '   <li><strong>Participants of The Session must be registered roped climbers</strong> and therefore confident putting on a harness correctly, tying in with the correct knot and belaying competently.</li>';
-    SessionDetails += '   <li>The Session and the Wednesday mixed bouldering session may be attended by those registered as bouldering only. If you’re not sure about which session you can join, please ask a receptionist who will be happy to help you. <strong>The Session is not suitable for novice climbers.</strong></li>';
-    SessionDetails += '   <li>I<strong>MPORTANT INFORMATION: <u>This is not a teaching session</u>, <u>nor is it supervised</u>. Participants are still responsible for their own safety.  It is up to each participant to decide for themselves who they wish to climb with.</strong></li>';
+    SessionDetails += '   <li>Women With Altitude and the wednesday mixed bouldering Session may be attended by those registered as bouldering only. If you’re not sure about which session you can join, please ask a receptionist who will be happy to help you. <strong>The Session is not suitable for novice climbers.</strong></li>';
+    SessionDetails += '   <li><strong>IMPORTANT INFORMATION: <u>This is not a teaching session</u>, <u>nor is it supervised</u>. Participants are still responsible for their own safety.  It is up to each participant to decide for themselves who they wish to climb with.</strong></li>';
     SessionDetails += '</div>';
 
 $( "#addFacilitator" ).replaceWith( SessionDetails );
@@ -113,17 +113,17 @@ function ShowParticipants(){
         selectMe1 = '';
         selectMe2 = '';
         selectMe3 = '';
-      } else if (Reason === "Staff Input") {
+      } else if (Reason === "Climbing Partner") {
         selectMe0 = '';
         selectMe1 = 'selected=""';
         selectMe2 = '';
         selectMe3 = '';
-      } else if (Reason === "Climbing Partner") {
+      } else if (Reason === "New") {
         selectMe0 = '';
         selectMe1 = '';
         selectMe2 = 'selected=""';
         selectMe3 = '';
-      } else if (Reason === "New") {
+      } else if (Reason === "Other") {
         selectMe0 = '';
         selectMe1 = '';
         selectMe2 = '';
@@ -142,9 +142,9 @@ function ShowParticipants(){
       output += '   <input disabled id="Participant'+i+'" type="text" placeholder="'+PName+'" aria-label="Participant Name" aria-describedby="sizing-addon2" class="row'+i+ ' form-control col-4"/>';
       output += ' <select disabled id="Reason'+i+'" class="custom-select">';
       output += '     <option '+ selectMe0 +' value="">Im joining the session...</option>';
-      output += '     <option '+ selectMe1 +' value="Staff Input">for staff input </option>';
-      output += '     <option '+ selectMe2 +' value="Climbing Partner">I have no climbing partner</option>';
-      output += '     <option '+ selectMe3 +' value="New">I am new to the Centre</option>';
+      output += '     <option '+ selectMe1 +' value="Climbing Partner">I have no climbing partner today</option>';
+      output += '     <option '+ selectMe2 +' value="New">I am new to the Centre</option>';
+      output += '     <option '+ selectMe3 +' value="Other">Other</option>';
       output += ' </select>';
       output += ' <select disabled id="FirstTime'+i+'" class="custom-select">';
       output += '     <option '+ selectMe00 +' value="">First Time?</option>';
@@ -162,9 +162,9 @@ var ActiveLine = output;
     ActiveLine += '   <input id="Participant'+i+'" type="text" placeholder="Name" aria-label="Participant Name" aria-describedby="sizing-addon2" class="row'+i+ ' form-control col-4"/>';
     ActiveLine += ' <select id="Reason'+i+'" class="row'+i+ ' custom-select">';
     ActiveLine += '     <option value="">Im joining the session...</option>';
-    ActiveLine += '     <option value="Staff Input">for staff input </option>';
-    ActiveLine += '     <option value="Climbing Partner">I have no climbing partner</option>';
+    ActiveLine += '     <option value="Climbing Partner">I have no climbing partner today</option>';
     ActiveLine += '     <option value="New">I am new to the Centre</option>';
+    ActiveLine += '     <option value="Other">Other </option>';
     ActiveLine += ' </select>';
     ActiveLine += ' <select  id="FirstTime'+i+'" class="row'+i+ ' custom-select">';
     ActiveLine += '     <option value="">First Time?</option>';

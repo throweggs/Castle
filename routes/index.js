@@ -39,7 +39,7 @@ router.get('/', function(req, res) {
 
 /* GET wwa page. */
 router.get('/wwa', function(req, res) {
-    res.render('wwa', { title: 'Women With Attitude' });
+    res.render('wwa', { title: 'Women With Altitude' });
 });
 
 /* GET Garden Volunteer page. */

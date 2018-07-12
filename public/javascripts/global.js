@@ -89,6 +89,8 @@ jQuery.fn.tableToCSV = function() {
 
 };
 
+
+
 //Gets the information from the instructor for WWA and theSession, to create the session
 function createSession(){
   output='form#addFacilitator.container-fluid.SessionDetails(name="addFacilitator", method="post", onlcick="addFacilitator()")';
@@ -140,6 +142,9 @@ $(function(){ // this will be called when the DOM is ready
       $('#DateTime').html(moment().format("MMM Do YYYY"));
     });
 
+    $('#GoHome').click(function(){
+      $('#AreYouSure').modal('show');
+    });
 
 });
 
