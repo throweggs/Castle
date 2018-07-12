@@ -17,7 +17,7 @@ function createList(results){
 
     $.each(results, function( index, value ) {
         var i = index;
-        output += '<a href="/'+ results[i].formLink +'" id="welcomeFormRow" class="col-10 button btn btn-primary btn-lg">'+ results[i].formName +'</a>';
+        output += '<a href="/'+ results[i].formLink +'" id="welcomeFormRow" class="col-10 button btn '+ results[i].colour +' btn-lg">'+ results[i].formName +'</a>';
     });
   output +='</center>';
       $('#formList').html(output);
@@ -28,4 +28,6 @@ function createList(results){
       $( document ).ready(function() {
     getList();
       });
+
+
   });

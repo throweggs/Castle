@@ -1,3 +1,94 @@
+(function (global) {
+
+    if(typeof (global) === "undefined") {
+        throw new Error("window is undefined");
+    }
+
+    var _hash = "!";
+    var noBackPlease = function () {
+        global.location.href += "#";
+
+        // making sure we have the fruit available for juice (^__^)
+        global.setTimeout(function () {
+            global.location.href += "!";
+        }, 50);
+    };
+
+    global.onhashchange = function () {
+        if (global.location.hash !== _hash) {
+            global.location.hash = _hash;
+        }
+    };
+
+    global.onload = function () {
+        noBackPlease();
+
+        // disables backspace on page except on input fields and textarea..
+        document.body.onkeydown = function (e) {
+            var elm = e.target.nodeName.toLowerCase();
+            if (e.which === 8 && (elm !== 'input' && elm  !== 'textarea')) {
+                e.preventDefault();
+            }
+            // stopping event bubbling up the DOM tree..
+            e.stopPropagation();
+        };
+    };
+
+})(window);
+
+
+
+
+function resetPage() {
+    location.reload();
+}
+//create Exportable table
+jQuery.fn.tableToCSV = function() {
+
+    var clean_text = function(text){
+        text = text.replace(/"/g, '""');
+        return '"'+text+'"';
+    };
+
+	$(this).each(function(){
+			var table = $(this);
+			var caption = $(this).find('caption').text();
+			var title = [];
+			var rows = [];
+
+			$(this).find('tr').each(function(){
+				var data = [];
+				$(this).find('th').each(function(){
+                    var text = clean_text($(this).text());
+					title.push(text);
+					});
+				$(this).find('td').each(function(){
+                    var text = clean_text($(this).text());
+					data.push(text);
+					});
+				data = data.join(",");
+				rows.push(data);
+				});
+			title = title.join(",");
+			rows = rows.join("\n");
+
+			var csv = title + rows;
+			var uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+			var download_link = document.createElement('a');
+			download_link.href = uri;
+			var ts = new Date().getTime();
+			if(caption===""){
+				download_link.download = ts+".csv";
+			} else {
+				download_link.download = caption+"-"+ts+".csv";
+			}
+			document.body.appendChild(download_link);
+			download_link.click();
+			document.body.removeChild(download_link);
+	});
+
+};
+
 //Gets the information from the instructor for WWA and theSession, to create the session
 function createSession(){
   output='form#addFacilitator.container-fluid.SessionDetails(name="addFacilitator", method="post", onlcick="addFacilitator()")';
@@ -38,23 +129,38 @@ function successAlert(theText, alertType, removeMe){
   $('#TheText').html(theText);
 }
 
-//sets the Date
-
-var dt = new Date();
-var curDate = dt.toString();
-var DateOnly = curDate.split(" ", 4);
-var output = "";
-  $.each(DateOnly, function( index, value ) {
-    output += value + " ";
-  });
-  DateOnly = $.trim(output);
+var dt = moment();
+var DateOnly = moment().format("ddd MMM Do YYYY");
+var TimeOnly = moment().format("h:mm:ss a");
 
 
-//Set the Time
-var DateRemoved = curDate.replace(DateOnly, '');
-var TimeOnly = DateRemoved.split(" ", 2);
-var output = "";
-  $.each(TimeOnly, function( index, value ) {
-    output += value + " ";
-  });
-  TimeOnly = $.trim(output);
+$(function(){ // this will be called when the DOM is ready
+
+    $( document ).ready(function() {
+      $('#DateTime').html(moment().format("MMM Do YYYY"));
+    });
+
+
+});
+
+
+// //sets the Date
+//
+// var dt = new Date();
+// var curDate = dt.toString();
+// var DateOnly = curDate.split(" ", 4);
+// var output = "";
+//   $.each(DateOnly, function( index, value ) {
+//     output += value + " ";
+//   });
+//   DateOnly = $.trim(output);
+//
+//
+// //Set the Time
+// var DateRemoved = curDate.replace(DateOnly, '');
+// var TimeOnly = DateRemoved.split(" ", 2);
+// var output = "";
+//   $.each(TimeOnly, function( index, value ) {
+//     output += value + " ";
+//   });
+//   TimeOnly = $.trim(output);

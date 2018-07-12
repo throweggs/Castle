@@ -5,10 +5,9 @@ var router = express.Router();
 /*
  * POST to addSession.
  */
-router.post('/createSession', function(req, res) {
-  console.log('creating Session');
+router.post('/addPerson', function(req, res) {
     var db = req.db;
-    var collection = db.get('GardenVolunteer');
+    var collection = db.get('gardenVolunteer');
     collection.insert(req.body, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
@@ -19,23 +18,22 @@ router.post('/createSession', function(req, res) {
 /*
  * GET userlist.
  */
- router.get('/getGardenVolunteer', function(req, res) {
-   console.log('get Session');
-     findMe = req.query;
-     var db = req.db;
-     var collection = db.get('GardenVolunteer');
-     collection.find(findMe,{},function(e,docs){
-         res.json(docs);
-     });
- });
+router.get('/getDay', function(req, res) {
+    findMe = req.query;
+    var db = req.db;
+    var collection = db.get('gardenVolunteer');
+    collection.find(findMe,{},function(e,docs){
+        res.json(docs);
+    });
+});
 
 //Updates an theSession
-router.put('/updateGardenVolunteer', function(req, res){
-  theDate = req.body.FindDate;
-  console.log(theDate);
+router.put('/updatePerson', function(req, res){
+  thePerson = req.body.FindPerson;
+  console.log(req.body);
   var db = req.db;
-  var collection = db.get('GardenVolunteer');
-  collection.update(theDate,req.body,function(e,docs){
+  var collection = db.get('gardenVolunteer');
+  collection.update(thePerson,req.body,function(e,docs){
       res.json(docs);
   });
 });

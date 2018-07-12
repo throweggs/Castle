@@ -5,8 +5,8 @@ block content
 	
 	#successAlert		
 	#Disclaimer.container-fluid
-		.disclaimer-text.row.align-centre
-			.col-12
+		.disclaimer-text
+			.col
 				<p>
 				text-left.h4 For the safe enjoyment of our facilities for all users, please read our conditions below before signing in:
 				<p>
@@ -28,28 +28,31 @@ block content
 		.form-group.row
 			label.col-lg-2.col-sm-12.col-form-label(for='firstName') Visitor Name*
 			.col-lg-4.col-sm-6
-				input#firstName.form-control(type='text' name='firstName' placeholder='First Name' autocomplete='off')
+				input#firstName.form-control(type='text' name='firstName' placeholder='First Name' autocomplete='given-name')
 			.col-lg-4.col-sm-6
-				input#lastName.form-control(type='text' name='lastName' placeholder='Last Name' autocomplete='off')
+				input#lastName.form-control(type='text' name='lastName' placeholder='Last Name' autocomplete='family-name')
 				
 
 		// Contact Number
 		.form-group.row
 				label.col-lg-2.col-sm-12.col-form-label(for='contactNumber') Phone Number
 				.col-lg-8.col-sm-12
-					input#contactNumber.form-control(type='text' name='contactNumber' minlength="11" maxlength="11" placeholder='Phone Number' autocomplete='off')
+					input#contactNumber.form-control(type='text' name='contactNumber' minlength="11" maxlength="11" placeholder='Phone Number' autocomplete='tel')
 
 
 		// Supervising Children
-		.form-group.row
+		.form-group
 				label.col-6.form-check-label(for='supervisingChild') Are you supervising children? Maximum of 3 per adult.
-				.btn-group(data-toggle='buttons').col-2.col-xs-6
+				.btn-group.btn-group-toggle(data-toggle='buttons')
 					label.btn.btn-primary.active
 						input#supervisingChildNo(type='radio', name='supervisingChild', autocomplete='off', checked='')
 						|  No
 					label.btn.btn-primary
 						input#supervisingChildYes(type='radio', name='supervisingChild', autocomplete='off')
 						|  Yes
+										
+						
+						
 		.form-group.row
 			.col-lg-2
 			.col-lg-4.col-sm-6.col-xs-12
@@ -73,10 +76,37 @@ block content
 					option(value='Castle Climbing')  Castle Climbing Club
 					option(value='Passing By')  Passing By
 					option(value='Shop')  Shop
+					option(value='Contractor')  Contractor
+					option(value='Photography')  Photography
 					option(value='Staff Member')  Visiting a staff member
 					option(value='Other')  Other
 			.offset-lg-2.offset-md-2.col-lg-8.col-md-10.col-sm-12
 				#otherReason
+
+		//Photoghrapy Waver
+		.form-check.row
+			label.col-lg-6.col-md-6.col-sm-6.col-xs-10.requiredField(for='photographyWaver') I intend to take photos while in the centre:
+			input#photographyWaver.offset-1.big-checkbox.checkbox-inline(type='checkbox', disabled='',  name='photographyWaver', value='Checked')
+			// Button to Open the Modal
+			
+			// The Modal
+		#photographyWaverModal.modal
+			.modal-dialog
+				.modal-content
+					// Modal Header
+					.modal-header
+						h4.modal-title Photography Waver
+						button.close(type='button', data-dismiss='modal') ×
+					// Modal body
+					.modal-body
+						p I understand that The Castle is a private building and I need to seek permission from management in order to photograph inside.
+						p I will not use the photographs taken for commercial use without written consent from The Castle management.
+						p I will not photograph any adults without their permission.
+						p	I will not photograph any children without the consent of the child’s parent or guardian.
+
+					// Modal footer
+					.modal-footer
+						button#photographyWaverAgreement.btn.btn-danger(type='button', data-dismiss='modal') I Agree
 
 		//Disclaimer
 		.form-check.row

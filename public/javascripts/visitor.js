@@ -5,6 +5,8 @@ var Count = 0,
     ReasonForVisit = 0,
     Disclaimer = '',
     output = false,
+    otherReason = null,
+    photographyWaverAgreement  = null,
     theText = '';
 
 
@@ -89,18 +91,25 @@ $(function(){ // this will be called when the DOM is ready
       } else if ($('#reasonForVisit').val() === "Staff Member"){
             otherReason = '<input class="form-control" id="otherReason" type="text" name="otherReason" placeholder="Which Staff Member" autocomplete="off">';
           $('#otherReason').html(otherReason);
-        } else {
-          otherReason = '';
+      } else if ($('#reasonForVisit').val() === "Photography"){
+            otherReason = '';
           $('#otherReason').html(otherReason);
-        }
+      } else {
+          otherReason = '';
+        $('#otherReason').html(otherReason);
+      }
       });
+
+
 
       $('#addVisitor').on('keydown keyup change',function() {
       var Count = ReasonForVisit + LastName + FirstName;
           if (Count === 3){
             $('#disclaimer').prop('disabled', false);
+            $('#photographyWaver').prop('disabled', false);
           } else if (Count != 3){
             $('#disclaimer').prop('disabled', true);
+            $('#photographyWaver').prop('disabled', true);
             $('#disclaimer').prop('checked', false);
           }
       });
@@ -113,9 +122,21 @@ $(function(){ // this will be called when the DOM is ready
       }
     });
 
+    $('#photographyWaver').change(function(){
+      if($('#photographyWaver').is(':checked')){
+        $('#photographyWaverModal').modal('show');
+      }
+    });
+
+    $('#photographyWaverAgreement').click(function(){
+      photographyWaverAgreement = 'Agreed';
+      console.log('Agreed');
+    });
+
+
     $('#disclaimer').change(function(){
       if ($('#disclaimer').is(':checked')){
-        console.log("checked");
+
         var CName = ($('#firstName').val());
             CName = CName.charAt(0).toUpperCase() + CName.slice(1);
         var theText = '<strong>Thanks ' + CName + '. </strong> Please hand this tablet back to the receptionist.';
@@ -135,7 +156,8 @@ $(function(){ // this will be called when the DOM is ready
                 theText = 'Please make sure you have selected a <strong> REASON FOR VISIT</strong>, thanks.';
                 failAlert(theText, 'alert-danger', false);
             } else if ($('#reasonForVisit').val() !== ""){
-                      failAlert("buger2", 'alert-danger', true);
+
+
                   }
         } else if (FirstName != 1) {
             theText = 'Please make sure you have entered your <strong>FIRST NAME</strong> correctly, thanks.';
@@ -150,7 +172,22 @@ $(function(){ // this will be called when the DOM is ready
 
     });
 
+    $('#addVisitor').on('keydown keyup change',function() {
+      if ($('#addVisitor textarea#otherReason').val() !== ''){
+        otherReason = $('#addVisitor textarea#otherReason').val();
+
+      }
+      if ($('#addVisitor input#otherReason').val() !== ''){
+        otherReason = $('#addVisitor input#otherReason').val();
+
+      }
+    });
+
       });
+
+
+
+
 
 
 // Add User button click
@@ -158,9 +195,8 @@ function addVisitor(event) {
     event.preventDefault();
   console.log('arrived on submit');
 
-  var dt = new Date();
-  var curDate = dt.toString();
-  console.log("New Visitors added at :" + curDate);
+
+  console.log("New Visitors added at :" + dt);
 
 var Kids = {
   'Kid1' : $('#addVisitor input#Kid1').val(),
@@ -168,21 +204,23 @@ var Kids = {
   'Kid3' : $('#addVisitor input#Kid3').val(),
 };
 
+
+
     // If it is, compile all user info into one object
     var newVisitor = {
         'fullName': $('#addVisitor input#firstName').val() + ' ' + $('#addVisitor input#lastName').val(),
         'firstName': $('#addVisitor input#firstName').val(),
         'lastName': $('#addVisitor input#lastName').val(),
         'reasonForVisit': $('#addVisitor select#reasonForVisit').val(),
-        'otherReason': $('#addVisitor input#otherReason').val(),
+        'otherReason': otherReason,
         'contactNumber': $('#addVisitor input#contactNumber').val(),
-        'ChildNames' : {
-            'Kid1' : $('#addVisitor input#Kid1').val(),
-            'Kid2' : $('#addVisitor input#Kid2').val(),
-            'Kid3' : $('#addVisitor input#Kid3').val(),
-          },
+        'ChildNames' : [
+            {'name' : $('#addVisitor input#Kid1').val()},
+            {'name' : $('#addVisitor input#Kid2').val()},
+          ],
+        'PhotographyWaverAgreement' : photographyWaverAgreement,
         'disclaimer': $('#addVisitor input#disclaimer').val(),
-        'createdDate': curDate
+        'createdDate': moment(),
 
     };
     console.log(newVisitor);

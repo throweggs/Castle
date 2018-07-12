@@ -6,10 +6,16 @@ router.get('/confirmation/:firstName', function(req, res) {
   res.render('confirmation', {firstName: req.param("firstName"), title: 'thanks'});
 });
 
-/* GET user List page. */
-router.get('/visitorList', function(req, res) {
-    res.render('visitorList', { title: 'Visitor List' });
+// /* GET user List page. */
+// router.get('/visitorList', function(req, res) {
+//     res.render('visitorList', { title: 'Visitor List' });
+// });
+
+/* GET Dash boars page. */
+router.get('/dashboard', function(req, res) {
+    res.render('dashboard', { title: 'Dashboard' });
 });
+
 
 /* GET user List page. */
 router.get('/childSupervision', function(req, res) {
@@ -28,7 +34,7 @@ router.get('/visitor', function(req, res) {
 
 /* GET homepage. */
 router.get('/', function(req, res) {
-    res.render('homepage', { title: 'Welcome to the Castle Climbing Centre' });
+    res.render('homepage', { title: 'Welcome' });
 });
 
 /* GET wwa page. */
@@ -40,6 +46,12 @@ router.get('/wwa', function(req, res) {
 router.get('/gardenVolunteer', function(req, res) {
     res.render('gardenVolunteer', { title: 'Garden Volunteer' });
 });
+
+router.get('/thamesWater', function(req, res) {
+    res.render('thamesWater', { title: 'Thames Water Worker' });
+});
+
+
 
 /* POST to Add Visitor Service */
 // router.post('/addVisitor', function(req, res) {

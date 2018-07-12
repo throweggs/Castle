@@ -1,0 +1,72 @@
+extends layout
+include GDPR
+
+block content
+	script(src='/javascripts/thamesWater.js')
+	
+	br
+	// VISITOR LIST
+	.col
+		.visitor-list
+			.row
+				.col
+					h2 Thames Water workers in today: <span id='ListCount'></span>
+				.col
+				.col.text-right
+					// Button to Open the Modal
+					button.btn.btn-primary(type='button', data-toggle='modal', data-target='#addPerson')
+						| Add Me		
+			#workerList
+				table.table.table-striped.table-hover
+						thead
+							th Full Name
+							th Time In
+							th Time Out
+						tbody
+			
+	
+		// The Modal
+		#addPerson.modal
+			.modal-dialog
+				.modal-content
+					// Modal Header
+					.modal-header
+						h4.modal-title.fas.fa-user-plus
+						button.close(type='button', data-dismiss='modal') ×
+					// Modal body
+					.modal-body
+											
+						.col
+							.form-group
+								#nameField.input-group
+									.input-group-prepend
+										span.input-group-text Name:
+									input#workerName.form-control(type='text')
+										
+						.col
+							#Disclaimer
+								.disclaimer-text
+									p <b> I will not climb in the centre unless I have registered and signed in to do so.</b>
+									p I have read and understood The Castle Garden Risk Assessment & the Castle Garden Work Checklist, and agree to follow the recommendations in these documents.
+									p I will be responsible for my own safety whilst working in the Castle Garden and point out any safety issues to the garden co-ordinator.
+									p
+					
+						.col						
+							label.requiredField(for='disclaimer') <b> I have read and agree to the above conditions*: </b>
+							input#disclaimer.offset-1.big-checkbox.checkbox-inline(type='checkbox', name='disclaimer', disabled='true' value='Agreed')
+
+
+										
+									
+
+					// Modal footer
+					.modal-footer
+						button#submit.btn.btn-danger(type='submit', data-dismiss='modal', disabled='true') Submit
+	
+	
+		
+	
+		
+
+
+			

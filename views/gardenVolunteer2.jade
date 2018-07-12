@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  script(src='/javascripts/gardenVolunteer.js')
+  script(src='/javascripts/global.js')
+  
+  .container
+    .row
+      .col-sm-6
+        .form-group
+          #datetimepicker1.input-group.date(data-target-input='nearest')
+            input.form-control.datetimepicker-input(type='text', data-target='#datetimepicker1')
+            .input-group-append(data-target='#datetimepicker1', data-toggle='datetimepicker')
+              .input-group-text
+                i.fa.fa-calendar
+
+  
+
+
+  
+  
+  br
+  form#Volunteers.form-inline
+    .container.col-12
+      .form-group
+        #gardenVolunteerDetails
+        input#VolunteerName.form-control(type='text', placeholder='Volunteer Name')
+        .input-group
+            .input-group-addon Check In Time
+            input#CheckInTime.form-control(type='text', placeholder='')
+        .input-group
+          .btn-group(data-toggle='buttons')
+            label.btn.btn-primary.active.btn.btn-secondary
+              input#MiniPlot(type='radio', name='MiniPlot', checked='')
+              |  Mini Plot
+            label.btn.btn-primary.btn.btn-secondary
+              input#GardenVolunteer(type='radio', name='GardenVolunteer')
+              |  Garden Volunteer
+        .input-group
+            .input-group-addon Checked Out 
+            .input-group-addon
+              input(type='checkbox', aria-label='Checkbox for following text input')
+  
+        button#SubmitButton.btn.btn-primary(type='submit') Submit

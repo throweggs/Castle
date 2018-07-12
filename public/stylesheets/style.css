@@ -6,7 +6,11 @@ html {
   text-align: center;
 }
 
-.side-bar-header {
+td.innerTable {
+  padding: 0;
+}
+
+/* .side-bar-header {
   font-weight: normal;
   margin-top:10px;
   font-size: 18px;
@@ -20,14 +24,6 @@ html {
   padding: 5px;
   margin-top: 10px;
   top: 55px;
-}
-
-.visitor-list {
-  margin-top: 0px;
-  margin-left: 20px;
-  font-size: 18px;
-  font-weight: 300;
-  top: 52px;
 }
 
 .visitor-detail {
@@ -48,7 +44,11 @@ html {
     color: black;
   }
 
-tbody {
+  .table td div.form-group {
+   margin-bottom: 0rem;
+  } */
+
+/* tbody {
   padding-right: 10px;
   color: #00B7FF;
 }
@@ -65,8 +65,9 @@ tbody {
   color: #555;
 }
 
+*/
+
 a {
-  padding-right: 10px;
   color: black;
 }
 
@@ -146,7 +147,6 @@ body {
 }
 
 #GDPR {
-
   height:60px;   /* Height of the footer */
   background:#FcFcFc;
   font-size: 80%;

@@ -9,7 +9,7 @@ router.get('/forms', function(req, res) {
     var collection = db.get('Forms');
     var options = {
         "limit": 20,
-        "sort": "formName"
+        "sort": "order"
       };
     collection.find({},options,function(e,docs){
         res.json(docs);

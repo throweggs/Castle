@@ -1,9 +1,16 @@
 var express = require('express');
 var path = require('path');
+var $ = require('jquery');
+var jquery = require('jquery');
+var jQuery = require('jquery');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var moment = require('moment');
+var popper = require('popper.js');
+var tooltip = require('tooltip.js');
+
 
 var mongo = require('mongodb');
 var monk = require('monk');
@@ -14,10 +21,11 @@ var users = require('./routes/users');
 var childSupervisor = require('./routes/childSupervisor');
 var theSession = require('./routes/theSession');
 var visitor = require('./routes/visitor');
-// var visitorList = require('.routes/visitorList')
+var dashboard = require('./routes/dashboard');
 var wwa = require('./routes/wwa');
 var homepage = require('./routes/homepage');
 var gardenVolunteer = require('./routes/gardenVolunteer');
+var thamesWater = require('./routes/thamesWater');
 
 var app = express();
 
@@ -43,14 +51,20 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/childSupervisor', childSupervisor);
 app.use('/theSession', theSession);
-// app.use('/vistorList', vistorList);
+app.use('/dashboard', dashboard);
 app.use('/visitor', visitor);
 app.use('/wwa', wwa);
 app.use('/homepage', homepage);
 app.use('/gardenVolunteer', gardenVolunteer);
+app.use('/thamesWater', thamesWater);
+
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
-app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
+app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+app.use('/moment', express.static(__dirname + '/node_modules/moment')); // redirect moments JS
+app.use('/tempus', express.static(__dirname + '/node_modules/tempusdominus-bootstrap-4')); // redirect tempus JS
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

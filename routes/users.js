@@ -5,12 +5,46 @@ var router = express.Router();
  * GET userlist.
  */
 router.get('/visitorlist', function(req, res) {
+    var findMe = req.query;
+    console.log(findMe);
     var db = req.db;
     var collection = db.get('Visitors');
-    collection.find({},{},function(e,docs){
+    collection.find(findMe,{},function(e,docs){
+        res.json(docs);
+        console.log(docs);
+    });
+});
+
+router.get('/WWAlist', function(req, res) {
+  var findMe = req.query;
+  console.log(findMe);
+    var db = req.db;
+    var collection = db.get('wwa');
+    collection.find(findMe,{},function(e,docs){
         res.json(docs);
     });
 });
+
+router.get('/theSessionlist', function(req, res) {
+  var findMe = req.query;
+  console.log(findMe);
+    var db = req.db;
+    var collection = db.get('theSession');
+    collection.find(findMe,{},function(e,docs){
+        res.json(docs);
+    });
+});
+
+router.get('/NCClist', function(req, res) {
+  var findMe = req.query;
+  console.log(findMe);
+    var db = req.db;
+    var collection = db.get('Non-Climbing Child');
+    collection.find(findMe,{},function(e,docs){
+        res.json(docs);
+    });
+});
+
 
 /*
  * POST to addVisitor.

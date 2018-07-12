@@ -1,109 +1,122 @@
-  var VolunteerArray = {};
-  var FoundGardenVolunteer = true;
-  var theID = '';
+var GardenChoice = ''; //Choice between Mini Plot or Garden Volunteer
+var GardenVisitorListData = []; //Setting up array for GardenVisitors
+
+// DOM Ready =============================================================
+$(document).ready(function() {
+  $("#dataProtection").modal('show');
 
 
-// function getGardenVolunteer(){
-//   $.getJSON( '/gardenVolunteer/getGardenVolunteer', {createdDate: DateOnly}, function(results, res) {
-//     console.log(results +  "  :  " + DateOnly);
-//     })
-//       .done(function(results, res) {
-//         var theResults = JSON.stringify(results);
-//           if (results.length === 0) {
-//                 FoundGardenVolunteer = false;
-//                 console.log('gotfalse :' + results);
-//                 createSession(event);
-//
-//         } else if (results.length >= 0) {
-//             console.log('NOT empty' + ' ' + results);
-//                 theID = results[0]._id;
-//                 FoundGardenVolunteer = true;
-//                 console.log('gotTrue :' + results);
-//                 GardenVolunteerArray = theResults[0].Participants;
-//
-//                 ShowGardenVolunteer();
-//         }
-//     });
-// }
+    // Populate the user table on initial page load
+    populateTable();
 
-function getGardenVolunteer(){
-$.getJSON( '/gardenVolunteer/getGardenVolunteer', {createdDate: DateOnly}, function(results, res) {
-})
-.done(function(results, res) {
-      var theResults = JSON.stringify(results);
-        if (theResults === '[]') {
-              FoundSession = false;
-      } else {
-              FoundSession = true;
-              VolunteerArray = Volunteers;
-              updateGardenVolunteer();
-              ShowGardenVolunteer();
-      }
-  });
-}
+    // Visitor name link click
+    $('#visitorList table tbody').on('click', 'td button.CheckOut', TiggerCheckOut);
 
-//List all the stored Participants, and creates a new entry field
-function ShowGardenVolunteer(){
-      var output = '<hr>';
-      $.each(VolunteerArray, function( index, value ) {
+    //SUBMIT
 
-        console.log(value);
-        VolunteerName = value.VolunteerName;
-        timeIn = value.timeIn;
-        timeOut = value.timeOut;
-        miniPlot = value.miniPlot;
-        var i = index +1,
-            numParticipants = numParticipants + 1;
+    // Button selected oulining
+      $().button('toggle');
 
-        output += '<div class="form-group">';
-        output += ' <input id="VolunteerName" type="text" placeholder="'+ VolunteerName +'" class="form-control">';
-        output += '  <div class="input-group">';
-        output += '   <div class="input-group-addon">Check In Time</div>';
-        output += '    <input id="CheckInTimeX" type="text" placeholder="" class="form-control"></div>';
-        output += '  <div class="input-group">';
-        output += '    <div data-toggle="buttons" class="btn-group">';
-        output += '      <label class="btn btn-primary active btn btn-secondary">';
-        output += '        <input id="MiniPlotX" type="radio" name="MiniPlot" checked=""> Mini Plot</label>';
-        output += '      <label class="btn btn-primary btn btn-secondary">';
-        output += '       <input id="GardenVolunteerX" type="radio" name="GardenVolunteer"> Garden Volunteer</label></div></div>';
-        output += '   <div class="input-group">';
-        output += '    <div class="input-group-addon">Checked Out </div>';
-        output += '    <div class="input-group-addon">';
-        output += '        <input type="checkbox" aria-label="Checkbox for following text input"></div></div>';
-        output += '    <button id="SubmitButton" type="submit" class="btn btn-primary">Submit</button></div>';
+      $('#submit').on('click', addPerson);
+
+      $('#timeIn').datetimepicker({
+        useCurrent: true,
+        format: 'LT'
+      });
+      $('#timeOut').datetimepicker({
+        useCurrent: false,
+        format: 'LT'
+      });
+      $("#timeIn").on("change.datetimepicker", function (e) {
+          $('#timeOut').datetimepicker('minDate', e.date);
+      });
+      $("#timeOut").on("change.datetimepicker", function (e) {
+          $('#timeIn').datetimepicker('maxDate', e.date);
+      });
 
 
-      console.log(DateOnly);
-        $('#gardenVolunteerDetails').html(output);
+      $('input#VolunteerChoice').on('change',function(){
+        if ($('input#VolunteerChoice').is(":checked")){
+          GardenChoice = $('input#VolunteerChoice').val();
+          console.log(GardenChoice);
+        }
+      });
+
+      $('input#miniPlotsChoice').on('change',function(){
+        if ($('input#miniPlotsChoice').is(":checked")){
+          GardenChoice = $('input#miniPlotsChoice').val();
+          console.log(GardenChoice);
+        }
+      });
+
+        $('#addPerson.modal').on('keydown keyup change',function(){
+          if (($('input#volunteerName').val().length >= 1)){
+              $('#disclaimer').prop('disabled', false);
+          }
+        });
+
+      $('#disclaimer').on('change',function(){
+        if ($('#disclaimer').is(':checked')){
+              if (($('input#volunteerName').val().length >= 1) && GardenChoice !== "" ){
+                $('button#submit').prop('disabled', false);
+              }
+
+        } else if ($('#disclaimer').not(':checked')){
+            $('button#submit').prop('disabled', true);
+        }
+      });
+
 });
-}
 
-//Post request to create the session
-function createSession(event) {
-    event.preventDefault();
-    console.log('createSession');
-    var newSession = {
-      createdDate : DateOnly,
-      Volunteers : VolunteerArray,
+// Functions =============================================================
+
+function TiggerCheckOut(event) {
+
+        // Prevent Link from Firing
+        event.preventDefault();
+
+        // Retrieve fullname from link rel attribute
+        var thisFullName = $(this).attr('rel');
+
+        // Get Index of object based on id value
+        var arrayPosition = visitorListData.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisFullName);
+
+        // Get our User Object
+       var thisVisitorObject = visitorListData[arrayPosition];
+
+       updatePerson(thisVisitorObject);
+
+    console.log(visitorListData[arrayPosition]);
+    console.log("did it work?");
+    }
+
+function updatePerson(thisVisitorObject){
+    console.log('DATE: ' + DateOnly);
+
+    var updates = {
+        'FindPerson': thisVisitorObject._id,
+        'createdDate': thisVisitorObject.createdDate,
+        'Person' : thisVisitorObject.Person,
+        'Reason' : thisVisitorObject.Reason,
+        'ArrivalTime' : thisVisitorObject.ArrivalTime,
+        'DepartureTime' : TimeOnly,
+        'Disclaimer' : thisVisitorObject.Disclaimer,
     };
 
-  var myJSON = JSON.stringify(newSession);
-
-
-
-    // Use AJAX to post the object to our adduser service
     $.ajax({
-        type: 'POST',
-        data: myJSON,
-        url: 'gardenVolunteer/createSession',
-        dataType: 'JSON',
-        contentType: 'application/json',
+      type: "put",
+      url: "gardenVolunteer/updatePerson",
+      contentType: 'application/json',
+      data: JSON.stringify(updates)
     }).done(function( response, results ) {
+      populateTable();
+      // location.reload();
+        console.log(response);
         // Check for successful (blank) response
-        if (response.msg === '') {
+        if (response.ok === 1) {
 
             // Clear the form inputs
-            // $('#addSession input').val('');
+            // $('#addPerson input').val('');
 
             // // Update the table
             // populateTable();
@@ -115,87 +128,90 @@ function createSession(event) {
             alert('Error: ' + response.msg);
 
         }
+
     });
   }
 
-//Put request to update to Participants, on  pre made sesion
-function updateGardenVolunteer(){
-  console.log('DATE: ' + DateOnly);
-  var updates = {
-      'FindDate': {createdDate: DateOnly},
-      'createdDate': DateOnly,
-      'Volunteers': VolunteerArray
+
+
+// Fill table with data
+function populateTable() {
+
+  console.log("Populate Tab");
+
+    // Empty content string
+    var tableContent = '';
+
+    // jQuery AJAX call for JSON
+    $.getJSON( '/gardenVolunteer/getDay', {createdDate: DateOnly}, function( data ) {
+
+      // Stick our visitor data array into a visitorlist variable in the visitorlist object
+      visitorListData = data;
+
+$('#ListCount').text(visitorListData.length);
+
+        // For each item in our JSON, add a table row and cells to the content string
+        $.each(data, function(){
+            tableContent += '<tr>';
+            tableContent += '<td>' + this.Person + '</td>';
+            tableContent += '<td>' + this.Reason + '</td>';
+            tableContent += '<td>' + this.ArrivalTime + '</td>';
+
+              if (this.DepartureTime === '') {
+                console.log(this._id + 'No Depart');
+
+                tableContent += '<td><button type="button" rel="' + this._id + '" class="CheckOut btn btn-warning btn-sm">Check Out</button></td>';
+              } else {
+                tableContent += '<td>' + this.DepartureTime + '</td>';
+              }
+            // tableContent += '<td><a href="#" class="linkdeletevisitor " rel="' + this._id + '">delete</a></td>';
+            tableContent += '</tr>';
+        });
+
+        // Inject the whole content string into our existing HTML table
+        $('#visitorList table tbody').html(tableContent);
+    });
+  }
+
+
+
+//Post request to add the person
+function addPerson(event) {
+  event.preventDefault();
+
+
+  var newPerson = {
+    'createdDate': DateOnly,
+    'Person' : $('input#volunteerName').val(),
+    'Reason' : GardenChoice,
+    'ArrivalTime' : TimeOnly,
+    'DepartureTime' : "",
+    'Disclaimer' : $('input#Disclaimer').val(),
   };
 
+var myJSON = JSON.stringify(newPerson);
+
+
+
+  // Use AJAX to post the object to our adduser service
   $.ajax({
-    type: "put",
-    url: "gardenVolunteer/updateGardenVolunteer",
-    contentType: 'application/json',
-    data: JSON.stringify(updates)
+      type: 'POST',
+      data: myJSON,
+      url: 'gardenVolunteer/addPerson',
+      dataType: 'JSON',
+      contentType: 'application/json',
+  }).done(function( response, results ) {
+    console.log(response);
+        populateTable();
+      // location.reload(forcedReload);
+      // Check for successful (blank) response
+      if (response.msg === '') {
+
+      }
+      else {
+          // If something goes wrong, alert the error message that our service returned
+          alert('Error: ' + response.msg);
+      }
+
   });
 }
-// this will be called when the DOM is ready
-$(function(){
-
-$( document ).ready(function() {
-  // $("#CheckInTime").attr("placeholder").val(TimeOnly);
-  // $("#CheckOutTime").attr("placeholder").val(TimeOnly);
-  getGardenVolunteer(); //GETS Volunteer!
-});
-
-
-
-
-
-// TRIGGER SUBMIT
-  $('#submit').click(function() {
-    event.preventDefault();
-    addVolunteer(event);
-          });
-
-// COLLECT INPUTS FROM PARTICIPANTS
-  $('#Volunteers').on('change blur click', function(event){
-    var targetID = (event.target.id);
-    var check = $("#"+targetID).val();
-    if (check === ''){}
-    var field = (event.target.classList[0]);
-    var Row = (field.slice(3,4));
-    var ArrayVal = Row-1;
-
-    $('#MiniPlot' + Row).selected(function() {
-      var TheReason = 'MiniPlot';
-        });
-
-    $('#GardenVolunteer' + Row).selected(function() {
-      var TheReason = 'MiniPlot';
-        });
-
-    VolunteerArray[ArrayVal]= '';
-    // ({ "VolunteerName": $('input#VolunteerName'+Row).val(), "Check In Time": $('#CheckInTime'+Row).val(), "Reason": TheReason });
-    updateGardenVolunteer();
-    // < ---- AND NOW INSERT IN TO ARRAY
-      });
-
-
-
-  $('input[name=ids]').val(function(index, value) {
-   return value.replace('54,', '');
-    });
-
-  $('#ShowParticipants').on('change blur', function(event){
-    var targetID = (event.target.id);
-    var check = $("#"+targetID).val();
-    var $el = $('<input />');
-    var $valid = $('<input is-valid />');
-    var $invalid = $('<input is-invalid />');
-
-    if (check === ''){
-      console.log('invalid');
-      $this.$el.replaceWith( $invalid );
-    } else if (check !== ''){
-      console.log('valid');
-    $valid.replaceWith( $invalid );
-    }
-  });
-
-});

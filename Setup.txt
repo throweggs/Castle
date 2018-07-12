@@ -1,0 +1,13 @@
+Tab 1
+	cd /Users/admin/Documents/GitHub/Castleconfirm
+	sudo mongod --dbpath /Users/admin/Documents/GitHub/data
+
+
+Tab 2
+	cd /Users/admin/Documents/GitHub/Castleconfirm
+	mongo
+
+
+Tab 3 
+	cd /Users/admin/Documents/GitHub/Castleconfirm
+	sudo nodemon
