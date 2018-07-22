@@ -7,14 +7,15 @@
 var app = require('../app');
 var debug = require('debug')('castle:server');
 var http = require('http');
-var https = require('https'),
-  fs = require("fs"),
-  helmet = require("helmet");
+var fs = require('fs');
+var https = require('https');
+var path = require('path');
 
+var httpOptions = {};
 
-var options = {
-  key: fs.readFileSync("./bin/keys/ca.pem"),
-  cert: fs.readFileSync("./bin/keys/ia.pem")
+var httpsOptions = {
+  cert: fs.readFileSync(path.join(__dirname,'ssl', 'server.crt')),
+  key: fs.readFileSync(path.join(__dirname,'ssl', 'server.key'))
 };
 
 /**
@@ -29,8 +30,12 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-https.createServer(options, app).listen(8080);
+http.createServer(httpOptions, app).listen(80);
 
+https.createServer(httpsOptions, app)
+  .listen(port,function() {
+    console.log('Serving the client directory at https://localhost:3443');
+});
 /**
  * Listen on provided port, on all network interfaces.
  */
