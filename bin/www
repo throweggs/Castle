@@ -6,8 +6,8 @@
 
 var app = require('../app');
 var debug = require('debug')('castle:server');
-// var http = require('http');
-var http = require('https'),
+var http = require('http');
+var https = require('https'),
   fs = require("fs"),
   helmet = require("helmet");
 
