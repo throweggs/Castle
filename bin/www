@@ -6,7 +6,16 @@
 
 var app = require('../app');
 var debug = require('debug')('castle:server');
-var http = require('http');
+// var http = require('http');
+var http = require('https'),
+  fs = require("fs"),
+  helmet = require("helmet");
+
+
+var options = {
+  key: fs.readFileSync("/srv/www/keys/ca.pem"),
+  cert: fs.readFileSync("/srv/www/keys/ia.pem")
+};
 
 /**
  * Get port from environment and store in Express.
@@ -20,6 +29,7 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+https.createServer(options, app).listen(8080);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -84,6 +94,7 @@ function onError(error) {
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'
+
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
