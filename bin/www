@@ -13,8 +13,8 @@ var http = require('https'),
 
 
 var options = {
-  key: fs.readFileSync("/srv/www/keys/ca.pem"),
-  cert: fs.readFileSync("/srv/www/keys/ia.pem")
+  key: fs.readFileSync("/srv/keys/ca.pem"),
+  cert: fs.readFileSync("/srv/keys/ia.pem")
 };
 
 /**
