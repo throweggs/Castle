@@ -7,40 +7,40 @@
 var app = require('../app');
 var debug = require('debug')('castle:server');
 var http = require('http');
-var fs = require('fs');
 var https = require('https');
+var fs = require('fs');
 var path = require('path');
-
-var httpOptions = {};
-
-var httpsOptions = {
-  cert: fs.readFileSync(path.join(__dirname,'ssl', 'server.crt')),
-  key: fs.readFileSync(path.join(__dirname,'ssl', 'server.key'))
-};
 
 /**
  * Get port from environment and store in Express.
  */
 
 var port = normalizePort(process.env.PORT || '80');
+var sport = normalizePort(process.env.PORT || '443');
 app.set('port', port);
+app.set('sport', sport);
+
+var httpsOptions = {
+    cert: fs.readFileSync(path.join(__dirname, 'ssl', 'server.crt')),
+    key: fs.readFileSync(path.join(__dirname, 'ssl', 'server.key'))
+};
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
-http.createServer(httpOptions, app).listen(80);
+// var server = http.createServer(app);
 
-https.createServer(httpsOptions, app)
-  .listen(port,function() {
-    console.log('Serving the client directory at https://localhost:3443');
-});
+var server = https.createServer(httpsOptions, app)
+  .listen(sport, function() {
+    console.log('server listings on ${port}');
+  });
+
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(sport);
 server.on('error', onError);
 server.on('listening', onListening);
 
@@ -99,7 +99,6 @@ function onError(error) {
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'
-
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
