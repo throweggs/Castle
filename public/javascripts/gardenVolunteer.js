@@ -155,7 +155,7 @@ $('#ListCount').text(visitorListData.length);
           var theName = this.Person;
           var lastName = '';
           theName = theName.split(" ");
-          console.log(theName);
+          console.log(theName + theName.length);
           if (theName.length <= 1){
                lastName = theName.slice(-1)[0];
                         console.log(lastName);
