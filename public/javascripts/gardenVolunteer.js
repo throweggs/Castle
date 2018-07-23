@@ -156,7 +156,7 @@ $('#ListCount').text(visitorListData.length);
           theName = theName.split(" ");
           console.log(theName);
           var n = theName.length;
-          var lastName = theName[n];
+          var lastName = theName.slice(-1)[0];
           console.log(lastName);
           var newName = theName[0] + ' ' + lastName.charAt(0) + '.';
           console.log(newName);
