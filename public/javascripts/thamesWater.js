@@ -146,7 +146,6 @@
               tableContent += '<td>' + newName + '</td>';
               tableContent += '<td>' + this.ArrivalTime + '</td>';
                 if (this.DepartureTime === '') {
-                  console.log(this._id + 'No Depart');
 
                   tableContent += '<td><button type="button" rel="' + this._id + '" class="CheckOut btn btn-warning btn-sm">Check Out</button></td>';
                 } else {
