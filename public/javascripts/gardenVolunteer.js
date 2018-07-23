@@ -159,7 +159,7 @@ $('#ListCount').text(visitorListData.length);
           if (theName.length >= 2){
                lastName = theName.slice(-1)[0];
                         console.log(lastName);
-              lastName = lastName.charAt(0);
+              lastName = lastName.charAt(0) + ',';
                         console.log(lastName);
           } if (theName.length < 2) {
              lastName = '';
@@ -167,7 +167,7 @@ $('#ListCount').text(visitorListData.length);
           }
 
 
-          var newName = theName[0] + ' ' + lastName + '.';
+          var newName = theName[0] + ' ' + lastName;
           console.log(newName);
 
             tableContent += '<tr>';
