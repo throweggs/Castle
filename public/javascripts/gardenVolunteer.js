@@ -153,12 +153,21 @@ $('#ListCount').text(visitorListData.length);
         // For each item in our JSON, add a table row and cells to the content string
         $.each(data, function(){
           var theName = this.Person;
+          var lastName = '';
           theName = theName.split(" ");
           console.log(theName);
-          var n = theName.length;
-          var lastName = theName.slice(-1)[0];
-          console.log(lastName);
-          var newName = theName[0] + ' ' + lastName.charAt(0) + '.';
+          if (theName.length < 1){
+               lastName = theName.slice(-1)[0];
+                        console.log(lastName);
+              lastName = lastName.charAt(0);
+                        console.log(lastName);
+          } else {
+             lastName = '';
+                      console.log(lastName);
+          }
+
+
+          var newName = theName[0] + ' ' + lastName + '.';
           console.log(newName);
 
             tableContent += '<tr>';
