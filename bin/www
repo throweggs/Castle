@@ -32,7 +32,7 @@ var httpsOptions = {
 // var server = http.createServer(app);
 
 var server =  https.createServer(httpsOptions, app)
-  .listen(sport, function() {
+  .listen(port, function() {
     console.log('server listings on 443 ${port}');
   });
 
