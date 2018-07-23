@@ -152,7 +152,8 @@ $('#ListCount').text(visitorListData.length);
 
         // For each item in our JSON, add a table row and cells to the content string
         $.each(data, function(){
-          var theName = this.person.split(" ");
+          var theName = this.person;
+          theName = theName.split(" ");
           console.log(theName);
           var lastName = theName[fruits.length];
           console.log(lastName);
