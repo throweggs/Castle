@@ -18,7 +18,7 @@ var path = require('path');
 // var port = normalizePort(process.env.PORT || '80');
 var port = normalizePort(process.env.PORT || '443');
 app.set('port', port);
-app.set('sport', sport);
+// app.set('sport', sport);
 
 var httpsOptions = {
     cert: fs.readFileSync(path.join(__dirname, 'ssl', 'server.crt')),
