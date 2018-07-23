@@ -156,12 +156,12 @@ $('#ListCount').text(visitorListData.length);
           var lastName = '';
           theName = theName.split(" ");
           console.log(theName + theName.length);
-          if (theName.length < 2){
+          if (theName.length >= 2){
                lastName = theName.slice(-1)[0];
                         console.log(lastName);
               lastName = lastName.charAt(0);
                         console.log(lastName);
-          } if (theName.length === 1) {
+          } if (theName.length < 2) {
              lastName = '';
                       console.log(lastName);
           }
