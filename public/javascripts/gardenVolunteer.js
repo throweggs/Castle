@@ -156,7 +156,7 @@ $('#ListCount').text(visitorListData.length);
           var lastName = '';
           theName = theName.split(" ");
           console.log(theName);
-          if (theName.length < 1){
+          if (theName.length <= 1){
                lastName = theName.slice(-1)[0];
                         console.log(lastName);
               lastName = lastName.charAt(0);
