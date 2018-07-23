@@ -98,6 +98,20 @@ function toTitleCase(str) {
     );
 }
 
+function firstNameLastInital(str) {
+  var theName = str;
+  var lastName = '';
+  theName = theName.split(" ");
+
+  if (theName.length >= 2){
+     lastName = theName.slice(-1)[0];
+      lastName = lastName.charAt(0) + ',';
+  } if (theName.length < 2) {
+     lastName = '';
+  }
+  return theName[0] + ' ' + lastName;
+}
+
 //Gets the information from the instructor for WWA and theSession, to create the session
 function createSession(){
   output='form#addFacilitator.container-fluid.SessionDetails(name="addFacilitator", method="post", onlcick="addFacilitator()")';
