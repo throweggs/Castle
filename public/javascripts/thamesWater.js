@@ -138,8 +138,21 @@
 
           // For each item in our JSON, add a table row and cells to the content string
           $.each(data, function(){
+            var theName = this.Person;
+            var lastName = '';
+            theName = theName.split(" ");
+
+            if (theName.length >= 2){
+               lastName = theName.slice(-1)[0];
+                lastName = lastName.charAt(0) + ',';
+            } if (theName.length < 2) {
+               lastName = '';
+            }
+
+          var newName = theName[0] + ' ' + lastName;
+
               tableContent += '<tr>';
-              tableContent += '<td>' + this.Person + '</td>';
+              tableContent += '<td>' + newName + '</td>';
               tableContent += '<td>' + this.ArrivalTime + '</td>';
                 if (this.DepartureTime === '') {
                   console.log(this._id + 'No Depart');

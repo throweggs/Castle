@@ -95,7 +95,21 @@ function ShowSession(){
 function ShowParticipants(){
       var output = '<hr>';
       $.each(ParticipantsArray, function( index, value ) {
-        var PName = value.Participant;
+
+        var theName = value.Participant;
+        var lastName = '';
+        theName = theName.split(" ");
+
+        if (theName.length >= 2){
+           lastName = theName.slice(-1)[0];
+            lastName = lastName.charAt(0) + ',';
+        } if (theName.length < 2) {
+           lastName = '';
+        }
+
+      var newName = theName[0] + ' ' + lastName;
+
+        var PName = newName;
         var Reason = value.Reason;
         var FirstTime = value.First_Time;
         var i = index + 1;
