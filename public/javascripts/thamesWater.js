@@ -150,6 +150,7 @@
             }
 
           var newName = theName[0] + ' ' + lastName;
+           toTitleCase(newName);
 
               tableContent += '<tr>';
               tableContent += '<td>' + newName + '</td>';

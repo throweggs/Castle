@@ -89,7 +89,14 @@ jQuery.fn.tableToCSV = function() {
 
 };
 
-
+function toTitleCase(str) {
+    return str.replace(
+        /\w\S*/g,
+        function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        }
+    );
+}
 
 //Gets the information from the instructor for WWA and theSession, to create the session
 function createSession(){
