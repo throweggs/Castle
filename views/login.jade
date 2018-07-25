@@ -1,0 +1,23 @@
+extends layout
+include GDPR
+
+block content
+	script(src='/javascripts/login.js')
+	
+	h2.w3-text-blue Login Form
+		p
+			label.w3-text-blue
+				b User Name
+			input#uname.w3-input.w3-border(name='uname', type='text')
+		p
+			label#pass.w3-text-blue
+				b Password
+			input#upass.w3-input.w3-border(name='pass', type='text')
+		p
+			button#loginForm.w3-btn.w3-blue Login
+
+
+
+
+
+	

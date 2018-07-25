@@ -1,0 +1,28 @@
+extends layout
+include GDPR
+
+block content
+	script(src='/javascripts/login.js')
+	style.
+			span{
+			font-size: 25px;
+			color: #ffff;
+			background-color: #2881DB;
+			padding: 10px;
+			}
+			div{
+			font-size: 25px;
+			color: #ffff;
+			background-color: #2881DB;
+			padding: 50px;
+			}
+		script.
+			$(document).ready(function(){
+				$("#backtohome").click(function(){
+					window.location.href='/';
+					});
+			});
+		body
+			span Welcome : 
+			div
+				| Email:

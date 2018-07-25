@@ -38,14 +38,14 @@ $(document).ready(function() {
       $('input#VolunteerChoice').on('change',function(){
         if ($('input#VolunteerChoice').is(":checked")){
           GardenChoice = $('input#VolunteerChoice').val();
-          console.log(GardenChoice);
+
         }
       });
 
       $('input#miniPlotsChoice').on('change',function(){
         if ($('input#miniPlotsChoice').is(":checked")){
           GardenChoice = $('input#miniPlotsChoice').val();
-          console.log(GardenChoice);
+
         }
       });
 
@@ -86,12 +86,11 @@ function TiggerCheckOut(event) {
 
        updatePerson(thisVisitorObject);
 
-    console.log(visitorListData[arrayPosition]);
-    console.log("did it work?");
+
     }
 
 function updatePerson(thisVisitorObject){
-    console.log('DATE: ' + DateOnly);
+
 
     var updates = {
         'FindPerson': thisVisitorObject._id,
@@ -111,7 +110,7 @@ function updatePerson(thisVisitorObject){
     }).done(function( response, results ) {
       populateTable();
       // location.reload();
-        console.log(response);
+
         // Check for successful (blank) response
         if (response.ok === 1) {
 

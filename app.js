@@ -10,6 +10,9 @@ var bodyParser = require('body-parser');
 var moment = require('moment');
 var popper = require('popper.js');
 var tooltip = require('tooltip.js');
+var loginController = require('./controller/loginController');
+
+
 
 
 var mongo = require('mongodb');
@@ -28,6 +31,7 @@ var gardenVolunteer = require('./routes/gardenVolunteer');
 var thamesWater = require('./routes/thamesWater');
 
 var app = express();
+loginController(app);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

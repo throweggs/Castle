@@ -16,6 +16,25 @@ router.get('/dashboard', function(req, res) {
     res.render('dashboard', { title: 'Dashboard' });
 });
 
+router.get('/completeprofile', function(req, res) {
+    res.render('completeprofile',{ title: 'Complete Profile' });
+});
+
+router.get('/home', function(req, res) {
+    res.render('home',{ title: 'home' });
+});
+
+router.get('/login', function(req, res) {
+    res.render('login', { title: 'login' });
+});
+
+router.get('/profile', function(req, res) {
+    res.render('profile', { title: 'profile' });
+});
+
+router.get('/register', function(req, res) {
+    res.render('register', { title: 'register' });
+});
 
 /* GET user List page. */
 router.get('/childSupervision', function(req, res) {
