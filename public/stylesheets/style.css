@@ -10,6 +10,20 @@ td.innerTable {
   padding: 0;
 }
 
+.nopadding {
+   padding: 0 !important;
+}
+.nomargin {
+   margin: 0 !important;
+}
+
+.card-img-top-{
+
+  height: inherit;
+  background: url(/loading.gif) 50% no-repeat;
+  border-radius: 5px;
+}
+
 /* .side-bar-header {
   font-weight: normal;
   margin-top:10px;

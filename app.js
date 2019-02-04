@@ -1,5 +1,7 @@
 var express = require('express');
 var path = require('path');
+var request = require('request');
+var rp = require('request-promise');
 var $ = require('jquery');
 var jquery = require('jquery');
 var jQuery = require('jquery');
@@ -10,6 +12,7 @@ var bodyParser = require('body-parser');
 var moment = require('moment');
 var popper = require('popper.js');
 var tooltip = require('tooltip.js');
+
 
 
 var mongo = require('mongodb');
@@ -26,6 +29,9 @@ var wwa = require('./routes/wwa');
 var homepage = require('./routes/homepage');
 var gardenVolunteer = require('./routes/gardenVolunteer');
 var thamesWater = require('./routes/thamesWater');
+var sonos = require('./routes/sonos');
+var sonosBackend = require('./routes/sonosBackend');
+var sonosHistory = require('./routes/sonosHistory');
 
 var app = express();
 
@@ -57,12 +63,17 @@ app.use('/wwa', wwa);
 app.use('/homepage', homepage);
 app.use('/gardenVolunteer', gardenVolunteer);
 app.use('/thamesWater', thamesWater);
+app.use('/sonos', sonos);
+app.use('/sonosBackend', sonosBackend);
+app.use('/sonosHistory', sonosHistory);
 
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use('/moment', express.static(__dirname + '/node_modules/moment')); // redirect moments JS
 app.use('/tempus', express.static(__dirname + '/node_modules/tempusdominus-bootstrap-4')); // redirect tempus JS
+app.use('/request', express.static(__dirname + '/node_modules/request')); // redirect tempus JS
+
 
 
 

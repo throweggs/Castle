@@ -51,7 +51,18 @@ router.get('/thamesWater', function(req, res) {
     res.render('thamesWater', { title: 'Thames Water Worker' });
 });
 
+router.get('/sonos', function(req, res) {
+    res.render('sonos', { title: 'Sonos Information and Locks' });
+});
 
+router.get('/sonosBackend', function(req, res) {
+    res.render('sonosBackend', { title: 'Sonos Backend Watcher' });
+});
+
+
+router.get('/sonosHistory', function(req, res) {
+    res.render('sonosHistory', { title: 'Sonos Track History' });
+});
 
 /* POST to Add Visitor Service */
 // router.post('/addVisitor', function(req, res) {

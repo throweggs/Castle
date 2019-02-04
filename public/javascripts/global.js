@@ -152,9 +152,9 @@ function successAlert(theText, alertType, removeMe){
   $('#TheText').html(theText);
 }
 
-var dt = moment();
-var DateOnly = moment().format("ddd MMM Do YYYY");
-var TimeOnly = moment().format("h:mm:ss a");
+// var dt = moment();
+// var DateOnly = moment().format("ddd MMM Do YYYY");
+// var TimeOnly = moment().format("h:mm:ss a");
 
 
 $(function(){ // this will be called when the DOM is ready
@@ -170,23 +170,23 @@ $(function(){ // this will be called when the DOM is ready
 });
 
 
-// //sets the Date
-//
-// var dt = new Date();
-// var curDate = dt.toString();
-// var DateOnly = curDate.split(" ", 4);
-// var output = "";
-//   $.each(DateOnly, function( index, value ) {
-//     output += value + " ";
-//   });
-//   DateOnly = $.trim(output);
-//
-//
-// //Set the Time
-// var DateRemoved = curDate.replace(DateOnly, '');
-// var TimeOnly = DateRemoved.split(" ", 2);
-// var output = "";
-//   $.each(TimeOnly, function( index, value ) {
-//     output += value + " ";
-//   });
-//   TimeOnly = $.trim(output);
+//sets the Date
+
+var dt = new Date();
+var curDate = dt.toString();
+var DateOnly = curDate.split(" ", 4);
+var output = "";
+  $.each(DateOnly, function( index, value ) {
+    output += value + " ";
+  });
+  DateOnly = $.trim(output);
+
+
+//Set the Time
+var DateRemoved = curDate.replace(DateOnly, '');
+var TimeOnly = DateRemoved.split(" ", 2);
+var output = "";
+  $.each(TimeOnly, function( index, value ) {
+    output += value + " ";
+  });
+  TimeOnly = $.trim(output);

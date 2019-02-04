@@ -73,8 +73,6 @@
 
          updatePerson(thisVisitorObject);
 
-      console.log(visitorListData[arrayPosition]);
-      console.log("did it work?");
       }
 
   function updatePerson(thisVisitorObject){
