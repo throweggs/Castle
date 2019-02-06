@@ -7,6 +7,7 @@ var router = express.Router();
  */
 router.post('/addSession', function(req, res) {
     var db = req.db;
+    console.log('hit');
     var collection = db.get('theSession');
     collection.insert(req.body, function(err, result){
         res.send(
@@ -27,13 +28,14 @@ router.get('/getSession', function(req, res) {
     });
 });
 
+
 //Updates an theSession
 router.put('/updateSession', function(req, res){
-  theID = req.body.FindDate;
-  console.log(theID);
+  theDate = req.body.FindDate;
+  console.log(req.body);
   var db = req.db;
   var collection = db.get('theSession');
-  collection.update(theID,req.body,function(e,docs){
+  collection.update(theDate,req.body,function(e,docs){
       res.json(docs);
   });
 });

@@ -1,330 +1,363 @@
-var Paticipants = {},
-    SessionAreas = '',
+var startLocation = '',
+    facilitatorName = '',
+    participantsArray = [],
+    createdTime = '',
     numParticipants = 0,
-    FoundSession = false,
-    MyArray = [],
-    findMe = '',
-    DateOnly = '',
-    Facilitator = '1',
+    foundSession = false,
     theID = '',
-    SessionType =  '',
-    StartLocation = '',
-    FoundSession = true,
-    ParticipantsArray = [];
-
-var TopropingAreas = [
-    'Auto Belays',
-    'Stacks',
-    'Quarry',
-    'Tall_Walls'
-    ];
-
-var BoulderingAreas = [
-    'Catacombs',
-    'Competition_Wall',
-    'Loft',
-    'Panels',
-    'Pen',
-    'Mez',
-    'Traverse_Boulders',
-    'Outdoor_Boulders'
-  ];
+    sessionType = 'bouldering';
 
 
-// SETTING DATE AND TIME FOR FINDING SESSIONS
+// FIll in options for the Facilitator Modals
+  var topRopingAreas = ' <a class="list-group-item  list-group-item-action" id="Auto Belays" data-toggle="list" href="#list-AutoBelays" role="tab" aria-controls="AutoBelays">Auto Belays</a>';
+      topRopingAreas += ' <a class="list-group-item list-group-item-action" id="Stacks" data-toggle="list" href="#list-Stacks" role="tab" aria-controls="Stacks">Stacks</a>';
+      topRopingAreas += ' <a class="list-group-item list-group-item-action" id="Quarry" data-toggle="list" href="#list-Quarry" role="tab" aria-controls="Quarry">Quarry</a>';
+      topRopingAreas += ' <a class="list-group-item list-group-item-action" id="TallWalls" data-toggle="list" href="#list-TallWalls" role="tab" aria-controls="TallWalls">Tall Walls</a>';
 
-var dt = new Date();
-var curDate = dt.toString();
-var DateOnly = curDate.split(" ", 4);
-var output = "";
-  $.each(DateOnly, function( index, value ) {
-    output += value + " ";
-  });
-  DateOnly = output;
+  var boulderingAreas = ' <a class="list-group-item  list-group-item-action" id="Catacombs" data-toggle="list" href="#list-Catacombs" role="tab" aria-controls="Catacombs">Catacombs</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Competition Wall" data-toggle="list" href="#list-CompetitionWall" role="tab" aria-controls="CompetitionWall">Competition Wall</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Loft" data-toggle="list" href="#list-Loft" role="tab" aria-controls="Loft">Loft</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Panels" data-toggle="list" href="#list-Panels" role="tab" aria-controls="Panels">Panels</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Pen" data-toggle="list" href="#list-Pen" role="tab" aria-controls="Pen">Pen</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Mez" data-toggle="list" href="#list-Mez" role="tab" aria-controls="Mez">Mez</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Traverse Boulders" data-toggle="list" href="#list-TraverseBoulders" role="tab" aria-controls="TraverseBoulders">Traverse Boulders</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Outdoor Boulders" data-toggle="list" href="#list-OutdoorBoulders" role="tab" aria-controls="OutdoorBoulders">Outdoor Boulders</a>';
 
 
+//ADDS the session info to the page
+    function showSession(){
+        var sessionDetails = " <h1>The Session Facilitator: <strong>" + facilitatorName +"</strong></h1>";
+            sessionDetails += ' <h3>Your '+ sessionType +' session, will be starting in the ' + startLocation + '.</h3>';
+            sessionDetails += ' <ul>';
+        var showTnCs        = '   <li><strong>Participants of The Session must be registered roped climbers</strong> and therefore confident putting on a harness correctly, tying in with the correct knot and belaying competently.</li>';
+            showTnCs       += "   <li>The Session and the wednesday mixed bouldering Session may be attended by those registered as bouldering only. <br> If you’re not sure about which session you can join, please ask a receptionist who will be happy to help you. <strong>The Session is not suitable for novice climbers.</strong></li>";
+            showTnCs       += '   <li><strong>IMPORTANT INFORMATION: <u>This is not a teaching session</u>, <u>nor is it supervised</u>. Participants are still responsible for their own safety.  It is up to each participant to decide for themselves who they wish to climb with.</strong></li>';
 
 
-// COMPARING CHOICE OF SESSION TYPE TO LIST OF STARTING LOCATIONS
-function SetSessionAreas(SessionAreas){
-    var output = '<select id="sessionStartingArea" class="custom-select mb-2 mr-sm-2 mb-sm-0">';
-    $.each(SessionAreas, function( index, value ) {
-      var readable = value.replace("_"," ");
-      output += '<option value='+ value +' selected="">'+ readable +'</option>';
-    });
-    output += '</div>';
-      $('#SessionStartChoices').html(output);
-}
-//Get request for Session, if already created
-function getSession(){
-$.getJSON( '/theSession/getSession', {createdDate: DateOnly}, function(results, res) {
-})
-.done(function(results, res) {
-      var theResults = JSON.stringify(results);
-        if (theResults === '[]') {
-              FoundSession = false;
-      } else {
-              Facilitator = results[0].Facilitator;
-              theID = results[0]._id;
-              SessionType =  results[0].Session_Type;
-              StartLocation = results[0].Start_Location;
-              FoundSession = true;
-              ParticipantsArray = results[0].Participants;
-
-              ShowSession();
-              updatetheSession();
+        $( "#showSession" ).html( sessionDetails );
+        $( "#showTnCs" ).html( showTnCs );
 
       }
-  });
-}
-// Replaces the input feilds with Text field, of the Session
-function ShowSession(){
-var SessionDetails = '<div class="col-12">';
-    SessionDetails += ' <h1>The Session Facilitator: <strong>' + Facilitator +'</strong></h1>';
-    SessionDetails += ' <h3>It is a '+ SessionType +' session, starting in the ' + (StartLocation.replace("_"," ")) + '.</h3>';
-    SessionDetails += ' <ul>';
-    SessionDetails += '   <li><strong>Participants of The Session must be registered roped climbers</strong> and therefore confident putting on a harness correctly, tying in with the correct knot and belaying competently.</li>';
-    SessionDetails += '   <li>Women With Altitude and the wednesday mixed bouldering Session may be attended by those registered as bouldering only. If you’re not sure about which session you can join, please ask a receptionist who will be happy to help you. <strong>The Session is not suitable for novice climbers.</strong></li>';
-    SessionDetails += '   <li><strong>IMPORTANT INFORMATION: <u>This is not a teaching session</u>, <u>nor is it supervised</u>. Participants are still responsible for their own safety.  It is up to each participant to decide for themselves who they wish to climb with.</strong></li>';
-    SessionDetails += '</div>';
 
-$( "#addFacilitator" ).replaceWith( SessionDetails );
-ShowParticipants();
+
+
+  //List all the stored Participants, and creates a new entry field
+  function ShowParticipants(){
+        var output = '<hr>';
+        $.each(participantsArray, function( index, value ) {
+          var participant = value.First_Name + ' ' + value.Last_Name;
+       var newName = toTitleCase(firstNameLastInital(participant));
+       console.log(newName);
+          var PName = newName;
+          var Reason = value.Reason;
+          var FirstTime = value.First_Time;
+          var i = index + 1;
+              numParticipants = numParticipants + 1;
+          var selectMe0 = '',
+              selectMe1 = '',
+              selectMe2 = '',
+              selectMe3 = '';
+          var selectMe00 = '',
+              selectMe01 = '',
+              selectMe02 = '';
+
+          if (Reason === "") {
+            selectMe0 = 'selected=""';
+            selectMe1 = '';
+            selectMe2 = '';
+            selectMe3 = '';
+            selectMe4 = '';
+          } else if (Reason === "Climbing Partner") {
+            selectMe0 = '';
+            selectMe1 = 'selected=""';
+            selectMe2 = '';
+            selectMe3 = '';
+            selectMe4 = '';
+          } else if (Reason === "New") {
+            selectMe0 = '';
+            selectMe1 = '';
+            selectMe2 = 'selected=""';
+            selectMe3 = '';
+            selectMe4 = '';
+          } else if (Reason === "Staff Input") {
+            selectMe0 = '';
+            selectMe1 = '';
+            selectMe2 = '';
+            selectMe3 = 'selected=""';
+            selectMe4 = '';
+          } else if (Reason === "Staff Input") {
+            selectMe0 = '';
+            selectMe1 = '';
+            selectMe2 = '';
+            selectMe3 = '';
+            selectMe4 = 'selected=""';
+          }
+          if (FirstTime === "Yes") {
+            selectMe01 = 'selected=""';
+            selectMe02 = '';
+          } else if (FirstTime === "No") {
+            selectMe01 = '';
+            selectMe02 = 'selected=""';
+          }
+
+          output += ' <div class="input-group">';
+          output += '  <div class="input-group-prepend">';
+          output += '   <label id="ParticipantRow'+i+'" class="input-group-text" for=ParticipantRow'+i+'"">Participant '+i+'</label>';
+          output += '  </div>';
+          output += '   <input disabled id="ParticipantFirstName'+i+'" type="text" placeholder="'+PName+'" aria-label="Participant First Name" aria-describedby="sizing-addon2" class="row'+i+ ' form-control col-4"/>';
+          output += ' <select disabled id="Reason'+i+'" class="row'+i+ ' custom-select">';
+          output += "     <option "+ selectMe0 +" value=''>I'm joining the session...</option>";
+          output += '     <option '+ selectMe1 +' value="Climbing Partner">I have no climbing partner today</option>';
+          output += '     <option '+ selectMe2 +' value="New">I am new to the Castle</option>';
+          output += '     <option '+ selectMe3 +' value="Staff Input">for staff input</option>';
+          output += '     <option '+ selectMe4 +' value="Other">Other Reasons</option>';
+          output += '  </select>';
+          output += ' <select disabled id="FirstTime'+i+'" class="row'+i+ ' custom-select">';
+          output += '     <option '+ selectMe00 +' value="">First Time?</option>';
+          output += '     <option '+ selectMe01 +'  value="Yes">Yes</option>';
+          output += '     <option '+ selectMe02 +'  value="No">No</option>';
+          output += ' </select>';
+          output += ' </div>';
+          output += '</div>';
+
+
+        });
+        i = numParticipants+1;
+
+var activeLine = output;
+
+    activeLine += '<hr>';
+    activeLine += ' <div class="input-group">';
+    activeLine += '  <div class="input-group-prepend">';
+    activeLine += '   <label id="ParticipantRow'+i+'" class="input-group-text" for=ParticipantRow'+i+'"">Participant '+i+'</label>';
+    activeLine += '  </div>';
+
+    activeLine += '   <input id="ParticipantFirstName'+i+'" type="text" class="form-control" placeholder="First Name" aria-label="Participant First Name" aria-describedby="sizing-addon2" class="row'+i+ ' form-control col-4"/>';
+
+    activeLine += '   <input id="ParticipantLastName'+i+'" type="text" placeholder="Last Name" aria-label="Participant Last Name" aria-describedby="sizing-addon2" class="row'+i+ ' form-control col-4"/>';
+
+    activeLine += ' <select  id="Reason'+i+'" class="row'+i+ ' custom-select">';
+    activeLine += "     <option value=''>I'm joining the session...</option>";
+    activeLine += '     <option value="Climbing Partner">as I have no climbing partner today</option>';
+    activeLine += '     <option value="New">as I am new to the Castle</option>';
+    activeLine += '     <option value="Staff Input">for staff input</option>';
+    activeLine += '     <option value="Other">Other Reasons</option>';
+    activeLine += '  </select>';
+    activeLine += ' <select  id="FirstTime'+i+'" class="row'+i+ ' custom-select">';
+    activeLine += '     <option value="">First Time?</option>';
+    activeLine += '     <option value="Yes">Yes</option>';
+    activeLine += '     <option value="No">No</option>';
+    activeLine += ' </select>';
+    activeLine += ' </div>';
+    activeLine += '</div>';
+    activeLine += '<br>';
+    activeLine += '<a id="submit" onclick="submitLine();" name="submit" class="btn btn-success" role="button">submit</a>';
+
+
+          $('#ShowParticipants').html(activeLine);
   }
-//List all the stored Participants, and creates a new entry field
-function ShowParticipants(){
-    var output = '<hr>';
-    $.each(ParticipantsArray, function( index, value ) {
-     var newName = toTitleCase(firstNameLastInital(value.Participant));
 
-      var PName = newName;
-      var Reason = value.Reason;
-      var FirstTime = value.First_Time;
-      var i = index + 1;
-          numParticipants = numParticipants + 1;
-      var selectMe0 = '',
-          selectMe1 = '',
-          selectMe2 = '',
-          selectMe3 = '';
-      var selectMe00 = '',
-          selectMe01 = '',
-          selectMe02 = '';
 
-      if (Reason === "") {
-        selectMe0 = 'selected=""';
-        selectMe1 = '';
-        selectMe2 = '';
-        selectMe3 = '';
-      } else if (Reason === "Climbing Partner") {
-        selectMe0 = '';
-        selectMe1 = 'selected=""';
-        selectMe2 = '';
-        selectMe3 = '';
-      } else if (Reason === "New") {
-        selectMe0 = '';
-        selectMe1 = '';
-        selectMe2 = 'selected=""';
-        selectMe3 = '';
-      } else if (Reason === "Other") {
-        selectMe0 = '';
-        selectMe1 = '';
-        selectMe2 = '';
-        selectMe3 = 'selected=""';
-      }
-      if (FirstTime === "Yes") {
-        selectMe01 = 'selected=""';
-        selectMe02 = '';
-      } else if (FirstTime === "No") {
-        selectMe01 = '';
-        selectMe02 = 'selected=""';
-      }
-
-      output += '<div class="input-group">';
-      output += '<span id="Participant'+i+'" class="col-2 input-group-addon">Participant '+i+'</span>';
-      output += '   <input disabled id="Participant'+i+'" type="text" placeholder="'+PName+'" aria-label="Participant Name" aria-describedby="sizing-addon2" class="row'+i+ ' form-control col-4"/>';
-      output += ' <select disabled id="Reason'+i+'" class="custom-select">';
-      output += '     <option '+ selectMe0 +' value="">Im joining the session...</option>';
-      output += '     <option '+ selectMe1 +' value="Climbing Partner">I have no climbing partner today</option>';
-      output += '     <option '+ selectMe2 +' value="New">I am new to the Centre</option>';
-      output += '     <option '+ selectMe3 +' value="Other">Other</option>';
-      output += ' </select>';
-      output += ' <select disabled id="FirstTime'+i+'" class="custom-select">';
-      output += '     <option '+ selectMe00 +' value="">First Time?</option>';
-      output += '     <option '+ selectMe01 +'  value="Yes">Yes</option>';
-      output += '     <option '+ selectMe02 +'  value="No">No</option>';
-      output += ' </select>';
-      output += '</div>';
+  function submitLine(){
+    console.log('hit');
+    participantsArray[i-1]=({
+      "First_Name" : $('#ParticipantFirstName'+i).val(),
+      "Last_Name" :  $('#ParticipantLastName'+i).val(),
+      "Reason": $('#Reason'+i+' option:selected').val(),
+      "Arrival_Time": moment().format('HH MM SS'),
+      "First_Time": $('#FirstTime'+i+' option:selected').val()
     });
-    i = numParticipants+1;
 
-var ActiveLine = output;
-    ActiveLine += '<hr>';
-    ActiveLine += '<div class="input-group">';
-    ActiveLine += '<span id="ParticipantRow'+i+'" class="ActiveLine col-2 input-group-addon">Participant '+i+'</span>';
-    ActiveLine += '   <input id="Participant'+i+'" type="text" placeholder="Name" aria-label="Participant Name" aria-describedby="sizing-addon2" class="row'+i+ ' form-control col-4"/>';
-    ActiveLine += ' <select id="Reason'+i+'" class="row'+i+ ' custom-select">';
-    ActiveLine += '     <option value="">Im joining the session...</option>';
-    ActiveLine += '     <option value="Climbing Partner">I have no climbing partner today</option>';
-    ActiveLine += '     <option value="New">I am new to the Centre</option>';
-    ActiveLine += '     <option value="Other">Other </option>';
-    ActiveLine += ' </select>';
-    ActiveLine += ' <select  id="FirstTime'+i+'" class="row'+i+ ' custom-select">';
-    ActiveLine += '     <option value="">First Time?</option>';
-    ActiveLine += '     <option value="Yes">Yes</option>';
-    ActiveLine += '     <option value="No">No</option>';
-    ActiveLine += ' </select>';
-    ActiveLine += '</div>';
-    ActiveLine += '<br>';
-    ActiveLine += '<a href="/" onclick="updatetheSession()" id="Done" name="Done" class="btn btn-success" role="button">Done</a>';
+      updateSession();
+      location.reload();
 
-      $('#ShowParticipants').html(ActiveLine);
-}
+  }
 
-//Post request to create the session
-function addSession(event) {
-  event.preventDefault();
-  createdDate = DateOnly;
-  Facilitator = $('input#FacilitatorsName').val();
-  SessionType = $('#SessionClimbingType option:selected').val();
-  StartLocation = $('#sessionStartingArea option:selected').val();
+// ----------------------------------------- DOM READY ----------------------------------------- //
+  $( document ).ready(function() {
+      //$("#dataProtection").modal('show');
 
-  var newSession = {
-      'createdDate': DateOnly,
-      'Facilitator': Facilitator,
-      'Session_Type': SessionType,
-      'Start_Location': StartLocation,
-      'Participants': ParticipantsArray,
-  };
+      //Database call to get details of session if already entered.
+      getSession();
+      ShowParticipants();
 
-var myJSON = JSON.stringify(newSession);
+      //adds the session information in to the options of the modal, so it makes sence when editing details.
+      $('#openFacilitatorModal').on('click',function(){
+
+        var text = document.getElementById('facilitatorName');
+        text.value = facilitatorName;
+        if(sessionType === 'bouldering'){
+            document.getElementById("BSess").classList.add("active");
+            document.getElementById("TSess").classList.remove("active");
+        } else if(sessionType === 'top roping'){
+            document.getElementById("BSess").classList.remove("active");
+            document.getElementById("TSess").classList.add("active");
+        }
+        if(startLocation===''){
+
+        } else if(startLocation!==''){
+        document.getElementById(startLocation).classList.add("active");
+        }
+      });
+
+      $('#startOptions').html(boulderingAreas);
+
+      //Input Check
+      $('input#facilitatorName').change(function(){
+        var value = document.getElementById('facilitatorName').value;
+         if (value.length > 2) {
+          $('input#BoulderingSession').prop('disabled', false);
+          $('input#TopRopeSession').prop('disabled', false);
+        } else if (value.length <= 2) {
+         $('input#BoulderingSession').prop('disabled', true);
+         $('input#TopRopeSession').prop('disabled', true);
+       }
+      });
+
+
+      //Sets Bouldering Options
+      $('input#BoulderingSession').on('change',function(){
+        if ($('input#BoulderingSession').is(":checked")){
+          sessionType = $('input#BoulderingSession').val();
+
+          $('#startOptions').html(boulderingAreas);
+
+        }
+      });
+
+      //Sets Top Rope Options
+      $('input#TopRopeSession').on('change',function(){
+        if ($('input#TopRopeSession').is(":checked")){
+          sessionType = $('input#TopRopeSession').val();
+
+          $('#startOptions').html(topRopingAreas);
+        }
+      });
+
+      //Allows submit once option has be selected
+      $('#startOptions').click(function(){
+          $('button#facilitatorSubmit').prop('disabled', false);
+      });
+
+      $("#facilitatorSubmit").on('click',function(e){
+        console.log('hit');
+          var item = document.getElementsByClassName("list-group-item active");
+          startLocation = (item[0].id);
+          facilitatorName = $('#facilitatorName').val();
+          sessionType = sessionType;
 
 
 
-  // Use AJAX to post the object to our adduser service
-  $.ajax({
-      type: 'POST',
-      data: myJSON,
-      url: 'theSession/addSession',
-      dataType: 'JSON',
-      contentType: 'application/json',
-  }).done(function( response, results ) {
-      // Check for successful (blank) response
-      if (response.msg === '') {
+        //displays session information
+          showSession();
 
-          // Clear the form inputs
-          // $('#addSession input').val('');
 
-          // // Update the table
-          // populateTable();
+          if(foundSession === false){
+          addSession();
+        } else if (foundSession === true){
+          updateSession();
+        }
+      });
 
-      }
-      else {
 
-          // If something goes wrong, alert the error message that our service returned
-          alert('Error: ' + response.msg);
-
-      }
   });
-  ShowSession($('input#FacilitatorsName').val(), $('#SessionClimbingType option:selected').val(), $('#sessionStartingArea option:selected').val());
-}
-//Put request to update to Participants, on  pre made sesion
-function updatetheSession(){
-console.log('DATE: ' + DateOnly);
-var updates = {
-    'FindDate': {createdDate: DateOnly},
-    'createdDate': DateOnly,
-    'Facilitator': Facilitator,
-    'Session_Type': SessionType,
-    'Start_Location': StartLocation,
-    'Participants': ParticipantsArray
-};
 
-$.ajax({
-  type: "put",
-  url: "theSession/updateSession",
-  contentType: 'application/json',
-  data: JSON.stringify(updates)
-});
-}
-// this will be called when the DOM is ready
-$(function(){
 
-  //Load GDPR statment
-    $( document ).ready(function() {
-        $("#dataProtection").modal('show');
-    });
+  //----------- DATABASE CALLS ------------//
 
-getSession();//GET SESSION!
-// CALL FUNCTION TO CHANGE OPTIONS ACCORDING TO SESSION TYPE CHOICE
-$('#SessionClimbingType').change(function(SessionAreas) {
-  var SessionClimbingType = $( "#SessionClimbingType option:selected" ).text();
-      if (SessionClimbingType === 'Top-Roping'){
-          SessionAreas = TopropingAreas;
-      } else if (SessionClimbingType === 'Bouldering'){
-          SessionAreas = BoulderingAreas;
-      }
-      SetSessionAreas(SessionAreas);
-});
+  //Post request to create the session
+  function addSession() {
 
-// SET CHOOSEN START AREA TO VARIABLE
-$('#SessionStartChoices').change(function(SessionAreas) {
-  var StartingArea = $( "#SessionStartChoices option:selected" ).text();
-});
+      createdDate = DateOnly;
 
-// TRIGGER SUBMIT
-$('#submit').click(function() {
-  event.preventDefault();
-  addSession(event);
+      var newSession = {
+          'Created_Date': moment().format('MMMM Do YYYY'),
+          'Created_Time' : moment().format('HH MM SS'),
+          'Facilitator': facilitatorName,
+          'Session_Type': sessionType,
+          'Start_Location': startLocation,
+          'Participants': participantsArray,
+      };
+      console.log(newSession);
+    var myJSON = JSON.stringify(newSession);
+
+
+        // Use AJAX to post the object to our adduser service
+        $.ajax({
+            type: 'POST',
+            data: myJSON,
+            url: 'theSession/addSession',
+            dataType: 'JSON',
+            contentType: 'application/json',
+        }).done(function( response, results ) {
+            // Check for successful (blank) response
+            if (response.msg === '') {
+
+                // Clear the form inputs
+                // $('#addSession input').val('');
+
+                // // Update the table
+                // populateTable();
+
+            }
+            else {
+
+                // If something goes wrong, alert the error message that our service returned
+                alert('Error: ' + response.msg);
+
+            }
         });
 
-// COLLECT INPUTS FROM PARTICIPANTS
-$('#ShowParticipants').on('change blur click', function(event){
-  var targetID = (event.target.id);
-  var check = $("#"+targetID).val();
-  if (check === ''){}
-  var field = (event.target.classList[0]);
-  var Row = (field.slice(3,4));
-  var ArrayVal = Row-1;
-  ParticipantsArray[ArrayVal]=({ "Participant": $('input#Participant'+Row).val(), "Reason": $('#Reason'+Row+' option:selected').val(), "First_Time":$('#FirstTime'+Row+' option:selected').val()});
-  updatetheSession();
-  // < ---- AND NOW INSERT IN TO ARRAY
-    });
+        foundSession = true;
+    }
 
-// CHANGE INPUT TO TEXT FIELD -- NOT USING JUST USEFUL
-$('#ShowParticipants').on('blur', function(){
 
-  var $el = $(this);
 
-  var $input = $('<input />').val( $el.text() );
-  $el.replaceWith( $input );
+  //Get request for session
+  function getSession(){
+    // var DateOnly = moment().format('MMMM Do YYYY');
+    $.getJSON( '/theSession/getSession', {Created_Date: moment().format('MMMM Do YYYY')}, function(results, res) {
+      })
+      .done(function(results, res) {
+            var theResults = JSON.stringify(results);
+              if (theResults === '[]') {
+                    foundSession = false;
+            } else {
+                    facilitatorName = results[0].Facilitator;
+                    createdTime = results[0].Created_Time;
+                    theID = results[0]._id;
+                    sessionType =  results[0].Session_Type;
+                    startLocation = results[0].Start_Location;
+                    foundSession = true;
+                    participantsArray = results[0].Participants;
 
-  var save = function(){
-    var $p = $('<text contentEditable/>').text( $input.val() );
-    $input.replaceWith( $p );
-  };
+                    showSession();
+                    ShowParticipants();
+                    // updateWWA();
 
-  $input.one('blur', save).focus();
+            }
+        });
+    }
 
-});
 
-$('input[name=ids]').val(function(index, value) {
- return value.replace('54,', '');
-  });
 
-$('#ShowParticipants').on('change blur', function(event){
-  var targetID = (event.target.id);
-  var check = $("#"+targetID).val();
-  var $el = $('<input />');
-  var $valid = $('<input is-valid />');
-  var $invalid = $('<input is-invalid />');
+  //Put request to update to Participants, on  pre made sesion
+  function updateSession(){
+      console.log('UPDATE: ' + moment().format('MMMM Do YYYY'));
+      var updates = {
+          'FindDate': {Created_Date: moment().format('MMMM Do YYYY')},
+          'Created_Date': moment().format('MMMM Do YYYY'),
+          'Created_Time' : createdTime,
+          'Facilitator': facilitatorName,
+          'Session_Type': sessionType,
+          'Start_Location': startLocation,
+          'Participants': participantsArray
+      };
 
-  if (check === ''){
-    console.log('invalid');
-    $this.$el.replaceWith( $invalid );
-  } else if (check !== ''){
-    console.log('valid');
-  $valid.replaceWith( $invalid );
-  }
-});
-
-});
+      $.ajax({
+        type: "put",
+        url: "theSession/updateSession",
+        contentType: 'application/json',
+        data: JSON.stringify(updates)
+      });
+    }

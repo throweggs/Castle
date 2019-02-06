@@ -12,7 +12,7 @@ block content
 				#showSession
 			.col-1.text-right
 				button#openFacilitatorModal.btn.btn-light(type='button', data-toggle='modal', data-target='#facilitatorModal')
-				i.far.fa-edit  Info
+					i.far.fa-edit  Info
 	.col
 		#showTnCs
 	
@@ -39,7 +39,7 @@ block content
 								.input-group-prepend
 									span.input-group-text Facilitator:
 								input#facilitatorName.form-control(type='text')
-					.form-group
+					.form-group#sessionType
 						label.col.form-check-label(for='SessionClimbingType') Session Type:
 						.btn-group.col.btn-group-toggle(data-toggle='buttons')
 							.col-6#BSess.label.btn.btn-outline-secondary.active
