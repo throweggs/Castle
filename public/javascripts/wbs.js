@@ -151,7 +151,7 @@ var activeLine = output;
     activeLine += ' </div>';
     activeLine += '</div>';
     activeLine += '<br>';
-    activeLine += '<a href="/", id="submit" onclick="submitLine();" name="submit" class="btn btn-success" role="button">submit</a>';
+    activeLine += '<a id="submit" onclick="submitLine();" name="submit" class="btn btn-success" role="button">submit</a>';
 
 
           $('#ShowParticipants').html(activeLine);
@@ -159,7 +159,6 @@ var activeLine = output;
 
 
   function submitLine(){
-    console.log('hit');
     participantsArray[i-1]=({
       "First_Name" : $('#ParticipantFirstName'+i).val(),
       "Last_Name" :  $('#ParticipantLastName'+i).val(),
@@ -169,7 +168,7 @@ var activeLine = output;
     });
 
       updateSession();
-      location.reload();
+      document.location.href="/";
 
   }
 
