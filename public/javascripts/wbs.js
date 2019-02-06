@@ -175,7 +175,6 @@ var activeLine = output;
 
 // ----------------------------------------- DOM READY ----------------------------------------- //
   $( document ).ready(function() {
-    alert('hi');
       $("#dataProtection").modal('show');
       //Women's Social is only ever Bouldering so hiding to choice.
       $('.form-group#sessionType').hide();
