@@ -151,7 +151,7 @@ var activeLine = output;
     activeLine += ' </div>';
     activeLine += '</div>';
     activeLine += '<br>';
-    activeLine += '<a id="submit" onclick="submitLine();" name="submit" class="btn btn-success" role="button">submit</a>';
+    activeLine += '<a href="/", id="submit" onclick="submitLine();" name="submit" class="btn btn-success" role="button">submit</a>';
 
 
           $('#ShowParticipants').html(activeLine);
