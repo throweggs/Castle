@@ -38,8 +38,8 @@ router.get('/', function(req, res) {
 });
 
 /* GET wwa page. */
-router.get('/wwa', function(req, res) {
-    res.render('wwa', { title: 'Women With Altitude' });
+router.get('/wbs', function(req, res) {
+    res.render('wbs', { title: 'Womens Bouldering Social' });
 });
 
 /* GET Garden Volunteer page. */

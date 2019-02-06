@@ -12,23 +12,24 @@
       FoundSession = true,
       ParticipantsArray = [];
 
-  var TopropingAreas = [
-      'Auto Belays',
-      'Stacks',
-      'Quarry',
-      'Tall_Walls'
-      ];
+  var topRopingAreas = '<div class="list-group" id="startOptions" role="tablist">';
+      topRopingAreas += ' <a class="list-group-item list-group-item-action" id="list-AutoBelays-list" data-toggle="list" href="#list-AutoBelays" role="tab" aria-controls="AutoBelays">Auto Belays</a>';
+      topRopingAreas += ' <a class="list-group-item list-group-item-action" id="list-Stacks-list" data-toggle="list" href="#list-Stacks" role="tab" aria-controls="Stacks">Stacks</a>';
+      topRopingAreas += ' <a class="list-group-item list-group-item-action" id="list-Quarry-list" data-toggle="list" href="#list-Quarry" role="tab" aria-controls="Quarry">Quarry</a>';
+      topRopingAreas += ' <a class="list-group-item list-group-item-action" id="list-TallWalls-list" data-toggle="list" href="#list-TallWalls" role="tab" aria-controls="TallWalls">Tall Walls</a>';
+      topRopingAreas += '</div>';
 
-  var BoulderingAreas = [
-      'Catacombs',
-      'Competition_Wall',
-      'Loft',
-      'Panels',
-      'Pen',
-      'Mez',
-      'Traverse_Boulders',
-      'Outdoor_Boulders'
-    ];
+
+  var boulderingAreas =  '<div class="list-group" id="startOptions" role="tablist">';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="list-Catacombs-list" data-toggle="list" href="#list-Catacombs" role="tab" aria-controls="Catacombs">Catacombs</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="list-CompetitionWall-list" data-toggle="list" href="#list-CompetitionWall" role="tab" aria-controls="CompetitionWall">Competition Wall</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="list-Loft-list" data-toggle="list" href="#list-Loft" role="tab" aria-controls="Loft">Loft</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="list-Panels-list" data-toggle="list" href="#list-Panels" role="tab" aria-controls="Panels">Panels</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="list-Pen-list" data-toggle="list" href="#list-Pen" role="tab" aria-controls="Pen">Pen</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="list-Mez-list" data-toggle="list" href="#list-Mez" role="tab" aria-controls="Mez">Mez</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="list-TraverseBoulders-list" data-toggle="list" href="#list-TraverseBoulders" role="tab" aria-controls="TraverseBoulders">Traverse Boulders</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="list-OutdoorBoulders-list" data-toggle="list" href="#list-OutdoorBoulders" role="tab" aria-controls="OutdoorBoulders">Outdoor Boulders</a>';
+      boulderingAreas += '</select>';
 
 
 // SETTING DATE AND TIME FOR FINDING SESSIONS
@@ -247,12 +248,45 @@ function updateWWA(){
     data: JSON.stringify(updates)
   });
 }
+
+
+
 // this will be called when the DOM is ready
 $(function(){
 
+
 //Load GDPR statment
   $( document ).ready(function() {
-      $("#dataProtection").modal('show');
+      // $("#dataProtection").modal('show');
+
+      $('input#BoulderingSession').on('change',function(){
+        if ($('input#BoulderingSession').is(":checked")){
+          GardenChoice = $('input#BoulderingSession').val();
+          console.log(GardenChoice);
+          $('#showAreaOptions').html(boulderingAreas);
+
+        }
+      });
+
+      $('input#TopRopeSession').on('change',function(){
+        if ($('input#TopRopeSession').is(":checked")){
+          GardenChoice = $('input#TopRopeSession').val();
+          console.log(GardenChoice);
+          $('#showAreaOptions').html(topRopingAreas);
+        }
+      });
+
+      $('input#TopRopeSession').on('change',function(){
+        if ($('input#TopRopeSession').is(":checked")){
+          GardenChoice = $('input#TopRopeSession').val();
+          console.log(GardenChoice);
+          $('#showAreaOptions').html(topRopingAreas);
+        }
+      });
+
+
+
+
   });
 
 getSession();//GET SESSION!
@@ -274,6 +308,9 @@ $('#SessionClimbingType').change(function(SessionAreas) {
 
 // TRIGGER SUBMIT
   $('#submit').click(function() {
+
+        console.log(document.getElementsByClassName("list-group-item active"));
+
     event.preventDefault();
     addSession(event);
           });

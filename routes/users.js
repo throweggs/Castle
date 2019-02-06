@@ -15,11 +15,11 @@ router.get('/visitorlist', function(req, res) {
     });
 });
 
-router.get('/WWAlist', function(req, res) {
+router.get('/wbslist', function(req, res) {
   var findMe = req.query;
   console.log(findMe);
     var db = req.db;
-    var collection = db.get('wwa');
+    var collection = db.get('wbs');
     collection.find(findMe,{},function(e,docs){
         res.json(docs);
     });

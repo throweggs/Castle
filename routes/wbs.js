@@ -7,7 +7,8 @@ var router = express.Router();
  */
 router.post('/addSession', function(req, res) {
     var db = req.db;
-    var collection = db.get('wwa');
+    console.log('hit');
+    var collection = db.get('wbs');
     collection.insert(req.body, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
@@ -21,18 +22,19 @@ router.post('/addSession', function(req, res) {
 router.get('/getSession', function(req, res) {
     findMe = req.query;
     var db = req.db;
-    var collection = db.get('wwa');
+    var collection = db.get('wbs');
     collection.find(findMe,{},function(e,docs){
         res.json(docs);
     });
 });
 
+
 //Updates an theSession
 router.put('/updateSession', function(req, res){
   theDate = req.body.FindDate;
-  console.log(theDate);
+  console.log(req.body);
   var db = req.db;
-  var collection = db.get('wwa');
+  var collection = db.get('wbs');
   collection.update(theDate,req.body,function(e,docs){
       res.json(docs);
   });
