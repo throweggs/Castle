@@ -4,6 +4,7 @@ var Count = 0,
     ContactNumber = 0,
     ReasonForVisit = 0,
     Disclaimer = '',
+    iPad = '',
     output = false,
     otherReason = null,
     photographyWaverAgreement  = null,
@@ -221,6 +222,7 @@ var Kids = {
         'PhotographyWaverAgreement' : photographyWaverAgreement,
         'disclaimer': $('#addVisitor input#disclaimer').val(),
         'createdDate': moment(),
+        'iPad' : getKioskId(),
 
     };
     console.log(newVisitor);

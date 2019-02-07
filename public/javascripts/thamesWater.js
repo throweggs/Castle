@@ -1,5 +1,4 @@
-  var GardenChoice = ''; //Choice between Mini Plot or Garden Volunteer
-  var GardenVisitorListData = []; //Setting up array for GardenVisitors
+  var iPadIn = '';
 
   // DOM Ready =============================================================
   $(document).ready(function() {
@@ -85,6 +84,8 @@
           'ArrivalTime' : thisVisitorObject.ArrivalTime,
           'DepartureTime' : TimeOnly,
           'Disclaimer' : thisVisitorObject.Disclaimer,
+          'iPadIn' : iPadIn,
+          'iPadOut' : getKioskId(),
       };
 
       $.ajax({
@@ -140,6 +141,8 @@
 
            var newName = toTitleCase(firstNameLastInital(this.Person));
 
+           iPadIn = this.iPadIn;
+
               tableContent += '<tr>';
               tableContent += '<td>' + newName + '</td>';
               tableContent += '<td>' + this.ArrivalTime + '</td>';
@@ -171,6 +174,7 @@ function addPerson(event) {
       'ArrivalTime' : TimeOnly,
       'DepartureTime' : "",
       'Disclaimer' : $('input#Disclaimer').val(),
+      'iPadIn' : getKioskId(),
     };
 
   var myJSON = JSON.stringify(newPerson);

@@ -6,6 +6,7 @@ var startLocation = '',
     foundSession = false,
     theID = '',
     formCheck = 0,
+    iPadIn = '',
     sessionType = 'bouldering';
 
 
@@ -207,7 +208,8 @@ var activeLine = output;
       "Last_Name" :  $('#NewParticipantLastName').val(),
       "Reason": $('#NewReason option:selected').val(),
       "Arrival_Time": moment().format('HH MM SS'),
-      "First_Time": $('#NewFirstTime option:selected').val()
+      "First_Time": $('#NewFirstTime option:selected').val(),
+      "iPad" : getKioskId()
     });
 
       updateSession();
@@ -321,11 +323,12 @@ var activeLine = output;
 
       var newSession = {
           'Created_Date': moment().format('MMMM Do YYYY'),
-          'Created_Time' : moment().format('HH MM SS'),
+          'Created_Time' : moment().format('HH:MM:SS'),
           'Facilitator': facilitatorName,
           'Session_Type': sessionType,
           'Start_Location': startLocation,
           'Participants': participantsArray,
+          'iPadin' : getKioskId(),
       };
       console.log(newSession);
     var myJSON = JSON.stringify(newSession);
@@ -379,6 +382,7 @@ var activeLine = output;
                     startLocation = results[0].Start_Location;
                     foundSession = true;
                     participantsArray = results[0].Participants;
+                    iPadIn = results[0].iPadIn;
 
                     showSession();
                     ShowParticipants();
@@ -400,7 +404,9 @@ var activeLine = output;
           'Facilitator': facilitatorName,
           'Session_Type': sessionType,
           'Start_Location': startLocation,
-          'Participants': participantsArray
+          'Participants': participantsArray,
+          'iPadIn' : iPadIn,
+          'iPadUpdate' : getKioskId(),
       };
 
       $.ajax({

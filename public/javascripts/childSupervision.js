@@ -110,6 +110,7 @@ function addSupervisor(event) {
         'childName': $('#addSupervisor input#childName').val(),
         'designatedAdult': $('#addSupervisor input#designatedAdult').val(),
         'disclaimer': $('#addSupervisor input#disclaimer').val(),
+        'iPad' : getKioskId(),
         'createdDate': curDate
 
     };
