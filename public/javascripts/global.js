@@ -168,6 +168,8 @@ $(function(){ // this will be called when the DOM is ready
       $('#AreYouSure').modal('show');
     });
 
+    kp_Vars_DidInject();
+
 });
 
 
@@ -191,3 +193,23 @@ var output = "";
     output += value + " ";
   });
   TimeOnly = $.trim(output);
+
+
+
+  //Get Kisk Pro // IDEA: function kp_Vars_DidInject() {
+  function kp_Vars_DidInject() {
+    updatePage();
+  }
+
+  function updatePage() {
+    document.getElementById("kioskIdValue").innerHTML = "<i>" + getKioskId() + "</i>";
+  }
+
+  function getKioskId() {
+    try {
+      return window.kioskpro_id.toString();
+    }
+    catch(e) {
+      return "";
+    }
+  }

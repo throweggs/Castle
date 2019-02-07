@@ -5,6 +5,7 @@ var startLocation = '',
     numParticipants = 0,
     foundSession = false,
     theID = '',
+    formCheck = 0,
     sessionType = 'bouldering';
 
 
@@ -12,7 +13,7 @@ var startLocation = '',
   var topRopingAreas = ' <a class="list-group-item  list-group-item-action" id="Auto Belays" data-toggle="list" href="#list-AutoBelays" role="tab" aria-controls="AutoBelays">Auto Belays</a>';
       topRopingAreas += ' <a class="list-group-item list-group-item-action" id="Stacks" data-toggle="list" href="#list-Stacks" role="tab" aria-controls="Stacks">Stacks</a>';
       topRopingAreas += ' <a class="list-group-item list-group-item-action" id="Quarry" data-toggle="list" href="#list-Quarry" role="tab" aria-controls="Quarry">Quarry</a>';
-      topRopingAreas += ' <a class="list-group-item list-group-item-action" id="TallWalls" data-toggle="list" href="#list-TallWalls" role="tab" aria-controls="TallWalls">Tall Walls</a>';
+      topRopingAreas += ' <a class="list-group-item list-group-item-action" id="TallWalls" data-toggle="list" href="#list-TallWalls" role="tab" aria-controls="TallWalls">Upstairs Slabs/Tall Walls</a>';
 
   var boulderingAreas = ' <a class="list-group-item  list-group-item-action" id="Catacombs" data-toggle="list" href="#list-Catacombs" role="tab" aria-controls="Catacombs">Catacombs</a>';
       boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Competition Wall" data-toggle="list" href="#list-CompetitionWall" role="tab" aria-controls="CompetitionWall">Competition Wall</a>';
@@ -29,13 +30,10 @@ var startLocation = '',
         var sessionDetails = " <h1>Women's Bouldering Social Facilitator: <strong>" + facilitatorName +"</strong></h1>";
             sessionDetails += ' <h3>Your '+ sessionType +' session, will be starting in the ' + startLocation + '.</h3>';
             sessionDetails += ' <ul>';
-        var showTnCs        = '   <li><strong>Participants of The Session must be registered roped climbers</strong> and therefore confident putting on a harness correctly, tying in with the correct knot and belaying competently.</li>';
-            showTnCs       += "   <li>Women's Bouldering Social and the wednesday mixed bouldering Session may be attended by those registered as bouldering only. <br> If you’re not sure about which session you can join, please ask a receptionist who will be happy to help you. <strong>The Session is not suitable for novice climbers.</strong></li>";
-            showTnCs       += '   <li><strong>IMPORTANT INFORMATION: <u>This is not a teaching session</u>, <u>nor is it supervised</u>. Participants are still responsible for their own safety.  It is up to each participant to decide for themselves who they wish to climb with.</strong></li>';
 
 
         $( "#showSession" ).html( sessionDetails );
-        $( "#showTnCs" ).html( showTnCs );
+
 
       }
 
@@ -129,21 +127,21 @@ var activeLine = output;
     activeLine += '<hr>';
     activeLine += ' <div class="input-group">';
     activeLine += '  <div class="input-group-prepend">';
-    activeLine += '   <label id="ParticipantRow'+i+'" class="input-group-text" for=ParticipantRow'+i+'"">Participant '+i+'</label>';
+    activeLine += '   <label id="NewParticipantRow" class="input-group-text" for=ParticipantRow'+i+'"">Your Info</label>';
     activeLine += '  </div>';
 
-    activeLine += '   <input id="ParticipantFirstName'+i+'" type="text" class="form-control" placeholder="First Name" aria-label="Participant First Name" aria-describedby="sizing-addon2" class="row'+i+ ' form-control col-4"/>';
+    activeLine += '   <input id="NewParticipantFirstName"  type="text" class="form-control" placeholder="First Name" aria-label="Participant First Name" aria-describedby="sizing-addon2" class="row'+i+ ' form-control col-4"/>';
 
-    activeLine += '   <input id="ParticipantLastName'+i+'" type="text" placeholder="Last Name" aria-label="Participant Last Name" aria-describedby="sizing-addon2" class="row'+i+ ' form-control col-4"/>';
+    activeLine += '   <input id="NewParticipantLastName" type="text" placeholder="Last Name" aria-label="Participant Last Name" aria-describedby="sizing-addon2" class="row'+i+ ' form-control col-4"/>';
 
-    activeLine += ' <select  id="Reason'+i+'" class="row'+i+ ' custom-select">';
+    activeLine += ' <select  id="NewReason" class="row'+i+ ' custom-select">';
     activeLine += "     <option value=''>I'm joining the session...</option>";
     activeLine += '     <option value="Climbing Partner">as I have no climbing partner today</option>';
     activeLine += '     <option value="New">as I am new to the Castle</option>';
     activeLine += '     <option value="Staff Input">for staff input</option>';
     activeLine += '     <option value="Other">Other Reasons</option>';
     activeLine += '  </select>';
-    activeLine += ' <select  id="FirstTime'+i+'" class="row'+i+ ' custom-select">';
+    activeLine += ' <select  id="NewFirstTime" class="row'+i+ ' custom-select">';
     activeLine += '     <option value="">First Time?</option>';
     activeLine += '     <option value="Yes">Yes</option>';
     activeLine += '     <option value="No">No</option>';
@@ -159,16 +157,65 @@ var activeLine = output;
 
 
   function submitLine(){
+    formCheck = 0;
+    if($('#NewParticipantFirstName').val().length<2){
+      document.getElementById("NewParticipantFirstName").classList.add("border");
+      document.getElementById("NewParticipantFirstName").classList.add("border-danger");
+
+    } else if($('#NewParticipantFirstName').val().length>=2){
+      document.getElementById("NewParticipantFirstName").classList.remove("border");
+      document.getElementById("NewParticipantFirstName").classList.remove("border-danger");
+    formCheck = formCheck + 1;
+    }
+
+    if($('#NewParticipantLastName').val().length<2){
+      document.getElementById("NewParticipantLastName").classList.add("border");
+      document.getElementById("NewParticipantLastName").classList.add("border-danger");
+
+  } else if($('#NewParticipantLastName').val().length>=2){
+      document.getElementById("NewParticipantLastName").classList.remove("border");
+      document.getElementById("NewParticipantLastName").classList.remove("border-danger");
+    formCheck = formCheck + 1;
+    }
+
+    if($('#NewReason option:selected').val().length<1){
+      document.getElementById("NewReason").classList.add("border");
+      document.getElementById("NewReason").classList.add("border-danger");
+
+    } else if($('#NewReason option:selected').val().length>=1){
+      document.getElementById("NewReason").classList.remove("border");
+      document.getElementById("NewReason").classList.remove("border-danger");
+    formCheck = formCheck + 1;
+    }
+
+    if($('#NewFirstTime option:selected').val().length<1){
+      document.getElementById("NewFirstTime").classList.add("border");
+      document.getElementById("NewFirstTime").classList.add("border-danger");
+
+    } else if($('#NewFirstTime option:selected').val().length>=1){
+      document.getElementById("NewFirstTime").classList.remove("border");
+      document.getElementById("NewFirstTime").classList.remove("border-danger");
+    formCheck = formCheck + 1;
+    }
+
+    if (formCheck === 4){
+
+
     participantsArray[i-1]=({
-      "First_Name" : $('#ParticipantFirstName'+i).val(),
-      "Last_Name" :  $('#ParticipantLastName'+i).val(),
-      "Reason": $('#Reason'+i+' option:selected').val(),
+
+      "First_Name" : $('#NewParticipantFirstName').val(),
+      "Last_Name" :  $('#NewParticipantLastName').val(),
+      "Reason": $('#NewReason option:selected').val(),
       "Arrival_Time": moment().format('HH MM SS'),
-      "First_Time": $('#FirstTime'+i+' option:selected').val()
+      "First_Time": $('#NewFirstTime option:selected').val()
     });
 
       updateSession();
       document.location.href="/";
+
+    } else if (formCheck < 4){
+      alert('Please fill in all the fields');
+    }
 
   }
 
@@ -180,6 +227,8 @@ var activeLine = output;
       //Database call to get details of session if already entered.
       getSession();
       ShowParticipants();
+
+
 
       //adds the session information in to the options of the modal, so it makes sence when editing details.
       $('#openFacilitatorModal').on('click',function(){

@@ -19,55 +19,58 @@ html
 
 body
 	// Image and text
-	.container-fluid
-		nav.navbar.navbar-dark.bg-dark
-				.col
-					.text-left
-						a.navbar-brand(href="#", data-toggle='modal', data-target='#AreYouSure')
-							img.d-inline-block.align-centre(src='logo.png', alt='')
-							| Castle Climbing Centre
-				.col.text-centre
-					.navbar-text
-						#DateTime
-				.col.text-right
-					.navbar-text #{title}
-				.col.text-right
-					a#GoHome.navbar-brand(href="#", data-toggle='modal', data-target='#AreYouSure') back to main menu
-					a#GoHome.navbar-brand.fa.fa-home(href="#", data-toggle='modal', data-target='#AreYouSure')
+	.row
+		.container-fluid
+			nav.navbar.navbar-dark.bg-dark
+					.col
+						.text-left
+							a.navbar-brand(href="#", data-toggle='modal', data-target='#AreYouSure')
+								img.d-inline-block.align-centre(src='logo.png', alt='')
+								| Castle Climbing Centre
+					.col.text-centre
+						.navbar-text
+							#DateTime
+					.col.text-centre
+						.navbar-text
+							#kioskIdValue
+					.col.text-right
+						.navbar-text #{title}
+					.col-1.text-right
+						a#GoHome.navbar-brand.fa.fa-home(href="#", data-toggle='modal', data-target='#AreYouSure')
 
-		//Return Home Modeal
-		#AreYouSure.modal.fade.AreYouSure(tabindex='-1', role='dialog', aria-labelledby='AreYouSure', aria-hidden='true')
-			.modal-dialog
-				.modal-content
-					.modal-header
-						h5 Are you sure you want to go back?
-					.modal-body
-						p The information you have entered will be lost.
-					.modal-footer
-						a.btn.btn-danger.btn-xl.submit-btn(href='/') Yes
-						a.btn.btn-success.btn-xl.submit-btn(href='#', data-dismiss='modal', aria-label='Close') No
+			//Return Home Modeal
+			#AreYouSure.modal.fade.AreYouSure(tabindex='-1', role='dialog', aria-labelledby='AreYouSure', aria-hidden='true')
+				.modal-dialog
+					.modal-content
+						.modal-header
+							h5 Are you sure you want to go back?
+						.modal-body
+							p The information you have entered will be lost.
+						.modal-footer
+							a.btn.btn-danger.btn-xl.submit-btn(href='/') Yes
+							a.btn.btn-success.btn-xl.submit-btn(href='#', data-dismiss='modal', aria-label='Close') No
 
 
-		//Header
-		.header.col-12
-		#failAlert
-		
-		//- // Button trigger modal
-		//- button.btn.btn-primary(type='button', data-toggle='modal', data-target='#SuccessModal')
-		//- 	| Launch demo modal
-		// Modal
-		#SuccessModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='Successful form creation', aria-hidden='true')
-			.modal-dialog(role='document')
-				.modal-content
-					.modal-header
-						h5#Title.modal-title Success
-						button.close(type='button', data-dismiss='modal', aria-label='Close')
-							span(aria-hidden='true') ×
-					.modal-body
-						#TheText
+			//Header
+			.header.col-12
+			#failAlert
+			
+			//- // Button trigger modal
+			//- button.btn.btn-primary(type='button', data-toggle='modal', data-target='#SuccessModal')
+			//- 	| Launch demo modal
+			// Modal
+			#SuccessModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='Successful form creation', aria-hidden='true')
+				.modal-dialog(role='document')
+					.modal-content
+						.modal-header
+							h5#Title.modal-title Success
+							button.close(type='button', data-dismiss='modal', aria-label='Close')
+								span(aria-hidden='true') ×
+						.modal-body
+							#TheText
+								
+
 							
-
-						
-		include GDPR
-						
-		block content
+			include GDPR
+							
+			block content
