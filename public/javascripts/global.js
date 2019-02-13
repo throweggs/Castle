@@ -210,6 +210,6 @@ var output = "";
       return window.kioskpro_id.toString();
     }
     catch(e) {
-      return "";
+      return "Non Kiosk iPad";
     }
   }

@@ -11,10 +11,6 @@ router.get('/confirmation/:firstName', function(req, res) {
 //     res.render('visitorList', { title: 'Visitor List' });
 // });
 
-/* GET Dash boars page. */
-router.get('/dashboard', function(req, res) {
-    res.render('dashboard', { title: 'Dashboard' });
-});
 
 
 /* GET user List page. */
@@ -62,6 +58,28 @@ router.get('/sonosBackend', function(req, res) {
 
 router.get('/sonosHistory', function(req, res) {
     res.render('sonosHistory', { title: 'Sonos Track History' });
+});
+
+router.get('/staff', function(req, res) {
+    res.render('staff', { title: 'Staff' });
+});
+
+/* GET Dash boars page. */
+router.get('/dashboard', function(req, res) {
+    res.render('Dashboard/dashboard', { title: 'Dashboard' });
+});
+
+
+router.get('/viewStaff', function(req, res) {
+    res.render('Dashboard/viewStaff', { title: 'Staff' });
+});
+
+router.get('/viewTeams', function(req, res) {
+    res.render('Dashboard/viewTeams', { title: 'Teams' });
+});
+
+router.get('/checkIn', function(req, res) {
+    res.render('Dashboard/checkIn', { title: 'Check In / Check Out' });
 });
 
 /* POST to Add Visitor Service */

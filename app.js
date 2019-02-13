@@ -15,9 +15,10 @@ var tooltip = require('tooltip.js');
 
 
 
+
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/Castle');
+var db = monk('localhost:27017/forms');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -32,6 +33,7 @@ var thamesWater = require('./routes/thamesWater');
 var sonos = require('./routes/sonos');
 var sonosBackend = require('./routes/sonosBackend');
 var sonosHistory = require('./routes/sonosHistory');
+var staff = require('./routes/staff');
 
 var app = express();
 
@@ -57,21 +59,31 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/childSupervisor', childSupervisor);
 app.use('/theSession', theSession);
-app.use('/dashboard', dashboard);
 app.use('/visitor', visitor);
 app.use('/wbs', wbs);
 app.use('/homepage', homepage);
 app.use('/gardenVolunteer', gardenVolunteer);
 app.use('/thamesWater', thamesWater);
+
+//Sonos
 app.use('/sonos', sonos);
 app.use('/sonosBackend', sonosBackend);
 app.use('/sonosHistory', sonosHistory);
+
+//Staff
+app.use('/staff', staff);
+
+//Dashboard
+app.use('/dashboard', dashboard);
+
+
 
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use('/moment', express.static(__dirname + '/node_modules/moment')); // redirect moments JS
 app.use('/tempus', express.static(__dirname + '/node_modules/tempusdominus-bootstrap-4')); // redirect tempus JS
+
 app.use('/request', express.static(__dirname + '/node_modules/request')); // redirect tempus JS
 
 

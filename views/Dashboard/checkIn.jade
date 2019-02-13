@@ -1,0 +1,88 @@
+doctype html
+html
+  head
+    append styles
+      link(rel='stylesheet', href='/css/bootstrap.min.css')
+      link(rel='stylesheet', href='/stylesheets/style.css')
+      link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.7.1/css/all.css', integrity='sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr', crossorigin='anonymous')
+      script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js')
+      script(src='https://code.jquery.com/jquery-1.11.3.min.js')
+      script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous")
+      
+      script(src='/moment/min/moment.min.js')
+      script(src='/jquery/jquery.js')
+      script(src='/js/bootstrap.min.js')
+      script(src='/javascripts/global.js')
+      script(src='/tempus/build/js/tempusdominus-bootstrap-4.min.js')
+      script(scr='/javascripts/jquery.tabletoCSV.js')
+      script(scr='/javascripts/bootstrap-confirmation.js')
+      //- script(src='https://unpkg.com/fast-average-color/dist/index.min.js')
+      script(src='/javascripts/Dashboard/clockIn.js')
+
+    
+    
+    
+
+//- block content
+
+body
+
+
+  .container-fluid
+    .row
+      .col-9
+        .love-ya.display-4 Clock In - Clock Out
+      .col.align-self-end
+        h4.love-ya.love-ya.love-ya.text-right#date-part
+        h4.love-ya.love-ya.text-right#time-part
+    p.love-ya.lead
+      | Please make sure you clock in and out at the beginning and end of every shift
+
+    br
+    br
+    br
+    .container-fluid
+      .row
+        .col
+          #ListTeams.list-group(role='tablist')
+          #ListTheTeams
+
+        .col
+          #ListStaff.list-group(role='tablist')
+          #ListTheStaff
+
+    br
+    br
+    br
+    .row
+      .col-4
+      .col
+        button.ClockIn.btn.btn-huge.btn-outline-success.btn-lg(type='button', data-toggle='modal', data-clock='In', data-target='#PinModal') Clock In
+      .col
+        button.ClockOut.btn.btn-huge.btn-outline-info.btn-lg(type='button', data-toggle='modal', data-clock='Out', data-target='#PinModal') Clock Out
+
+      .col-4    
+// Modal
+
+#PinModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='digitPasswordlbl', aria-hidden='true')
+  .vertical-alignment-helper
+    .modal-dialog.modal-sm.vertical-align-center
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+          h4#digitPasswordlbl.modal-title.love-ya Enter your four-digit password:
+        .modal-body(style='.row {text-align: center}')
+          input(type='hidden', name='formType', value='confirmPassword')
+          .form-group
+            .row.text-center
+                .col
+                input#firstdigit.col-2.digit.log-status.form-control.text-center(name='firstdigit', type='password', required='', size='1', maxlength='1', tabindex='0')
+                input#seconddigit.col-2.digit.log-status.form-control.text-center(name='seconddigit', type='password', required='', size='1', maxlength='1', tabindex='1')
+                input#thirddigit.col-2.digit.log-status.form-control.text-center(name='thirddigit', type='password', required='', size='1', maxlength='1', tabindex='2')
+                input#fourthdigit.col-2.digit.log-status.form-control.text-center(name='fourthdigit', type='password', required='', size='1', maxlength='1', tabindex='3')
+                .col
+          span.alert Invalid Credentials
+          .form-group
+            .col-sm-9.col-sm-offset-3.text-center
+              // Do NOT use name="submit" or id="submit" for the Submit button
+              button#clockIn.btn.btn-default.digit(type='submit' tabindex='4') Confirm

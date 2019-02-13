@@ -2,6 +2,7 @@ var startLocation = '',
     facilitatorName = '',
     participantsArray = [],
     createdTime = '',
+    createdDate = '',
     numParticipants = 0,
     foundSession = false,
     theID = '',
@@ -14,7 +15,7 @@ var startLocation = '',
   var topRopingAreas = ' <a class="list-group-item  list-group-item-action" id="Auto Belays" data-toggle="list" href="#list-AutoBelays" role="tab" aria-controls="AutoBelays">Auto Belays</a>';
       topRopingAreas += ' <a class="list-group-item list-group-item-action" id="Stacks" data-toggle="list" href="#list-Stacks" role="tab" aria-controls="Stacks">Stacks</a>';
       topRopingAreas += ' <a class="list-group-item list-group-item-action" id="Quarry" data-toggle="list" href="#list-Quarry" role="tab" aria-controls="Quarry">Quarry</a>';
-      topRopingAreas += ' <a class="list-group-item list-group-item-action" id="TallWalls" data-toggle="list" href="#list-TallWalls" role="tab" aria-controls="TallWalls">Upstairs Slabs/Tall Walls</a>';
+      topRopingAreas += ' <a class="list-group-item list-group-item-action" id="TallWalls" data-toggle="list" href="#list-TallWalls" role="tab" aria-controls="TallWalls">Upstairs Slabs & Tall Walls</a>';
 
   var boulderingAreas = ' <a class="list-group-item  list-group-item-action" id="Catacombs" data-toggle="list" href="#list-Catacombs" role="tab" aria-controls="Catacombs">Catacombs</a>';
       boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Competition Wall" data-toggle="list" href="#list-CompetitionWall" role="tab" aria-controls="CompetitionWall">Competition Wall</a>';
@@ -207,7 +208,7 @@ var activeLine = output;
       "First_Name" : $('#NewParticipantFirstName').val(),
       "Last_Name" :  $('#NewParticipantLastName').val(),
       "Reason": $('#NewReason option:selected').val(),
-      "Arrival_Time": moment().format('HH MM SS'),
+      "Arrival_Time": moment().format('HH:MM:SS'),
       "First_Time": $('#NewFirstTime option:selected').val(),
       "iPad" : getKioskId()
     });
@@ -318,12 +319,12 @@ var activeLine = output;
 
   //Post request to create the session
   function addSession() {
-
-      createdDate = DateOnly;
+    createdDate = moment().format('MMMM Do YYYY');
+    createdTime = moment().format('HH:MM:SS');
 
       var newSession = {
           'Created_Date': moment().format('MMMM Do YYYY'),
-          'Created_Time' : moment().format('HH:MM:SS'),
+          'Created_Time': moment().format('HH:MM:SS'),
           'Facilitator': facilitatorName,
           'Session_Type': sessionType,
           'Start_Location': startLocation,
@@ -377,6 +378,7 @@ var activeLine = output;
             } else {
                     facilitatorName = results[0].Facilitator;
                     createdTime = results[0].Created_Time;
+                    console.log(createdTime);
                     theID = results[0]._id;
                     sessionType =  results[0].Session_Type;
                     startLocation = results[0].Start_Location;
