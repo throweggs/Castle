@@ -78,8 +78,8 @@ router.get('/viewTeams', function(req, res) {
     res.render('Dashboard/viewTeams', { title: 'Teams' });
 });
 
-router.get('/checkIn', function(req, res) {
-    res.render('Dashboard/checkIn', { title: 'Check In / Check Out' });
+router.get('/clockIn', function(req, res) {
+    res.render('Dashboard/clockIn', { title: 'Clock In / Clock Out' });
 });
 
 /* POST to Add Visitor Service */

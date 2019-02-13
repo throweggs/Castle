@@ -144,7 +144,7 @@ $(function(){ // this will be called when the DOM is ready
 
         var CName = ($('#firstName').val());
             CName = CName.charAt(0).toUpperCase() + CName.slice(1);
-        var theText = '<strong>Thanks ' + CName + '. </strong> Please hand this tablet back to the receptionist.';
+        var theText = '<strong>Thanks ' + CName + '. </strong> Please hand this tablet back to the receptionist, so that they can check the form and submit it';
         successAlert(theText, 'alert-success', false);
       } else if ($('#disclaimer').not(':checked')){
 

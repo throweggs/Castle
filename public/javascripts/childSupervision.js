@@ -58,7 +58,7 @@ $(function(){ // this will be called when the DOM is ready
     $('#disclaimer').change(function(){
       if ($('#disclaimer').is(':checked')){
         console.log("checked");
-        var CName = ($('#childName').val());
+        var CName = ($('#designatedAdult').val());
             CName = CName.charAt(0).toUpperCase() + CName.slice(1);
         var theText = '<strong>Thanks ' + CName + '. </strong> Please hand this tablet back to the receptionist.';
         successAlert(theText, 'alert-success', false);
