@@ -1,7 +1,7 @@
 var Count = 0,
     FirstName = 0,
     LastName = 0,
-    ContactNumber = 0,
+    // ContactNumber = 0,
     ReasonForVisit = 0,
     Disclaimer = '',
     iPad = '',
@@ -9,6 +9,10 @@ var Count = 0,
     otherReason = null,
     photographyWaverAgreement  = null,
     theText = '';
+
+    //==========================================
+    // Contact Number removed for GDPR REASONS
+    //==========================================
 
 
 $(function(){ // this will be called when the DOM is ready
@@ -40,15 +44,15 @@ $(function(){ // this will be called when the DOM is ready
         }
       });
 
-    $('#contactNumber').keyup(function() {
-        if ($('#contactNumber').val().length === 11){
-          $(this).css({'color' : 'inherit' });
-          ContactNumber = 1;
-        } else {
-          $(this).css({'color' : '#ff0000' });
-          ContactNumber = 0;
-        }
-      });
+    // $('#contactNumber').keyup(function() {
+    //     if ($('#contactNumber').val().length === 11){
+    //       $(this).css({'color' : 'inherit' });
+    //       ContactNumber = 1;
+    //     } else {
+    //       $(this).css({'color' : '#ff0000' });
+    //       ContactNumber = 0;
+    //     }
+    //   });
 
     $('#supervisingChildYes').change(function() {
       var kid1,
@@ -214,7 +218,7 @@ var Kids = {
         'lastName': $('#addVisitor input#lastName').val(),
         'reasonForVisit': $('#addVisitor select#reasonForVisit').val(),
         'otherReason': otherReason,
-        'contactNumber': $('#addVisitor input#contactNumber').val(),
+        // 'contactNumber': $('#addVisitor input#contactNumber').val(),
         'ChildNames' : [
             {'name' : $('#addVisitor input#Kid1').val()},
             {'name' : $('#addVisitor input#Kid2').val()},
