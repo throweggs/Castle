@@ -1,0 +1,64 @@
+
+
+
+.container
+  .row
+    .col-md-6
+      .h2 Teams
+    .col
+      |  
+    .col
+      button#staffModal.btn.btn-outline-primary(type='button', data-toggle='modal', data-target='#addTeamModal')
+        i.fas.fa-users-cog 
+        |   Teams
+
+
+
+
+  table#TeamsTable.table.table-hover
+    thead
+      tr
+        td Rates
+        td Teams
+        td Manager
+        td Rates
+
+
+    tbody#TeamsTableBody
+
+  br
+
+
+
+
+  // Modal
+  #addTeamModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addTeamModalCenterTitle', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+      .modal-content
+        .modal-header
+          h5#addTimeModalLongTitle.modal-title Add Team
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        .modal-body
+          .input-group
+            .input-group-prepend
+              span#teamName.input-group-text Team Name
+            input#teamName.form-control(type='text', placeholder='', aria-label='Team Name', aria-describedby='teamName')
+          p
+          .input-group
+            .input-group-prepend
+              span#managerName.input-group-text Manager Name
+            input#managerName.form-control(type='text', placeholder='', aria-label='Manager Name', aria-describedby='managerName')
+          p
+          .input-group
+            .input-group-prepend
+              span#payRates.input-group-text Pay Rates
+            input#payRates.form-control(type='text', placeholder='', aria-label='Pay Rates', aria-describedby='payRates')
+          span#payNotes Use commas to sperate amounts.  
+      
+
+
+        .modal-footer
+          button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+          button.btn.btn-primary(type='submit', onClick='addTeam()') Save changes
+//- 
