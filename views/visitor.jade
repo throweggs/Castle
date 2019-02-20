@@ -84,38 +84,43 @@ block content
 				#otherReason
 
 		//Photoghrapy Waver
-		.form-check.row
-			label.col-lg-6.col-md-6.col-sm-6.col-xs-10.requiredField(for='photographyWaver') I intend to take photos while in the centre:
-			input#photographyWaver.offset-1.big-checkbox.checkbox-inline(type='checkbox', disabled='',  name='photographyWaver', value='Checked')
-			// Button to Open the Modal
-			
-			// The Modal
-		#photographyWaverModal.modal
-			.modal-dialog
-				.modal-content
-					// Modal Header
-					.modal-header
-						h4.modal-title Photography Waver
-						button.close(type='button', data-dismiss='modal') ×
-					// Modal body
-					.modal-body
-						p I understand that The Castle is a private building and I need to seek permission from management in order to photograph inside.
-						p I will not use the photographs taken for commercial use without written consent from The Castle management.
-						p I will not photograph any adults without their permission.
-						p	I will not photograph any children without the consent of the child’s parent or guardian.
-
-					// Modal footer
-					.modal-footer
-						button#photographyWaverAgreement.btn.btn-danger(type='button', data-dismiss='modal') I Agree
+	.form-check.row
+		label.col-7.requiredField(for='photographyWaver')
+			| I intend to take photos while in the centre:
+		input#photographyWaver.col-1.big-checkbox.checkbox-inline(type='checkbox', disabled='',  name='photographyWaver', value='Checked')
+	
 
 		//Disclaimer
-		.form-check.row
-			label.col-lg-6.col-md-6.col-sm-6.col-xs-10.requiredField(for='disclaimer') I have read and agree to the above conditions*:
-			input#disclaimer.offset-1.big-checkbox.checkbox-inline(type='checkbox', disabled='', name='disclaimer' value='Agreed')
-			a#cancel.offset-lg-1.offset-md-1.offset-sm-1.btn.btn-danger.btn-xl.submit-btn(href="#", data-toggle='modal', data-target='#AreYouSure') Cancel
-			input#submit.offset-1.offset-sm-0.btn.btn-success.btn-xl.submit-btn(href='/', type='Submit', disabled='true')
-			| (Staff Only) - Submit
-			
-				
 
-					
+	.form-check.row
+		label.col-7.requiredField(for='disclaimer')
+			| I have read and agree to the above conditions*:
+		input#disclaimer.col-1.big-checkbox.checkbox-inline(type='checkbox', disabled='', name='disclaimer' value='Agreed')
+	br
+	.row
+		.col.align-self-end
+		a#cancel.btn.btn-danger.btn-lg(href="#", data-toggle='modal', data-target='#AreYouSure') Cancel
+		.col-1
+		input#submit.btn.btn-success.btn-lg(type='submit', value='(Staff Only) Submit', disabled='')
+		.col-2
+
+			
+		// The Modal
+	#photographyWaverModal.modal
+		.modal-dialog
+			.modal-content
+				// Modal Header
+				.modal-header
+					h4.modal-title Photography Waver
+					button.close(type='button', data-dismiss='modal') ×
+				// Modal body
+				.modal-body
+					p I understand that The Castle is a private building and I need to seek permission from management in order to photograph inside.
+					p I will not use the photographs taken for commercial use without written consent from The Castle management.
+					p I will not photograph any adults without their permission.
+					p	I will not photograph any children without the consent of the child’s parent or guardian.
+
+				// Modal footer
+				.modal-footer
+					button#photographyWaverAgreement.btn.btn-danger(type='button', data-dismiss='modal') I Agree
+						

@@ -3,20 +3,23 @@ var teamsNRates = [],
     theData = [];
   //functions ------------
   function showTheTeamPage(){
-      getTeamsAndRates();
+        // jQuery AJAX call for JSON
+        $.getJSON( '/staff/getTeams', function( results, res ) {
 
-      $.get('viewTeams').then(function(html) {
-        var theList = document.getElementById('mainPage');
-        theList.id = 'mainPage';
-        theList.innerHTML = html;
+          })
+          .done(function(results, res) {
+              teamsNRates = results;
+              $.get('viewTeams').then(function(html) {
+                  var theList = document.getElementById('mainPage');
+                  theList.id = 'mainPage';
+                  theList.innerHTML = html;
 
-      })
-        .done(function(results, res) {
-          insertTeams();
+                })
+                  .done(function(results, res) {
+                    insertTeams();
 
-        });
-
-
+                  });
+          });
   }
 
 
@@ -103,21 +106,10 @@ function addStaff() {
 
 
 //DB CALLS  =============================================
-function getTeamsAndRates() {
 
-    // jQuery AJAX call for JSON
-    $.getJSON( '/staff/getTeams', function( results, res ) {
 
-    })
-      .done(function(results, res) {
-          teamsNRates = results;
 
-          insertTeams();
-          console.log(result);
 
-      });
-
-}
 
 
 //Post request to add Staff Member
@@ -205,10 +197,10 @@ $(document).mouseout(function() {
 
 $(document).on('click',function() {
 //Show teams
-  if(event.target.className === 'fas fa-edit toggle-row'){
-    var theID = '#'+event.target.id+'_team';
-    $(theID).toggle();
-}
+//   if(event.target.className === 'fas fa-edit toggle-row'){
+//     var theID = '#'+event.target.id+'_team';
+//     $(theID).toggle();
+// }
 
 
 

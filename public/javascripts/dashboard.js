@@ -15,11 +15,5 @@ $(document).ready(function() {
     });
 
 
-//Load TeamView jade file onto page
-    $('#CheckInLink').click(function(){
-
-      showCheckInPage();
-    });
-
 
 });

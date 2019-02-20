@@ -21,6 +21,7 @@
         td Staff Member
         td Pin
         td Created Date
+        td Admin
 
     tbody#StaffMembersTableBody
 
@@ -39,21 +40,45 @@
           button.close(type='button', data-dismiss='modal', aria-label='Close')
             span(aria-hidden='true') ×
         .modal-body
-          .input-group
-            .input-group-prepend
-              span#firstName.input-group-text First Name
-            input#firstName.form-control(type='text', placeholder='Username', aria-label='First Name', aria-describedby='firstName')
+          .row
+            .col
+              .input-group
+                .input-group-prepend
+                  span#firstName.input-group-text.input-group-addon.primary  Name
+                input#firstNameInput.input-group-outline-addon.primary.form-control(type='text', placeholder='First', aria-label='First', aria-describedby='firstName')
+                input#lastNameInput.input-group-outline-addon.primary.form-control(type='text', placeholder='Last', aria-label='Last', aria-describedby='lastName')
           p
-          .input-group
-            .input-group-prepend
-              span#lastName.input-group-text Last Name
-            input#lastName.form-control(type='text', placeholder='Username', aria-label='Last Name', aria-describedby='lastName')
-          p
-          .input-group
-            .input-group-prepend
-              span#pin.input-group-text Pin
-            input#pin.form-control(type='password', placeholder='4 digits or more', aria-label='Pin', aria-describedby='Pin')     
+          .row
+            .col
+              .input-group
+                .input-group-prepend
+                  span#pin.input-group-text.input-group-addon.primary Pin
+                input#pinInput.input-group-outline-addon.primary.form-control(type='password', placeholder='4 digits only', aria-label='Pin', aria-describedby='Pin')
 
+            .col
+              .input-group
+                .input-group-prepend
+                  .input-group-text.input-group-addon.primary
+                    input#adminCheckBox(type='checkbox', aria-label='Checkbox for following admin or manager input')
+                span.input-group-text.input-group-outline-addon.primary.form-control(type='text', aria-label='Text input with checkbox') Admin or Manager
+          p
+          #TeamList
+
+          p
+          .form-group#sessionType
+            label.col.form-check-label(for='SessionClimbingType') Employee is:
+            .btn-group.col.btn-group-toggle(data-toggle='buttons')
+              .col-6#BSess.label.btn.btn-outline-primary.active
+                input#ContractedChoice.input-group-outline-addon.primary(type='radio', value='Contracted', autocomplete='off', checked='')
+                | Contracted
+              .col-6#TSess.label.btn.btn-outline-primary
+                input#HourlyChoice.input-group-outline-addon.primary(type='radio', value='Hourly', autocomplete='off')
+                | Hourly
+                  
+
+
+
+  
 
 
         .modal-footer

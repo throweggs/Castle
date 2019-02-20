@@ -5,16 +5,20 @@ var teamsNRates = [],
     allStaff = [],
     aStaff = [],
     theData = [],
-    teamsList = '';
-    staffList = '';
+    teamsList = '',
+    teamList = '',
+    theTeamMembers = [],
+    passInfo = '';
 
-
-
+//GET TEAMS LIST
 function getTeams(){
+      $('#ListTeams').html('<img src="/loading.gif" alt="loading" height="42" width="42">');
     $.each(teamsNRates, function(i, team){
-      console.log(team);
-      var teamID = team.Team_Name;
-      teamsList += '<a class="teams list-group-item list-group-item-action" id="'+teamID+'" onClick="getNames('+i+', '+team.Team_Name+');" data-toggle="list" href="#" role="tab" aria-controls="'+team.Team_Name+'">'+team.Team_Name+'</a>';
+      // console.log(team);
+      var teamName = team.Team_Name;
+
+
+      teamsList += '<a class="teams list-group-item list-group-item-orange list-group-item-orange-action" id="'+teamName+'" onClick="getNames('+i+');" data-toggle="list" href="#" role="tab" aria-controls="'+teamName+'">'+teamName+'</a>';
     });
     teamsList += '</div>';
       $('#ListTeams').html(teamsList);
@@ -22,137 +26,170 @@ function getTeams(){
 
 }
 
-function getNames(i, theTeamName){
-  var theStaff = teamsNRates[i].Team_Staff;
+//GET NAMES LIST
+function getNames(i){
+    $('#ListStaff').html('<img src="/loading.gif" alt="loading" height="42" width="42">');
+var theStaff = [],
+    staffList = '',
+    presence = '',
+    colour = '';
+    // $('#ListStaff').html('<img src="/loading.gif" alt="loading" height="42" width="42">');
 
-  $.each(theStaff, function(i, staff){
-    var staffID = staff._id;
-    var staffName = staff.Staff_Name;
-    staffList += '<a class="staff list-group-item list-group-item-action" id="'+staffID+'" data-toggle="list" href="#" role="tab" aria-controls="'+staff.Staff_Name+'">'+staff.Staff_Name+'</a>';
+      getTeamName = teamsNRates[i].Team_Name;
 
-  });
-  staffList += '</div>';
+          $.getJSON( '/staff/findStaffInTeam', {Teams:{$elemMatch: {team: getTeamName}}}, function(results, res) {
+            })
+            .done(function(results, res) {
+              theStaff = results;
 
-  $('#ListStaff').html(staffList);
+              $.each(theStaff, function(i, staff){
+                var theTeams = staff.Teams;
+
+
+                    if (staff.Present === true){
+                      presence = ' <i class="h4 fas fa-sign-in-alt"></i>';
+                      colour = 'list-group-item-success';
+                  } else if (staff.Present === false){
+                      presence = ' <i class="h4 fas fa-sign-out-alt"></i>';
+                      colour = 'list-group-item-primary';
+                    }
+
+
+                var staffID = staff._id;
+
+                var staffName = staff.First_Name + ' ' +staff.Last_Name;
+
+                staffList += '<a class="staff list-group-item '+colour+' list-group-item-action" id="'+staffID+'" data-toggle="list" href="#" role="tab" aria-controls="'+staff+'">'+presence+'  '+staffName+'</a>';
+
+              });
+              staffList += '</div>';
+
+              $('#ListStaff').html(staffList);
+          });
 
 
 }
 
-
-function addMe(staffName){
-
-}
-
-
-
-
-
-
-
-//DB CALLS=============================
-
+//CLOCK IN AND OUT
 function  clockIn(direction,staffID,teamID) {
+      $('#ListStaff').html('<img src="/loading.gif" alt="loading" height="42" width="42">');
+      $('#ListTeam').html('<img src="/loading.gif" alt="loading" height="42" width="42">');
 var newClockIn = '';
 
 if(direction === 'ClockIn'){
    newClockIn = {
-    'Check_In' : moment().format('HH:MM:SS'),
+    'Clocked_In' : moment().format('HH:mm:ss'),
     'Date' : moment().format('MMMM Do YYYY'),
-    'Check_Out': '',
-      'Staff_Id' : staffID,
+    'Staff_Id' : staffID,
     'Team_Name' : teamID,
+
   };
-  } else if(direction === 'ClockOut'){
-
-    $.getJSON( '/staff/getClockIn', {_id: clockInId }, function(results, res) {
-      })
-      .done(function(results, res) {
-            var theResults = JSON.stringify(results);
-
-            newClockIn = {
-
-             'Check_In': results.Check_In,
-             'Date': results.Date,
-             'Check_Out': moment().format('MMMM Do YYYY'),
-             'Staff_Id' : results.Staff_Id,
-             'Team_Name' : results.Last_Name,
-           };
-
-        return results;
-        });
-
-
-  }
-
-
-var myJSON = JSON.stringify(newClockIn);
-
-
-
-
-  $.ajax({
-      type: 'POST',
-      data: myJSON,
-      url: 'staff/addClockIn',
-      dataType: 'JSON',
-      contentType: 'application/json',
-  }).done(function( response, results ) {
-    console.log(response);
-
-  var theClockInID = response.msg._id;
-
-  });
-
-
-}
-
-//Post request to add Staff Member
-function addStaff() {
-
-    var newStaffMember = {
-      'Created_Date': moment().format('MMMM Do YYYY'),
-      'Created_Time' : moment().format('HH:MM:SS'),
-      'First_Name' : $('input#firstName').val(),
-      'Last_Name' : $('input#lastName').val(),
-      'Pin' : $('input#pin').val(),
-      'Teams' : [],
-    };
-
-  var myJSON = JSON.stringify(newStaffMember);
-
-
-
+    console.log(direction);
+  var myJSON = JSON.stringify(newClockIn);
 
     $.ajax({
         type: 'POST',
         data: myJSON,
-        url: 'staff/addStaff',
+        url: 'staff/addClockIn',
         dataType: 'JSON',
         contentType: 'application/json',
-    }).done(function( response, results ) {
-      console.log(response);
-        location.reload();
-        // Clock for successful (blank) response
-        if (response.msg === '') {
+      }).done(function( response, results ) {
+        console.log(response);
 
-        }
-        else {
-            // If something goes wrong, alert the error message that our service returned
-            alert('Error: ' + response.msg);
-        }
+          // Check for successful (blank) response
+          if (response.msg === '') {
+            // var objID = { _id : 'ObjectId('+staffID+')'};
 
-    });
+            $.getJSON( '/staff/StaffPresent',{ _id: staffID } , function(results, res) {
+              })
+              .done(function(results, res) {
+              });
+
+
+          location.reload();
+          }
+          else {
+              // If something goes wrong, alert the error message that our service returned
+              alert('Error: ' + response.msg);
+          }
+
+      });
+
+
+  } else if(direction === 'ClockOut'){
+    $('#ListStaff').html('<img src="/loading.gif" alt="loading" height="42" width="42">');
+    $('#ListTeam').html('<img src="/loading.gif" alt="loading" height="42" width="42">');
+
+          console.log('UPDATE: ' + moment().format('MMMM Do YYYY'));
+
+                var newClockOut  = [{Staff_Id : staffID},
+                                    {Clocked_Out: moment().format('HH:mm:ss')}];
+
+
+    console.log(newClockOut);
+                    $.ajax({
+                      type: "put",
+                      url: "staff/ClockOut",
+                      contentType: 'application/json',
+                      data: JSON.stringify(newClockOut)
+                    }).done(function( response, results ) {
+                      console.log(response);
+                      console.log(results);
+                        // Check for successful (blank) response
+                        if (results === 'success') {
+                          // var objID = { _id : 'ObjectId('+staffID+')'};
+
+                          $.getJSON( '/staff/StaffNotPresent',{ _id: staffID } , function(results, res) {
+                            })
+                            .done(function(results, res) {
+                            });
+
+
+                        location.reload();
+                        }
+                        else {
+                            // If something goes wrong, alert the error message that our service returned
+                            alert('Error: ' + response.msg);
+                        }
+
+                    });
 }
 
-// function toggleShow(theID){
-//
-//     theID = '#'+theID+'_team';
-//     console.log(theID);
-//     $(theID).toggle();
-//
-// }
+  //
+  //   $.getJSON( '/staff/ClockOut',({ Staff_Id: staffID, '$set': {Clock_Out:  moment().format('HH:mm:ss')}}), function(results, res) {
+  //     })
+  //     .done(function(results, res) {
+  //       console.log('clocked out on form');
+  //
+  //         // Check for successful (blank) response
+  //         if (results.msg === '') {
+  //
+  //
+  //           // $.getJSON( '/staff/StaffNotPresent',{ _id: staffID}, function(results, res) {
+  //           //   })
+  //           //   .done(function(results, res) {
+  //           //     console.log('clocked out on staff');
+  //           //   });
+  //
+  //
+  //         location.reload();
+  //         }
+  //         else {
+  //             // If something goes wrong, alert the error message that our service returned
+  //             alert('Error: ' + results.msg);
+  //         }
+  //
+  //     });
+  //
+  // }
+  //
 
-//Get request for session
+
+
+}
+
+
+//Get request for Staff
 function getAStaff(staffID){
 
   $.getJSON( '/staff/getAStaff', {_id: staffID }, function(results, res) {
@@ -171,7 +208,7 @@ function getAStaff(staffID){
 
   }
 
-//Put request to update to Participants, on  pre made sesion
+//Put request to update a Staff
 function updateAStaff(theID,theteam){
       console.log('UPDATE: ' + moment().format('MMMM Do YYYY'));
 
@@ -180,10 +217,10 @@ function updateAStaff(theID,theteam){
         })
         .done(function(results, res) {
               var theResults = JSON.stringify(results);
-console.log(results);
+
               results[0].FindMe = {_id: theID};
               results[0].ClockIns = {'team': theteam, 'time' : moment().format('HH mm ss')};
-console.log(results);
+
                 $.ajax({
                   type: "put",
                   url: "staff/updateAStaff",
@@ -197,21 +234,6 @@ console.log(results);
 
   }
 
-//Get Staff Members Files
-function getStaffMembers() {
-
-
-    // jQuery AJAX call for JSON
-    $.getJSON( '/staff/getStaff', function( data ) {
-
-    })
-    .done(function(results, res) {
-      theStaff = results;
-
-    });
-
-}
-
 //DB CALLS  =============================================
 function getTeamsAndRates() {
 
@@ -220,22 +242,16 @@ function getTeamsAndRates() {
 
     })
       .done(function(results, res) {
-          teamsNRates = results;
-            getTeams();
-            getStaffMembers();
+        teamsNRates = results;
+        getTeams();
 
       });
 
 }
 
-// $('#Department-list-tab').on('click', function (e) {
-//   e.preventDefault();
-//   $(this).tab('show');
-//   console.log(this);
-// });
+
 
 //DOM watch==============================
-
 
 
 //DOM ready
@@ -246,7 +262,7 @@ $(document).ready(function() {
         $('#date-part').html(momentNow.format('YYYY MMMM DD') + ' '  + momentNow.format('dddd').substring(0,3).toUpperCase());
         $('#time-part').html(momentNow.format('A hh:mm:ss'));
     }, 1000);
-getStaffMembers();
+
 getTeamsAndRates();
 getTeams();
 
@@ -283,6 +299,19 @@ $(document).mouseout(function() {
 $(document).on('click',function() {
 
 console.log(event.target.className);
+
+  if ($(event.target).hasClass('staff') === true){
+if ($(event.target).hasClass('list-group-item-success') === true){
+document.getElementById("ClockOut").disabled = false;
+document.getElementById("ClockIn").disabled = true;
+}
+if ($(event.target).hasClass('list-group-item-primary') === true){
+document.getElementById("ClockOut").disabled = true;
+document.getElementById("ClockIn").disabled = false;
+}
+  }
+
+
 });
 
 
@@ -307,13 +336,17 @@ console.log(event.target.className);
       var item = document.getElementsByClassName("list-group-item active");
       var staffID = item[1].id;
       var teamID = item[0].id;
+      var thePin = '';
 
-              $.each(theStaff, function(i, staff){
-                if(staff._id == staffID){
-                  thePin = staff.Pin;
+      $.getJSON( '/staff/getAStaff', {_id: staffID }, function(results, res) {
+        })
+        .done(function(results, res) {
 
-                }
-              });
+          thePin = results[0].Pin;
+          console.log(thePin);
+
+          });
+
 
         $("#firstdigit").focus();
         $('button#clockIn').on('click', function(){
@@ -324,7 +357,7 @@ console.log(event.target.className);
             typedPin += $("#fourthdigit").val();
 
 if(typedPin === thePin){
-
+  $('button#clockIn').hide().after('<img src="/loading.gif" />');
  clockIn(direction,staffID,teamID);
 
 } else {

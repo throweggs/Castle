@@ -121,9 +121,9 @@ $(function(){ // this will be called when the DOM is ready
 
     $('#addVisitor').on('keydown keyup change',function(){
       if ($('#disclaimer').is(':checked')){
-            $('#submit').prop('disabled', false);
+            $('input#submit').prop('disabled', false);
       } else if ($('#disclaimer').not(':checked')){
-          $('#submit').prop('disabled', true);
+          $('input#submit').prop('disabled', true);
       }
     });
 
@@ -144,7 +144,7 @@ $(function(){ // this will be called when the DOM is ready
 
         var CName = ($('#firstName').val());
             CName = CName.charAt(0).toUpperCase() + CName.slice(1);
-        var theText = '<strong>Thanks ' + CName + '. </strong> Please hand this tablet back to the receptionist, so that they can check the form and submit it';
+        var theText = '<strong>Thanks ' + CName + '. </strong> <br>Please hand this tablet back to the receptionist, so that they can check the form.';
         successAlert(theText, 'alert-success', false);
       } else if ($('#disclaimer').not(':checked')){
 

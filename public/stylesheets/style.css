@@ -45,62 +45,6 @@ td.innerTable {
 
 }
 
-/* .side-bar-header {
-  font-weight: normal;
-  margin-top:10px;
-  font-size: 18px;
-}
-
-.vistor-info {
-  background-color: #cfe0e8;
-  color: black;
-  position: fixed;
-  height: 100%;
-  padding: 5px;
-  margin-top: 10px;
-  top: 55px;
-}
-
-.visitor-detail {
-  font-size: 18px;
-  font-weight: 200;
-}
-
-.visitor-title {
-  padding: 5px;
-  width: 100%;
-  font-size: 30px;
-  font-weight: normal;
-  background-color: #b7d7e8;
-  color: black;
-}
-
-  .side-bar-header {
-    color: black;
-  }
-
-  .table td div.form-group {
-   margin-bottom: 0rem;
-  } */
-
-/* tbody {
-  padding-right: 10px;
-  color: #00B7FF;
-}
-
-th {
-  color: black;
-  display: table-cell;
-  vertical-align: inherit;
-  font-weight: normal;
-  text-align: left;
-}
-
-tbody {
-  color: #555;
-}
-
-*/
 
 a {
   color: black;
@@ -259,4 +203,56 @@ body {
   0%, 100% { left: 0px;}
   20% , 60%{left: 15px;}
   40% , 80%{left: -15px;}
+}
+
+.list-group-item-orange.active {
+z-index: 2;
+color: #fef8f1;
+font-weight: bold;
+background-color: #cc3801;
+border-color: #9d4b02;
+}
+
+.list-group-item-orange {
+color: #d06911;
+
+background-color: #feb063;
+}
+
+.list-group-item-orange-action:focus, .list-group-item-orange-action:hover {
+  color: #fef8f1;
+  background-color: #cc3801;
+  border-color: #9d4b02;
+text-decoration: none;
+
+}
+
+.input-group-addon.primary {
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 109, 255);
+    border-color: rgb(0, 109, 255);
+}
+.input-group-outline-addon.primary {
+    color: rgb(0, 109, 255);
+    border-color: rgb(0, 109, 255);
+}
+.input-group-addon.success {
+    color: rgb(255, 255, 255);
+    background-color: rgb(92, 184, 92);
+    border-color: rgb(76, 174, 76);
+}
+.input-group-addon.info {
+    color: rgb(255, 255, 255);
+    background-color: rgb(57, 179, 215);
+    border-color: rgb(38, 154, 188);
+}
+.input-group-addon.warning {
+    color: rgb(255, 255, 255);
+    background-color: rgb(240, 173, 78);
+    border-color: rgb(238, 162, 54);
+}
+.input-group-addon.danger {
+    color: rgb(255, 255, 255);
+    background-color: rgb(217, 83, 79);
+    border-color: rgb(212, 63, 58);
 }
