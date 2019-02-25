@@ -9,6 +9,7 @@ var router = express.Router();
 router.post('/addVisitor', function(req, res) {
     var db = req.db;
     var collection = db.get('Visitors');
+    console.log(req.body);
     collection.insert(req.body, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }

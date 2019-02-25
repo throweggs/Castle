@@ -16,22 +16,28 @@ $(function(){ // this will be called when the DOM is ready
 
     $('#submit').on('click', addSupervisor);
 
-    $('#childName').keydown(function() {
-        if ($('#childName').val().length >= 1){
-          $(this).css({'color' : 'inherit' });
-          childName = 1;
+    $('#childName').blur(function() {
+        if ($('#childName').val().length >= 3){
+        $('#childName').addClass('is-valid');
+        $('#childName').removeClass('is-invalid');
+        $('#childName').removeClass('is-invalid-feedback');
+        childName = 1;
         } else {
-          $(this).css({'color' : '#ff0000' });
+          $('#childName').removeClass('is-valid');
+          $('#childName').addClass('is-invalid');
           childName = 0;
         }
       });
 
-    $('#designatedAdult').keydown(function() {
-        if ($('#designatedAdult').val().length >= 1){
-          $(this).css({'color' : 'inherit' });
+    $('#designatedAdult').keyup(function() {
+        if ($('#designatedAdult').val().length >= 3){
+          $('#designatedAdult').addClass('is-valid');
+          $('#designatedAdult').removeClass('is-invalid');
+          $('#designatedAdult').removeClass('is-invalid-feedback');
           designatedAdult = 1;
-        } else {
-          $(this).css({'color' : '#ff0000' });
+          } else {
+            $('#designatedAdult').removeClass('is-valid');
+            $('#designatedAdult').addClass('is-invalid');
           designatedAdult = 0;
         }
       });
@@ -41,56 +47,24 @@ $(function(){ // this will be called when the DOM is ready
       var Count = designatedAdult + childName;
           if (Count === 2){
             $('#disclaimer').prop('disabled', false);
+            $('#theMessage').text('Thanks ' + $('#designatedAdult').val());
+
           } else if (Count != 2){
             $('#disclaimer').prop('disabled', true);
-            $('#disclaimer').prop('checked', false);
           }
       });
 
-    $('#addSupervisor').on('keydown keyup change',function(){
-      if ($('#disclaimer').is(':checked')){
-            $('#submit').prop('disabled', false);
-      } else if ($('#disclaimer').not(':checked')){
-          $('#submit').prop('disabled', true);
-      }
-    });
-
-    $('#disclaimer').change(function(){
-      if ($('#disclaimer').is(':checked')){
+    
+    $('#disclaimer').click(function(){
+        $("button#submit").show();
+        $("button#disclaimer").addClass('active');
         console.log("checked");
         var CName = ($('#designatedAdult').val());
             CName = CName.charAt(0).toUpperCase() + CName.slice(1);
         var theText = '<strong>Thanks ' + CName + '. </strong> Please hand this tablet back to the receptionist.';
-        successAlert(theText, 'alert-success', false);
-      } else if ($('#disclaimer').not(':checked')){
-
-        successAlert("", 'alert-success', true);
-      }
 
     });
 
-    // $('#addSupervisor').on('blur change',function() {
-    //   var Count = childName + designatedAdult;
-    //     if (Count === 2){
-    //         failAlert("bugger 1", "", true);
-    //         if ($('#reasonForVisit').val() === "") {
-    //             theText = 'Please make sure you have selected a <strong> REASON FOR VISIT</strong>, thanks.';
-    //             failAlert(theText, 'alert-danger', false);
-    //         } else if ($('#reasonForVisit').val() !== ""){
-    //                   failAlert("buger2", 'alert-danger', true);
-    //               }
-    //     } else if (FirstName != 1) {
-    //         theText = 'Please make sure you have entered your <strong>FIRST NAME</strong> correctly, thanks.';
-    //         failAlert(theText, 'alert-danger', false);
-    //     } else if ((LastName != 1) && (FirstName === 1)) {
-    //         theText = 'Please make sure you have entered your <strong>LAST NAME</strong> correctly, thanks.';
-    //         failAlert(theText, 'alert-danger', false);
-    //     } else if ((LastName != 1) && (FirstName != 1)) {
-    //         theText = 'Please make sure you have entered your <strong>FULL NAME</strong> correctly, thanks.';
-    //         failAlert(theText, 'alert-danger', false);
-    //       }
-    //
-    // });
 
       });
 
@@ -98,11 +72,11 @@ $(function(){ // this will be called when the DOM is ready
 // Add User button click
 function addSupervisor(event) {
     event.preventDefault();
-  console.log('arrived on submit');
+
 
   var dt = new Date();
   var curDate = dt.toString();
-  console.log("New Supervisor of Non-Climbing Child added at :" + curDate);
+
 
 
     // If it is, compile all user info into one object

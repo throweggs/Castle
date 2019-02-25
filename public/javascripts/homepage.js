@@ -12,12 +12,12 @@ function getList(){
 }
 function createList(results){
     var output = '<center>';
-        output += '<div class="love-ya col-12 forms">Please select which form you require:</div>';
+        output += '<div class="love-ya col-12 forms"><h1>Please select which form you require:</h1></div>';
         output += '<div id="welcomeForm" class=" forms"></div>';
 
     $.each(results, function( index, value ) {
         var i = index;
-        output += '<a href="/'+ results[i].formLink +'" id="welcomeFormRow" class="col-10 button btn '+ results[i].colour +' btn-lg">'+ results[i].formName +'</a>';
+        output += '<p><a href="/'+ results[i].formLink +'" id="welcomeFormRow" class="col-10 button btn '+ results[i].colour +' btn-lg">'+ results[i].formName +'</a></p>';
     });
   output +='</center>';
       $('#formList').html(output);

@@ -1,72 +1,118 @@
 extends layout
 
 block content
-	script(src='/javascripts/wbs.js')
-	
-	br
-	// Button Facilitator modal
-	.container-fluid
-		.row
-			.col-11
-				//Session INFORMATION
-				#showSession
-			.col-1.text-right
-				button#openFacilitatorModal.btn.btn-light(type='button', data-toggle='modal', data-target='#facilitatorModal')
-					i.far.fa-edit  Info
-	.col
-		li <strong>The Session is not suitable for novice climbers.</strong> You need to be a registered bouldering member. Please ask reception who will be able to guide you through the registration process.
-		li <u>This is not a teaching session</u>, <u>nor is it supervised</u>. 
-		li Participants are still responsible for their own safety. It is up to each participant to decide for themselves who they wish to climb with.
-		li If you have any questions or concerns please speak to the facilitator or reception so that they can assist you.
+  script(src='/javascripts/wbs.js')
+  
+  br
+  // Button Facilitator modal
+  .container-fluid
+    .row
+      .col-10
+        //Session INFORMATION
+        #showSession
+      .col-2.text-right
+        button#openFacilitatorModal.btn.btn-outline-success(type='button', data-toggle='modal', data-target='#facilitatorModal')
+          i.far.fa-edit  Info
+  .col
+    li <strong>The Session is not suitable for novice climbers.</strong> You need to be a registered bouldering member. Please ask reception who will be able to guide you through the registration process.
+    li <u>This is not a teaching session</u>, <u>nor is it supervised</u>. 
+    li Participants are still responsible for their own safety. It is up to each participant to decide for themselves who they wish to climb with.
+    li If you have any questions or concerns please speak to the facilitator or reception so that they can assist you.
 
-	
-	//Participants		
-	form#ShowParticipants.container-fluid(name="addFacilitator", method="post", onlcick="SaveParticipants()")
-		#ShowParticipants
-			
+  
+  //Participants    
+  hr
+  form.needs-validation.container-fluid(novalidate='')
+    .form-row
+      .col
+        label(for='NewParticipantFirstName') First name
+        input#NewParticipantFirstName.form-control(type='text', placeholder='', value='', required='')
+        .valid-feedback
+          | Looks good!
+        .invalid-feedback
+          | Required
+      .col
+        label(for='NewParticipantLastName') Last name
+        input#NewParticipantLastName.form-control(type='text', placeholder='', value='', required='')
+        .valid-feedback
+          | Looks good!
+        .invalid-feedback
+          | Required
+      .col
+        label(for='NewReason') Reason for participanting
+        select#NewReason.form-control.row2.custom-select(autocomplete='false', required='')
+          option(selected='', value='')
+          option(value='I have no climbing partner today') as I have no climbing partner today
+          option(value='I am new to the Castle') as I am new to the Castle
+          option(value=' for staff input') for staff input
+          option(value='other reasons') other reasons
+        .valid-feedback
+          | Looks good!
+        .invalid-feedback
+          | Required     
+      .col 
+        label(for='NewReason') First time on the session
+        select#NewFirstTime.form-control.row2.custom-select(autocomplete='false', required='')
+          option(selected='', value='')
+          option(value='Yes') Yes
+          option(value='No') No
+        .valid-feedback
+          | Looks good!
+        .invalid-feedback
+          | Required
+    br
+    button#addMe.col.align-self-end.btn.btn-primary(type='submit') Add Me
+    
+    hr
+    p
 
+    h2 Currently signed in participants...
+    table#participantTable.table.table-sm
+      thead
+        tr
+          th(scope='col') #
+          th(scope='col') Name
+          th(scope='col') Reason for participating
+          th(scope='col') First time on the session
+      tbody
 
-	// Modal
-	#facilitatorModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='facilitatorModalCenterTitle', aria-hidden='true')
-		.modal-dialog
-			.modal-content
-				// Modal Header
-				.modal-header
-					h4.modal-title.i.far.fa-edit  Session Info
-					button.close(type='button', data-dismiss='modal') ×
-				// Modal body
-				.modal-body
-		
-					.col
-						.form-group
-							#facilitatorField.input-group
-								.input-group-prepend
-									span.input-group-text Facilitator:
-								input#facilitatorName.form-control(type='text')
-					.form-group#sessionType
-						label.col.form-check-label(for='SessionClimbingType') Session Type:
-						.btn-group.col.btn-group-toggle(data-toggle='buttons')
-							.col-6#BSess.label.btn.btn-outline-secondary.active
-								input#BoulderingSession(type='radio', value='bouldering', autocomplete='off', checked='', disabled='true')
-								| Bouldering
-							.col-6#TSess.label.btn.btn-outline-secondary
-								input#TopRopeSession(type='radio', value='top roping', autocomplete='off', disabled='true')
-								| Top Roping
-			
-					
-									
-					.col-12
-						.form-group
-							label(for='startOptions') Session Starting Location:
-							#startOptions.list-group(role='tablist')
-								
-									
-		
+  // Modal
+  #facilitatorModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='facilitatorModalCenterTitle', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        // Modal Header
+        .modal-header
+          h4.modal-title.i.far.fa-edit  Session Info
+          button.close(type='button', data-dismiss='modal') ×
+        // Modal body
+        .modal-body
+    
+          .col
+            .form-group
+              #facilitatorField.input-group
+                .input-group-prepend
+                  span.input-group-text Facilitator:
+                input#facilitatorName.form-control(type='text')
+          .form-group#sessionType
+            label.col.form-check-label(for='SessionClimbingType') Session Type:
+            .btn-group.col.btn-group-toggle(data-toggle='buttons')
+              .col-6#BSess.label.btn.btn-outline-secondary.active
+                input#BoulderingSession(type='radio', value='bouldering', autocomplete='off', checked='', disabled='true')
+                | Bouldering
+              .col-6#TSess.label.btn.btn-outline-secondary
+                input#TopRopeSession(type='radio', value='top roping', autocomplete='off', disabled='true')
+                | Top Roping
+      
+          
+                  
+          .col-12
+            .form-group
+              label(for='startOptions') Session Starting Location:
+              #startOptions.list-group(role='tablist',, style="display: none;")
+                
+                  
+    
 
-				// Modal footer
-				.modal-footer
-					button#facilitatorSubmit.btn.btn-danger(type='submit', data-dismiss='modal', disabled='true') Submit
-
-
-	
-				
+        // Modal footer
+        .modal-footer
+          button#facilitatorSubmit.btn.btn-danger(type='submit', data-dismiss='modal', disabled='true') Submit

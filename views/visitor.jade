@@ -1,126 +1,145 @@
 extends layout
 
 block content 
-	script(src='/javascripts/visitor.js')
-	
-	#successAlert		
-	#Disclaimer.container-fluid
-		.disclaimer-text
-			.col
-				<p>
-				text-left.h4 For the safe enjoyment of our facilities for all users, please read our conditions below before signing in:
-				<p>
-				ul.text-left
-					li <b> Climbing is a dangerous activity. </b>
-					li <b> You, and any children you are supervising, may NOT climb on this visit to the centre. </b>
-					li <b> DO NOT stand in the climbing areas or distract climbers/belayers. </b>
-					li <b> Children must be supervised at all times. </b>
-					ul.text-left
-						li They must remain with you at all times and may NOT climb anywhere within in the centre or the garden.
-						li They must NOT go on the soft matting – these areas are landing zones for climbers.
-						li You are responsible for the safety of children under your supervision.
-					li <b>Unauthorised photography is not permitted</b> - please speak to a Duty Manager if you’d like to take photos.
-						<p>
-	
-	form#addVisitor.container-fluid(name="addVisitor", method="post", action="/addVisitor")
-		
-		// Visitors Name
-		.form-group.row
-			label.col-lg-2.col-sm-12.col-form-label(for='firstName') Visitor Name*
-			.col-lg-4.col-sm-6
-				input#firstName.form-control(type='text' name='firstName' placeholder='First Name' autocomplete='given-name')
-			.col-lg-4.col-sm-6
-				input#lastName.form-control(type='text' name='lastName' placeholder='Last Name' autocomplete='family-name')
-				
+  script(src='/javascripts/visitor.js')
+  
+  #successAlert    
+  #Disclaimer.container-fluid
+    .disclaimer-text
+      .col
+        <p>
+        text-left.h4 For the safe enjoyment of our facilities for all users, please read our conditions below before signing in:
+        <p>
+        ul.text-left
+          li <b> Climbing is a dangerous activity. </b>
+          li <b> You, and any children you are supervising, may NOT climb on this visit to the centre. </b>
+          li <b> DO NOT stand in the climbing areas or distract climbers/belayers. </b>
+          li <b> Children must be supervised at all times. </b>
+          ul.text-left
+            li They must remain with you at all times and may NOT climb anywhere within in the centre or the garden.
+            li They must NOT go on the soft matting – these areas are landing zones for climbers.
+            li You are responsible for the safety of children under your supervision.
+          li <b>Unauthorised photography is not permitted</b> - please speak to a Duty Manager if you’d like to take photos.
+            <p>
+  
+  form#addVisitor.needs-validation.container-fluid(novalidate='', name="addVisitor")
 
-		//- // Contact Number
-		//- .form-group.row
-		//- 		label.col-lg-2.col-sm-12.col-form-label(for='contactNumber') Phone Number
-		//- 		.col-lg-8.col-sm-12
-		//- 			input#contactNumber.form-control(type='text' name='contactNumber' minlength="11" maxlength="11" placeholder='Phone Number' autocomplete='tel')
+    // Visitors Name
+    .form-group.row
+      label.col-lg-2.col-sm-12.col-form-label(for='firstName') Your name
+      .col-lg-4.col-sm-6
+        input#firstName.form-control(type='text', name='firstName', placeholder='first name', required='')
+        .invalid-feedback
+          | Please enter your fist name
+      .col-lg-4.col-sm-6
+        input#lastName.form-control(type='text', name='lastName', placeholder='last name', required='')
+        .invalid-feedback
+          | Please enter your last name
 
 
-		// Supervising Children
-		.form-group
-				label.col-6.form-check-label(for='supervisingChild') Are you supervising children? Maximum of 2 per adult.
-				.btn-group.btn-group-toggle(data-toggle='buttons')
-					label.btn.btn-primary.active
-						input#supervisingChildNo(type='radio', name='supervisingChild', autocomplete='off', checked='')
-						|  No
-					label.btn.btn-primary
-						input#supervisingChildYes(type='radio', name='supervisingChild', autocomplete='off')
-						|  Yes
-										
-						
-						
-		.form-group.row
-			.col-lg-2
-			.col-lg-4.col-sm-6.col-xs-12
-					#Kid1
-			.col-lg-4.col-sm-6.col-xs-12
-					#Kid2
-			//- .col-lg-3.col-sm-4.col-xs-12
-			//- 		#Kid3
+    // Supervising Children
+    .form-group.row
+        label.col-lg-4.col-md-6.col-sm-10.form-check-label.text-right(for='supervisingChild') Are you supervising children? (Maximum of 2 per adult)
+        .btn-group.col-2.btn-group-toggle(data-toggle='buttons')
+          label.btn.btn-outline-primary.active
+            input#supervisingChildNo(type='radio', name='supervisingChild', autocomplete='off', checked='')
+            |  No
+          label.btn.btn-outline-primary
+            input#supervisingChildYes(type='radio', name='supervisingChild', autocomplete='off')
+            |  Yes
+            
+    // Visitors Name
+    .form-group.row
+      label#Kids.col-lg-2.col-sm-12.col-form-label(for='ChildNames', style='display: none;') Their names
+      .col-lg-4.col-sm-6
+        input#Kid1.form-control(type='text' name='Child1' placeholder='Child 1', style='display: none;')
+        .invalid-feedback
+          | Please enter your their name
+      .col-lg-4.col-sm-6
+        input#Kid2.form-control(type='text' name='Child2' placeholder='Child 2', style='display: none;')      
 
-		//Reason for Visit
-		.form-group.row
-			.col-lg-2.col-md-2.col-sm-12
-				label.control-label.requiredField(for='reasonForVisit') Reason for Visit*:
-			.col-lg-8.col-md-10.col-sm-12
-				select#reasonForVisit.select.form-control.input-lg(name='reasonForVisit' required='')
-					option(value='')
-					option(value='Cafe') Cafe
-					option(value='Climbers Clinic') Climbers Clinic
-					option(value='Garden')  Garden
-					option(value='Geckos')  Geckos
-					option(value='Castle Climbing')  Castle Climbing Club
-					option(value='Passing By')  Passing By
-					option(value='Shop')  Shop
-					option(value='Contractor')  Contractor
-					option(value='Photography')  Photography
-					option(value='Staff Member')  Visiting a staff member
-					option(value='Other')  Other
-			.offset-lg-2.offset-md-2.col-lg-8.col-md-10.col-sm-12
-				#otherReason
 
-		//Photoghrapy Waver
-	.form-check.row
-		label.col-7.requiredField(for='photographyWaver')
-			| I intend to take photos while in the centre:
-		input#photographyWaver.col-1.big-checkbox.checkbox-inline(type='checkbox', disabled='',  name='photographyWaver', value='Checked')
-	
+    //Reason for Visit
+    .form-group.row
+      label.col-lg-2.col-sm-12.col-form-label(for='reasonForVisit') Reason for visit
+      .col-lg-8.col-sm-12
+        select#reasonForVisit.select.form-control.input-lg(name='reasonForVisit' required='')
+          option(value='')
+          option(value='Cafe') Cafe
+          option(value='Climbers Clinic') Climbers Clinic
+          option(value='Garden')  Garden
+          option(value='Geckos')  Geckos
+          option(value='Castle Climbing')  Castle Climbing Club
+          option(value='Passing By')  Passing By
+          option(value='Shop')  Shop
+          option(value='Contractor')  Contractor
+          option(value='Photography')  Photography
+          option(value='Staff Member')  Visiting a staff member
+          option(value='Other')  Other
+        .invalid-feedback
+          | Please select an option
 
-		//Disclaimer
+    .form-group.row
+      label#otherReason.col-lg-2.col-sm-12.col-form-label(for='otherReason', style='display: none;') Please State Other Reason
+      .col-lg-8.col-sm-12
+        input#otherReason.form-control(type='text', name='otherReason', style='display: none;')
+        .invalid-feedback
+          | Please the require information
+      
+    // Supervising Children
+    .form-group.row
+        label.col-lg-4.col-md-6.col-sm-10.form-check-label.text-right(for='supervisingChild')  I intend to take photos while in the centre
+        .btn-group.col-2.btn-group-toggle(data-toggle='buttons')
+          button#photographyWaiverNo.btn.btn-outline-primary.active(type='button', name='photographyWaiver', autocomplete='off', checked='') No
+          button#photographyWaiverYes.btn.btn-outline-primary(type='button', name='photographyWaiver', autocomplete='off') Yes
+  
 
-	.form-check.row
-		label.col-7.requiredField(for='disclaimer')
-			| I have read and agree to the above conditions*:
-		input#disclaimer.col-1.big-checkbox.checkbox-inline(type='checkbox', disabled='', name='disclaimer' value='Agreed')
-	br
-	.row
-		.col.align-self-end
-		a#cancel.btn.btn-danger.btn-lg(href="#", data-toggle='modal', data-target='#AreYouSure') Cancel
-		.col-1
-		input#submit.btn.btn-success.btn-lg(type='submit', value='(Staff Only) Submit', disabled='')
-		.col-2
 
-			
-		// The Modal
-	#photographyWaverModal.modal
-		.modal-dialog
-			.modal-content
-				// Modal Header
-				.modal-header
-					h4.modal-title Photography Waver
-					button.close(type='button', data-dismiss='modal') ×
-				// Modal body
-				.modal-body
-					p I understand that The Castle is a private building and I need to seek permission from management in order to photograph inside.
-					p I will not use the photographs taken for commercial use without written consent from The Castle management.
-					p I will not photograph any adults without their permission.
-					p	I will not photograph any children without the consent of the child’s parent or guardian.
+        
+    // Disclaimer
+    .form-group.row
+      label.col-lg-4.col-md-6.col-sm-10.custom-control-label.text-right(for='disclaimer') I have read and agree to the above conditions
+      .col-2
+        button#disclaimer.container.btn.btn-outline-primary(type='button', data-toggle='modal', data-target='#disclaimerModal', required='') I Agree
 
-				// Modal footer
-				.modal-footer
-					button#photographyWaverAgreement.btn.btn-danger(type='button', data-dismiss='modal') I Agree
-						
+    .form-group.row.container-fluid
+      .col.align-self-end
+      a#cancel.btn.btn-danger(href="#", data-toggle='modal', data-target='#AreYouSure') Cancel
+      .col-1
+      button#submit.btn.btn-success(data-toggle='modal',type='submit', style='display: none;') Submit - Staff Only 
+      .col-1
+  // The Modal
+  #photographyWaiverModal.modal
+      .modal-dialog
+        .modal-content
+          // Modal Header
+          .modal-header
+            h4.modal-title Photography Waiver
+            button#photographyWaiverCross.close(type='button', data-dismiss='modal') ×
+          // Modal body
+          .modal-body
+            p I understand that The Castle is a private building and I need to seek permission from management in order to photograph inside.
+            p I will not use the photographs taken for commercial use without written consent from The Castle management.
+            p I will not photograph any adults without their permission.
+            p I will not photograph any children without the consent of the child’s parent or guardian.
+
+          // Modal footer
+          .modal-footer
+            button#photographyWaiverAgreement.btn.btn-danger(type='button', data-dismiss='modal') I Agree
+              
+  #disclaimerModal.modal.fade.AreYouSure(tabindex='-1', role='dialog', aria-labelledby='Disclaimer', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        .modal-header.h1
+          .row
+            .col-auto
+              #theMessage
+          
+        .modal-body
+          h5 Please hand this tablet back to the receptionist, so they can check the form.
+        .modal-footer
+          .row
+            .col
+              img(src='logo.png', alt='')
+            .col.align-self-end
+              a.btn.btn-success.btn-xl.submit-btn(href='#', data-dismiss='modal', aria-label='Close') Close
