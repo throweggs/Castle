@@ -25,3 +25,21 @@ body {
 input.big-checkbox[type=checkbox] {
     -webkit-transform: scale(2,2);
 }
+
+	.navbar {
+  padding: 0px 10px 5px 10px;
+
+}
+
+img {
+padding: 0px 10px 0px 0px;
+
+}
+.navbar-text.kiosk {
+  padding: 0px 10px 0px 10px;
+}
+.nav-link.fas.fa-home {
+  color: white;
+  margin: 0px 0px 0px 10px;
+  padding: 0px 0px 0px 0px;
+}
