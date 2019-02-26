@@ -28,7 +28,7 @@ var startLocation = '',
 
 
 //ADDS the session info to the page
-    function showSession(){
+  function showSession(){
       if(facilitatorName === ''){
         $('#facilitatorModal').modal('show');
       }
@@ -42,9 +42,6 @@ var startLocation = '',
 
       }
 
-
-
-  //List all the stored Participants, and creates a new entry field
   //List all the stored Participants, and creates a new entry field
   function ShowParticipants(){
 
@@ -60,32 +57,28 @@ var startLocation = '',
       }
 
 
-
-
   function submitLine(e){
-      numParticipants=participantsArray.length;
+    event.preventDefault();
+        var update = {
+         FindDate: {Created_Date: moment().format('MMMM Do YYYY')},
+          Details : { $push: { Participants : {
+          First_Name : $('#NewParticipantFirstName').val(),
+          Last_Name :  $('#NewParticipantLastName').val(),
+          Reason: $('#NewReason option:selected').val(),
+          Arrival_Time : moment().format('HH MM SS'),
+          First_Time : $('#NewFirstTime option:selected').val(),
+          iPad : getKioskId() }}},
+        };
 
-    participantsArray[numParticipants]=({
+        updateParticipants(update);
 
-      "First_Name" : $('#NewParticipantFirstName').val(),
-      "Last_Name" :  $('#NewParticipantLastName').val(),
-      "Reason": $('#NewReason option:selected').val(),
-      "Arrival_Time": moment().format('HH:MM:SS'),
-      "First_Time": $('#NewFirstTime option:selected').val(),
-      "iPad" : getKioskId()
-    });
-
-      updateSession();
-      document.location.href="/";
+          document.location.href="/";
 
     // } else if (formCheck < 4){
     //   alert('Please fill in all the fields');
     // }
 
   }
-
-
-
 
 // ----------------------------------------- DOM READY ----------------------------------------- //
   $( document ).ready(function() {
@@ -239,8 +232,6 @@ var startLocation = '',
         foundSession = true;
     }
 
-
-
   //Get request for session
   function getSession(){
     // var DateOnly = moment().format('MMMM Do YYYY');
@@ -273,27 +264,35 @@ var startLocation = '',
         });
     }
 
-
-
-  //Put request to update to Participants, on  pre made sesion
-  function updateSession(){
+    //Put request to update to Participants, on  pre made sesion
+  function updateParticipants(update){
       console.log('UPDATE: ' + moment().format('MMMM Do YYYY'));
-      var updates = {
-          'FindDate': {Created_Date: moment().format('MMMM Do YYYY')},
-          'Created_Date': moment().format('MMMM Do YYYY'),
-          'Created_Time' : createdTime,
-          'Facilitator': facilitatorName,
-          'Session_Type': sessionType,
-          'Start_Location': startLocation,
-          'Participants': participantsArray,
-          'iPadIn' : iPadIn,
-          'iPadUpdate' : getKioskId(),
-      };
+
 
       $.ajax({
         type: "put",
-        url: "wbs/updateSession",
+        url: "wbs/updateParticipant",
         contentType: 'application/json',
-        data: JSON.stringify(updates)
+        data: JSON.stringify(update)
       });
     }
+
+    //Put request to update to Participants, on  pre made sesion
+  function updateSession(){
+        console.log('UPDATE: ' + moment().format('MMMM Do YYYY'));
+        var updates = {
+            FindDate: {Created_Date: moment().format('MMMM Do YYYY')},
+            Details : { $set:  {
+            Facilitator: facilitatorName,
+            Session_Type: sessionType,
+            Start_Location: startLocation,
+            iPadIn : iPadIn }},
+        };
+  console.log(updates);
+        $.ajax({
+          type: "put",
+          url: "wbs/updateSession",
+          contentType: 'application/json',
+          data: JSON.stringify(updates)
+        });
+      }

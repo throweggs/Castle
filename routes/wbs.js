@@ -32,13 +32,29 @@ router.get('/getSession', function(req, res) {
 //Updates an theSession
 router.put('/updateSession', function(req, res){
   theDate = req.body.FindDate;
-  console.log(req.body);
+  theUpdate = req.body.Details;
+  console.log(theDate);
+    console.log(theUpdate);
   var db = req.db;
   var collection = db.get('wbs');
-  collection.update(theDate,req.body,function(e,docs){
+  collection.findOneAndUpdate(theDate,theUpdate,function(e,docs){
       res.json(docs);
   });
 });
+
+//Updates an Participants
+router.put('/updateParticipant', function(req, res){
+  theDate = req.body.FindDate;
+  theUpdate = req.body.Details;
+  console.log(theDate);
+    console.log(theUpdate);
+  var db = req.db;
+  var collection = db.get('wbs');
+  collection.update(theDate, theUpdate,function(e,docs){
+      res.json(docs);
+  });
+});
+
 
 
 module.exports = router;

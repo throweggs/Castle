@@ -27,7 +27,7 @@ var startLocation = '',
 
 
 //ADDS the session info to the page
-    function showSession(){
+  function showSession(){
         var sessionDetails = " <h1>The Session Facilitator: <strong>" + facilitatorName +"</strong></h1>";
             sessionDetails += ' <h3>Your '+ sessionType +' session, will be starting in the ' + startLocation + '.</h3>';
             sessionDetails += ' <ul>';
@@ -38,10 +38,8 @@ var startLocation = '',
 
       }
 
-
-
-      //List all the stored Participants, and creates a new entry field
-      function ShowParticipants(){
+  //List all the stored Participants, and creates a new entry field
+  function ShowParticipants(){
 
             $.each(participantsArray, function( index, value ) {
               var participant = value.First_Name + ' ' + value.Last_Name;
@@ -58,19 +56,20 @@ var startLocation = '',
 
 
   function submitLine(){
-    numParticipants=participantsArray.length;
+    event.preventDefault();
+    var update = {
+     FindDate: {Created_Date: moment().format('MMMM Do YYYY')},
+      Details : { $push: { Participants : {
+      First_Name : $('#NewParticipantFirstName').val(),
+      Last_Name :  $('#NewParticipantLastName').val(),
+      Reason: $('#NewReason option:selected').val(),
+      Arrival_Time : moment().format('HH MM SS'),
+      First_Time : $('#NewFirstTime option:selected').val(),
+      iPad : getKioskId() }}},
+    };
 
-    participantsArray[numParticipants]=({
+    updateParticipants(update);
 
-      "First_Name" : $('#NewParticipantFirstName').val(),
-      "Last_Name" :  $('#NewParticipantLastName').val(),
-      "Reason": $('#NewReason option:selected').val(),
-      "Arrival_Time": moment().format('HH MM SS'),
-      "First_Time": $('#NewFirstTime option:selected').val(),
-      "iPad" : getKioskId()
-    });
-
-      updateSession();
       document.location.href="/";
 
     // } else if (formCheck < 4){
@@ -231,8 +230,6 @@ var startLocation = '',
         foundSession = true;
     }
 
-
-
   //Get request for session
   function getSession(){
     // var DateOnly = moment().format('MMMM Do YYYY');
@@ -259,22 +256,31 @@ var startLocation = '',
         });
     }
 
+    //Put request to update to Participants, on  pre made sesion
+  function updateParticipants(update){
+      console.log('UPDATE: ' + moment().format('MMMM Do YYYY'));
 
 
+      $.ajax({
+        type: "put",
+        url: "theSession/updateParticipant",
+        contentType: 'application/json',
+        data: JSON.stringify(update)
+      });
+    }
+    
   //Put request to update to Participants, on  pre made sesion
   function updateSession(){
       console.log('UPDATE: ' + moment().format('MMMM Do YYYY'));
       var updates = {
-          'FindDate': {Created_Date: moment().format('MMMM Do YYYY')},
-          'Created_Date': moment().format('MMMM Do YYYY'),
-          'Created_Time' : createdTime,
-          'Facilitator': facilitatorName,
-          'Session_Type': sessionType,
-          'Start_Location': startLocation,
-          'Participants': participantsArray,
-          'iPadIn' : iPadIn,
+          FindDate: {Created_Date: moment().format('MMMM Do YYYY')},
+          Details : { $set:  {
+          Facilitator: facilitatorName,
+          Session_Type: sessionType,
+          Start_Location: startLocation,
+          iPadIn : iPadIn }},
       };
-
+console.log(updates);
       $.ajax({
         type: "put",
         url: "theSession/updateSession",

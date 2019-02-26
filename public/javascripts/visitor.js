@@ -102,8 +102,7 @@ $(function(){ // this will be called when the DOM is ready
       photographyWaverAgreement = 'Agreed';
     });
 
-
-      $("#photographyWaiverCross").click(function(){
+    $("#photographyWaiverCross").click(function(){
         $('#photographyWaiverNo').addClass('active').siblings().removeClass('active');
       photographyWaverAgreement = 'Not Agreed';
     });
