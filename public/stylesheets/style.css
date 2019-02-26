@@ -26,9 +26,11 @@ input.big-checkbox[type=checkbox] {
     -webkit-transform: scale(2,2);
 }
 
-	.navbar {
-  padding: 0px 10px 5px 10px;
-
+	.navbar{
+  padding: 0px 10px 0px 10px;
+}
+  .bg-dark {
+  background-color: black;
 }
 
 img {
