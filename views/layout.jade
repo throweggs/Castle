@@ -1,102 +1,103 @@
 doctype html
 html(lang='en')
-	head
-		meta(charset='utf-8')
-		meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
-		append styles
-			script(src='https://code.jquery.com/jquery-3.3.1.min.js', integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=', crossorigin='anonymous')
-			link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    append styles
+      script(src='https://code.jquery.com/jquery-3.3.1.min.js', integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=', crossorigin='anonymous')
+      link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
 
-			//- link(rel='stylesheet', href='/css/bootstrap.min.css')
-			link(rel='stylesheet', href='/stylesheets/style.css')
-			link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.0.13/css/all.css', integrity='sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp', crossorigin='anonymous')
-	
-			
-			script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1', crossorigin='anonymous')
-			script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
-			
-			//- script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js')
-			//- script(src='https://code.jquery.com/jquery-1.11.3.min.js')
-			script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous")
-			script(src='/moment/min/moment.min.js')
-			//- script(src='/jquery/jquery.js')
-			//- script(src='/js/bootstrap.min.js')
-			script(src='/javascripts/global.js')
-			script(src='/tempus/build/js/tempusdominus-bootstrap-4.min.js')
-			script(scr='/javascripts/jquery.tabletoCSV.js')
-			//- script(src='https://unpkg.com/fast-average-color/dist/index.min.js')
-			
+      //- link(rel='stylesheet', href='/css/bootstrap.min.css')
+      link(rel='stylesheet', href='/stylesheets/style.css')
+      link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.0.13/css/all.css', integrity='sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp', crossorigin='anonymous')
+  
+      
+      script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1', crossorigin='anonymous')
+      script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
+      
+      //- script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js')
+      //- script(src='https://code.jquery.com/jquery-1.11.3.min.js')
+      script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous")
+      script(src='/moment/min/moment.min.js')
+      //- script(src='/jquery/jquery.js')
+      //- script(src='/js/bootstrap.min.js')
+      script(src='/javascripts/global.js')
+      script(src='/tempus/build/js/tempusdominus-bootstrap-4.min.js')
+      script(scr='/javascripts/jquery.tabletoCSV.js')
+      //- script(src='https://unpkg.com/fast-average-color/dist/index.min.js')
+      
 
 body
-	// Image and text
-	//- .row
-	//- 	.container-fluid
-	nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
-		a.navbar-brand(href='#')
-			img.d-inline-block.align-centre(src='logo.svg', height='30', alt='')
-			span.navbar-text Castle Climbing Centre
-		#navbarText.collapse.navbar-collapse
-			.navbar-nav.mr-auto
-				span.navbar-text
-					#DateTime
-			.navbar-text.kiosk 
-				#kioskIdValue
-		.navbar-text #{title}
-		h2.nav-link.fas.fa-home(href="#", data-toggle='modal', data-target='#AreYouSure')
-		
-				
-			//- 
-			//- 
-			//- .col-auto
-			//-   .text-left
-			//-     a.navbar-brand(href="#", data-toggle='modal', data-target='#AreYouSure')
-			//-       img.d-inline-block.align-centre(src='logo.png', alt='')
-			//-       | Castle Climbing Centre
-			//- 
-			//- 		#DateTime
-			//- .col.text-centre
-			//- 	.navbar-text
-			//- 		#kioskIdValue
-			//- .col.text-right
-			//- 	.navbar-text #{title}
-			//- .col-auto
-			//- 	.navbar-text
-			//- .col.text-right
-				//- a#GoHome.navbar-brand.fa.fa-home(href="#", data-toggle='modal', data-target='#AreYouSure')
+  // Image and text
+  //- .row
+  //-   .container-fluid
+  nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+    a.navbar-brand(href='#')
+      img.d-inline-block.align-centre(src='logo.svg', height='30', alt='')
+      span.navbar-text Castle Climbing Centre
+    #navbarText.collapse.navbar-collapse
+      .navbar-nav.mr-auto
+        span.navbar-text
+          #DateTime
+      .navbar-text.kiosk 
+        #kioskIdValue
+    .navbar-text #{title}
+    a.btn.btn-default.pull-right(href='/', title='Home')
+      h3.i.fas.fa-home
+    
+        
+      //- 
+      //- 
+      //- .col-auto
+      //-   .text-left
+      //-     a.navbar-brand(href="#", data-toggle='modal', data-target='#AreYouSure')
+      //-       img.d-inline-block.align-centre(src='logo.png', alt='')
+      //-       | Castle Climbing Centre
+      //- 
+      //-     #DateTime
+      //- .col.text-centre
+      //-   .navbar-text
+      //-     #kioskIdValue
+      //- .col.text-right
+      //-   .navbar-text #{title}
+      //- .col-auto
+      //-   .navbar-text
+      //- .col.text-right
+        //- a#GoHome.navbar-brand.fa.fa-home(href="#", data-toggle='modal', data-target='#AreYouSure')
 
-			//Return Home Modal
-	#AreYouSure.modal.fade.AreYouSure(tabindex='-1', role='dialog', aria-labelledby='AreYouSure', aria-hidden='true')
-		.modal-dialog
-			.modal-content
-				.modal-header
-					h5 Are you sure you want to go back?
-				.modal-body
-					p The information you have entered will be lost.
-				.modal-footer
-					a.btn.btn-danger.btn-xl.submit-btn(href='/') Yes
-					a.btn.btn-success.btn-xl.submit-btn(href='#', data-dismiss='modal', aria-label='Close') No
-	//- 
-	//- 
-	//Header
-	.header.col-12
-	#failAlert
-	//- 
-	//- // Button trigger modal
-	//- button.btn.btn-primary(type='button', data-toggle='modal', data-target='#SuccessModal')
-	//-   | Launch demo modal
-	// Modal
-	#SuccessModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='Successful form creation', aria-hidden='true')
-		.modal-dialog(role='document')
-			.modal-content
-				.modal-header
-					h5#Title.modal-title Success
-					button.close(type='button', data-dismiss='modal', aria-label='Close')
-						span(aria-hidden='true') ×
-				.modal-body
-					#TheText
-	//- 
-	//- 
-	//- 
-	include GDPR
-	
-	block content
+      //Return Home Modal
+  #AreYouSure.modal.fade.AreYouSure(tabindex='-1', role='dialog', aria-labelledby='AreYouSure', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h5 Are you sure you want to go back?
+        .modal-body
+          p The information you have entered will be lost.
+        .modal-footer
+          a.btn.btn-danger.btn-xl.submit-btn(href='/') Yes
+          a.btn.btn-success.btn-xl.submit-btn(href='#', data-dismiss='modal', aria-label='Close') No
+  //- 
+  //- 
+  //Header
+  .header.col-12
+  #failAlert
+  //- 
+  //- // Button trigger modal
+  //- button.btn.btn-primary(type='button', data-toggle='modal', data-target='#SuccessModal')
+  //-   | Launch demo modal
+  // Modal
+  #SuccessModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='Successful form creation', aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#Title.modal-title Success
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+        .modal-body
+          #TheText
+  //- 
+  //- 
+  //- 
+  include GDPR
+  
+  block content
