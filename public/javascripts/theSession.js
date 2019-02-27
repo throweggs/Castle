@@ -60,8 +60,8 @@ var startLocation = '',
     var update = {
      FindDate: {Created_Date: moment().format('MMMM Do YYYY')},
       Details : { $push: { Participants : {
-      First_Name : $('#NewParticipantFirstName').val(),
-      Last_Name :  $('#NewParticipantLastName').val(),
+      First_Name : toTitleCase($('#NewParticipantFirstName').val()),
+      Last_Name :  toTitleCase($('#NewParticipantLastName').val()),
       Reason: $('#NewReason option:selected').val(),
       Arrival_Time : moment().format('HH MM SS'),
       First_Time : $('#NewFirstTime option:selected').val(),
@@ -191,7 +191,7 @@ var startLocation = '',
       var newSession = {
           'Created_Date': moment().format('MMMM Do YYYY'),
           'Created_Time' : moment().format('HH:MM:SS'),
-          'Facilitator': facilitatorName,
+          'Facilitator': toTitleCase(facilitatorName),
           'Session_Type': sessionType,
           'Start_Location': startLocation,
           'Participants': participantsArray,
@@ -268,7 +268,7 @@ var startLocation = '',
         data: JSON.stringify(update)
       });
     }
-    
+
   //Put request to update to Participants, on  pre made sesion
   function updateSession(){
       console.log('UPDATE: ' + moment().format('MMMM Do YYYY'));

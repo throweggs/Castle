@@ -21,10 +21,12 @@ $(function(){ // this will be called when the DOM is ready
         $('#childName').addClass('is-valid');
         $('#childName').removeClass('is-invalid');
         $('#childName').removeClass('is-invalid-feedback');
+        $('#childName').val(toTitleCase($('#childName').val()));
         childName = 1;
         } else {
           $('#childName').removeClass('is-valid');
           $('#childName').addClass('is-invalid');
+
           childName = 0;
         }
       });
@@ -34,6 +36,7 @@ $(function(){ // this will be called when the DOM is ready
           $('#designatedAdult').addClass('is-valid');
           $('#designatedAdult').removeClass('is-invalid');
           $('#designatedAdult').removeClass('is-invalid-feedback');
+          $('#designatedAdult').val(toTitleCase($('#designatedAdult').val()));
           designatedAdult = 1;
           } else {
             $('#designatedAdult').removeClass('is-valid');
@@ -54,7 +57,7 @@ $(function(){ // this will be called when the DOM is ready
           }
       });
 
-    
+
     $('#disclaimer').click(function(){
         $("button#submit").show();
         $("button#disclaimer").addClass('active');

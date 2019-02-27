@@ -128,14 +128,14 @@ function addVisitor(event) {
 
     // If it is, compile all user info into one object
     var newVisitor = {
-        'fullName': $('#addVisitor input#firstName').val() + ' ' + $('#addVisitor input#lastName').val(),
-        'firstName': $('#addVisitor input#firstName').val(),
-        'lastName': $('#addVisitor input#lastName').val(),
+        'fullName': toTitleCase($('#addVisitor input#firstName').val() + ' ' + $('#addVisitor input#lastName').val()),
+        'firstName': toTitleCase($('#addVisitor input#firstName').val()),
+        'lastName': toTitleCase($('#addVisitor input#lastName').val()),
         'reasonForVisit': $('#addVisitor select#reasonForVisit').val(),
         'otherReason': otherReason,
         'ChildNames' : [
-            {'name' : $('#addVisitor input#Kid1').val()},
-            {'name' : $('#addVisitor input#Kid2').val()},
+            {'name' : toTitleCase($('#addVisitor input#Kid1').val())},
+            {'name' : toTitleCase($('#addVisitor input#Kid2').val())},
           ],
         'PhotographyWaverAgreement' : photographyWaverAgreement,
         'disclaimer': $('#addVisitor input#disclaimer').val(),
