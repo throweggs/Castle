@@ -1,6 +1,6 @@
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.2.0
+ * @version 1.3.1
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
  *
@@ -94,7 +94,9 @@ var DEFAULT_OPTIONS = {
   title: '',
   template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
   trigger: 'hover focus',
-  offset: 0
+  offset: 0,
+  arrowSelector: '.tooltip-arrow, .tooltip__arrow',
+  innerSelector: '.tooltip-inner, .tooltip__inner'
 };
 
 var Tooltip = function () {
@@ -103,16 +105,17 @@ var Tooltip = function () {
    * @class Tooltip
    * @param {HTMLElement} reference - The DOM node used as reference of the tooltip (it can be a jQuery element).
    * @param {Object} options
-   * @param {String|PlacementFunction} options.placement=top
+   * @param {String} options.placement='top'
    *      Placement of the popper accepted values: `top(-start, -end), right(-start, -end), bottom(-start, -end),
    *      left(-start, -end)`
+   * @param {String} options.arrowSelector='.tooltip-arrow, .tooltip__arrow' - className used to locate the DOM arrow element in the tooltip.
+   * @param {String} options.innerSelector='.tooltip-inner, .tooltip__inner' - className used to locate the DOM inner element in the tooltip.
    * @param {HTMLElement|String|false} options.container=false - Append the tooltip to a specific element.
    * @param {Number|Object} options.delay=0
    *      Delay showing and hiding the tooltip (ms) - does not apply to manual trigger type.
    *      If a number is supplied, delay is applied to both hide/show.
    *      Object structure is: `{ show: 500, hide: 100 }`
    * @param {Boolean} options.html=false - Insert HTML into the tooltip. If false, the content will inserted with `textContent`.
-   * @param {String|PlacementFunction} options.placement='top' - One of the allowed placements, or a function returning one of them.
    * @param {String} [options.template='<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>']
    *      Base HTML to used when creating the tooltip.
    *      The tooltip's `title` will be injected into the `.tooltip-inner` or `.tooltip__inner`.
@@ -122,6 +125,7 @@ var Tooltip = function () {
    * @param {String} [options.trigger='hover focus']
    *      How tooltip is triggered - click, hover, focus, manual.
    *      You may pass multiple triggers; separate them with a space. `manual` cannot be combined with any other trigger.
+   * @param {Boolean} options.closeOnClickOutside=false - Close a popper on click outside of the popper and reference element. This has effect only when options.trigger is 'click'.
    * @param {String|HTMLElement} options.boundariesElement
    *      The element used as boundaries for the tooltip. For more information refer to Popper.js'
    *      [boundariesElement docs](https://popper.js.org/popper-documentation.html)
@@ -200,11 +204,6 @@ var Tooltip = function () {
 
 
   //
-  // Defaults
-  //
-
-
-  //
   // Private methods
   //
 
@@ -235,7 +234,7 @@ var Tooltip = function () {
       tooltipNode.setAttribute('aria-hidden', 'false');
 
       // add title to tooltip
-      var titleNode = tooltipGenerator.querySelector(this.innerSelector);
+      var titleNode = tooltipGenerator.querySelector(this.options.innerSelector);
       this._addTitleContent(reference, title, allowHtml, titleNode);
 
       // return the generated tooltip node
@@ -268,7 +267,7 @@ var Tooltip = function () {
 
       // if the tooltipNode already exists, just show it
       if (this._tooltipNode) {
-        this._tooltipNode.style.display = '';
+        this._tooltipNode.style.visibility = 'visible';
         this._tooltipNode.setAttribute('aria-hidden', 'false');
         this.popperInstance.update();
         return this;
@@ -299,7 +298,7 @@ var Tooltip = function () {
 
       this._popperOptions.modifiers = _extends({}, this._popperOptions.modifiers, {
         arrow: {
-          element: this.arrowSelector
+          element: this.options.arrowSelector
         },
         offset: {
           offset: options.offset
@@ -329,7 +328,7 @@ var Tooltip = function () {
       this._isOpen = false;
 
       // hide tooltipNode
-      this._tooltipNode.style.display = 'none';
+      this._tooltipNode.style.visibility = 'hidden';
       this._tooltipNode.setAttribute('aria-hidden', 'true');
 
       return this;
@@ -436,6 +435,18 @@ var Tooltip = function () {
         };
         _this2._events.push({ event: event, func: func });
         reference.addEventListener(event, func);
+        if (event === 'click' && options.closeOnClickOutside) {
+          document.addEventListener('mousedown', function (e) {
+            if (!_this2._isOpening) {
+              return;
+            }
+            var popper = _this2.popperInstance.popper;
+            if (reference.contains(e.target) || popper.contains(e.target)) {
+              return;
+            }
+            func(e);
+          }, true);
+        }
       });
     }
   }, {
@@ -491,7 +502,7 @@ var Tooltip = function () {
         }
         return;
       }
-      var titleNode = this._tooltipNode.parentNode.querySelector(this.innerSelector);
+      var titleNode = this._tooltipNode.parentNode.querySelector(this.options.innerSelector);
       this._clearTitleContent(titleNode, this.options.html, this.reference.getAttribute('title') || this.options.title);
       this._addTitleContent(this.reference, title, this.options.html, titleNode);
       this.options.title = title;
@@ -509,15 +520,6 @@ var Tooltip = function () {
   }]);
   return Tooltip;
 }();
-
-/**
- * Placement function, its context is the Tooltip instance.
- * @memberof Tooltip
- * @callback PlacementFunction
- * @param {HTMLElement} tooltip - tooltip DOM node.
- * @param {HTMLElement} reference - reference DOM node.
- * @return {String} placement - One of the allowed placement options.
- */
 
 /**
  * Title function, its context is the Tooltip instance.
@@ -554,8 +556,6 @@ var _initialiseProps = function _initialiseProps() {
     return _this5._updateTitleContent(title);
   };
 
-  this.arrowSelector = '.tooltip-arrow, .tooltip__arrow';
-  this.innerSelector = '.tooltip-inner, .tooltip__inner';
   this._events = [];
 
   this._setTooltipNodeEvent = function (evt, reference, delay, options) {

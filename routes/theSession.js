@@ -44,6 +44,7 @@ router.put('/updateSession', function(req, res){
 
 //Updates an Participants
 router.put('/updateParticipant', function(req, res){
+  console.log('hit');
   theDate = req.body.FindDate;
   theUpdate = req.body.Details;
   console.log(theDate);

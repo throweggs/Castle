@@ -274,6 +274,24 @@ var startLocation = '',
         url: "wbs/updateParticipant",
         contentType: 'application/json',
         data: JSON.stringify(update)
+      }).done(function( response, results ) {
+          // Check for successful (blank) response
+          if (results === 'success') {
+            resetPage();
+              // Clear the form inputs
+              // $('#addSession input').val('');
+
+              // // Update the table
+              // populateTable();
+
+          }
+          else {
+
+              // If something goes wrong, alert the error message that our service returned
+              alert( response.msg);
+
+
+          }
       });
     }
 
@@ -294,5 +312,23 @@ var startLocation = '',
           url: "wbs/updateSession",
           contentType: 'application/json',
           data: JSON.stringify(updates)
+        }).done(function( response, results ) {
+            // Check for successful (blank) response
+            if (results === 'success') {
+              resetPage();
+                // Clear the form inputs
+                // $('#addSession input').val('');
+
+                // // Update the table
+                // populateTable();
+
+            }
+            else {
+
+                // If something goes wrong, alert the error message that our service returned
+                alert( response.msg);
+
+
+            }
         });
       }

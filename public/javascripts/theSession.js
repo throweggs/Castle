@@ -28,6 +28,9 @@ var startLocation = '',
 
 //ADDS the session info to the page
   function showSession(){
+    if(facilitatorName === ''){
+      $('#facilitatorModal').modal('show');
+    }
         var sessionDetails = " <h1>The Session Facilitator: <strong>" + facilitatorName +"</strong></h1>";
             sessionDetails += ' <h3>Your '+ sessionType +' session, will be starting in the ' + startLocation + '.</h3>';
             sessionDetails += ' <ul>';
@@ -70,7 +73,7 @@ var startLocation = '',
 
     updateParticipants(update);
 
-      document.location.href="/";
+
 
     // } else if (formCheck < 4){
     //   alert('Please fill in all the fields');
@@ -80,7 +83,7 @@ var startLocation = '',
 
 // ----------------------------------------- DOM READY ----------------------------------------- //
   $( document ).ready(function() {
-      //$("#dataProtection").modal('show');
+      $("#dataProtection").modal('show');
 
       //Database call to get details of session if already entered.
       getSession();
@@ -258,14 +261,33 @@ var startLocation = '',
 
     //Put request to update to Participants, on  pre made sesion
   function updateParticipants(update){
+    console.log('hit');
       console.log('UPDATE: ' + moment().format('MMMM Do YYYY'));
-
+    console.log(update);
 
       $.ajax({
         type: "put",
         url: "theSession/updateParticipant",
         contentType: 'application/json',
         data: JSON.stringify(update)
+      }).done(function( response, results ) {
+          // Check for successful (blank) response
+          if (results === 'success') {
+            resetPage();
+              // Clear the form inputs
+              // $('#addSession input').val('');
+
+              // // Update the table
+              // populateTable();
+
+          }
+          else {
+
+              // If something goes wrong, alert the error message that our service returned
+              alert( response.msg);
+
+
+          }
       });
     }
 
@@ -286,5 +308,23 @@ console.log(updates);
         url: "theSession/updateSession",
         contentType: 'application/json',
         data: JSON.stringify(updates)
+      }).done(function( response, results ) {
+          // Check for successful (blank) response
+          if (results === 'success') {
+            resetPage();
+              // Clear the form inputs
+              // $('#addSession input').val('');
+
+              // // Update the table
+              // populateTable();
+
+          }
+          else {
+
+              // If something goes wrong, alert the error message that our service returned
+              alert( response.msg);
+
+
+          }
       });
     }
