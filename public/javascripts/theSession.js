@@ -58,28 +58,74 @@ var startLocation = '',
           }
 
 
-  function submitLine(){
-    event.preventDefault();
-    var update = {
-     FindDate: {Created_Date: moment().format('MMMM Do YYYY')},
-      Details : { $push: { Participants : {
-      First_Name : toTitleCase($('#NewParticipantFirstName').val()),
-      Last_Name :  toTitleCase($('#NewParticipantLastName').val()),
-      Reason: $('#NewReason option:selected').val(),
-      Arrival_Time : moment().format('HH MM SS'),
-      First_Time : $('#NewFirstTime option:selected').val(),
-      iPad : getKioskId() }}},
-    };
+          $(document).on('keyup blur change', function(e){
+            var data = e.target.id;
+            console.log(e.target.classList);
+            if($('#'+data).hasClass('is-invalid')==true){
+              if($('#'+data).val().length > 1){
+                $('#'+data).removeClass('is-invalid');
+                $('#'+data).addClass('is-valid');
+              }
+            }
+          });
 
-    updateParticipants(update);
+            function submitLine(e){
+              var theCount = 0;
+              event.preventDefault();
+                  $('form#addMe').addClass('.was-validated');
+                  if($('#NewParticipantFirstName').val().length > 1){
+                    theCount = theCount + 1;
+                     $('#NewParticipantFirstName').addClass('is-valid');
+                     $('#NewParticipantFirstName').removeClass('is-invalid');
+                  } else {
+                       $('#NewParticipantFirstName').addClass('is-invalid');
+                       $('#NewParticipantFirstName').removeClass('is-valid');
+                    }
+                  if($('#NewParticipantLastName').val().length > 1){
+                    theCount = theCount + 1;
+                    $('#NewParticipantLastName').addClass('is-valid');
+                    $('#NewParticipantLastName').removeClass('is-invalid');
+                  } else {
+                    $('#NewParticipantLastName').addClass('is-invalid');
+                    $('#NewParticipantLastName').removeClass('is-valid');
+                  }
+                  if($('#NewReason option:selected').val().length > 1){
+                    theCount = theCount + 1;
+                    $('#NewReason').addClass('is-valid');
+                    $('#NewReason').removeClass('is-invalid');
+                  } else {
+                    $('#NewReason').addClass('is-invalid');
+                    $('#NewReason').removeClass('is-valid');
+                  }
+                  if($('#NewFirstTime option:selected').val().length > 1){
+                    theCount = theCount + 1;
+                    $('#NewFirstTime').addClass('is-valid');
+                    $('#NewFirstTime').removeClass('is-invalid');
+                  } else {
+                    $('#NewFirstTime').addClass('is-invalid');
+                    $('#NewFirstTime').removeClass('is-valid');
+                  }
+                  if(theCount === 4){
+                  var update = {
+                   FindDate: {Created_Date: moment().format('MMMM Do YYYY')},
+                    Details : { $push: { Participants : {
+                    First_Name : toTitleCase($('#NewParticipantFirstName').val()),
+                    Last_Name :  toTitleCase($('#NewParticipantLastName').val()),
+                    Reason: $('#NewReason option:selected').val(),
+                    Arrival_Time : moment().format('HH MM SS'),
+                    First_Time : $('#NewFirstTime option:selected').val(),
+                    iPad : getKioskId() }}},
+                  };
+
+                  updateParticipants(update);
+                }
 
 
+              // } else if (formCheck < 4){
+              //   alert('Please fill in all the fields');
+              // }
 
-    // } else if (formCheck < 4){
-    //   alert('Please fill in all the fields');
-    // }
-
-  }
+            }
 
 // ----------------------------------------- DOM READY ----------------------------------------- //
   $( document ).ready(function() {

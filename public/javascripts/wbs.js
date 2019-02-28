@@ -56,9 +56,54 @@ var startLocation = '',
 
       }
 
+$(document).on('keyup blur change', function(e){
+  var data = e.target.id;
+  console.log(e.target.classList);
+  if($('#'+data).hasClass('is-invalid')==true){
+    if($('#'+data).val().length > 1){
+      $('#'+data).removeClass('is-invalid');
+      $('#'+data).addClass('is-valid');
+    }
+  }
+});
 
   function submitLine(e){
+    var theCount = 0;
     event.preventDefault();
+
+        if($('#NewParticipantFirstName').val().length > 1){
+          theCount = theCount + 1;
+           $('#NewParticipantFirstName').addClass('is-valid');
+           $('#NewParticipantFirstName').removeClass('is-invalid');
+        } else {
+             $('#NewParticipantFirstName').addClass('is-invalid');
+             $('#NewParticipantFirstName').removeClass('is-valid');
+          }
+        if($('#NewParticipantLastName').val().length > 1){
+          theCount = theCount + 1;
+          $('#NewParticipantLastName').addClass('is-valid');
+          $('#NewParticipantLastName').removeClass('is-invalid');
+        } else {
+          $('#NewParticipantLastName').addClass('is-invalid');
+          $('#NewParticipantLastName').removeClass('is-valid');
+        }
+        if($('#NewReason option:selected').val().length > 1){
+          theCount = theCount + 1;
+          $('#NewReason').addClass('is-valid');
+          $('#NewReason').removeClass('is-invalid');
+        } else {
+          $('#NewReason').addClass('is-invalid');
+          $('#NewReason').removeClass('is-valid');
+        }
+        if($('#NewFirstTime option:selected').val().length > 1){
+          theCount = theCount + 1;
+          $('#NewFirstTime').addClass('is-valid');
+          $('#NewFirstTime').removeClass('is-invalid');
+        } else {
+          $('#NewFirstTime').addClass('is-invalid');
+          $('#NewFirstTime').removeClass('is-valid');
+        }
+        if(theCount === 4){
         var update = {
          FindDate: {Created_Date: moment().format('MMMM Do YYYY')},
           Details : { $push: { Participants : {
@@ -71,8 +116,8 @@ var startLocation = '',
         };
 
         updateParticipants(update);
+      }
 
-          document.location.href="/";
 
     // } else if (formCheck < 4){
     //   alert('Please fill in all the fields');
