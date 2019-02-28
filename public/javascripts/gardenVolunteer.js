@@ -98,7 +98,7 @@ function updatePerson(thisVisitorObject){
         'createdDate': thisVisitorObject.createdDate,
         'Person' : thisVisitorObject.Person,
         'Reason' : thisVisitorObject.Reason,
-        'ArrivalTime' : moment().format(),
+        'ArrivalTime' : thisVisitorObject.ArrivalTime,
         'DepartureTime' : moment().format(),
         'Disclaimer' : thisVisitorObject.Disclaimer,
         'iPadOut' : getKioskId(),
@@ -145,7 +145,7 @@ function populateTable() {
     var tableContent = '';
 
     // jQuery AJAX call for JSON
-    $.getJSON( '/gardenVolunteer/getDay', {createdDate: DateOnly}, function( data ) {
+    $.getJSON( '/gardenVolunteer/getDay', {createdDate: moment().format('MMMM Do YYYY')}, function( data ) {
 
       // Stick our visitor data array into a visitorlist variable in the visitorlist object
       visitorListData = data;
@@ -187,10 +187,10 @@ function addPerson(event) {
 
 
   var newPerson = {
-    'createdDate': DateOnly,
+    'createdDate': moment().format('MMMM Do YYYY'),
     'Person' : $('input#volunteerName').val(),
     'Reason' : GardenChoice,
-    'ArrivalTime' : TimeOnly,
+    'ArrivalTime' : moment().format(),
     'DepartureTime' : "",
     'Disclaimer' : $('input#Disclaimer').val(),
     'iPadIn' : getKioskId(),
