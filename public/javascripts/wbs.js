@@ -110,7 +110,7 @@ $(document).on('keyup blur change', function(e){
           First_Name : toTitleCase($('#NewParticipantFirstName').val()),
           Last_Name :  toTitleCase($('#NewParticipantLastName').val()),
           Reason: $('#NewReason option:selected').val(),
-          Arrival_Time : moment().format('HH MM SS'),
+          Arrival_Time : moment().format(),
           First_Time : $('#NewFirstTime option:selected').val(),
           iPad : getKioskId() }}},
         };
@@ -236,8 +236,8 @@ $(document).on('keyup blur change', function(e){
     createdTime = moment().format('HH:MM:SS');
 
       var newSession = {
-          'Created_Date': moment().format('MMMM Do YYYY'),
-          'Created_Time': moment().format('HH:MM:SS'),
+        'Created_Date': moment().format('MMMM Do YYYY'),
+        'created': moment().format(),
           'Facilitator': toTitleCase(facilitatorName),
           'Session_Type': sessionType,
           'Start_Location': startLocation,

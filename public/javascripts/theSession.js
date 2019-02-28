@@ -72,7 +72,7 @@ var startLocation = '',
             function submitLine(e){
               var theCount = 0;
               event.preventDefault();
-                  $('form#addMe').addClass('.was-validated');
+
                   if($('#NewParticipantFirstName').val().length > 1){
                     theCount = theCount + 1;
                      $('#NewParticipantFirstName').addClass('is-valid');
@@ -112,7 +112,7 @@ var startLocation = '',
                     First_Name : toTitleCase($('#NewParticipantFirstName').val()),
                     Last_Name :  toTitleCase($('#NewParticipantLastName').val()),
                     Reason: $('#NewReason option:selected').val(),
-                    Arrival_Time : moment().format('HH MM SS'),
+                    Arrival_Time : moment().format(),
                     First_Time : $('#NewFirstTime option:selected').val(),
                     iPad : getKioskId() }}},
                   };
@@ -239,7 +239,7 @@ var startLocation = '',
 
       var newSession = {
           'Created_Date': moment().format('MMMM Do YYYY'),
-          'Created_Time' : moment().format('HH:MM:SS'),
+          'created': moment().format(),
           'Facilitator': toTitleCase(facilitatorName),
           'Session_Type': sessionType,
           'Start_Location': startLocation,

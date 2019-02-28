@@ -88,19 +88,18 @@ function TiggerCheckOut(event) {
        updatePerson(thisVisitorObject);
 
     console.log(visitorListData[arrayPosition]);
-    console.log("did it work?");
+
     }
 
 function updatePerson(thisVisitorObject){
-    console.log('DATE: ' + DateOnly);
 
     var updates = {
         'FindPerson': thisVisitorObject._id,
         'createdDate': thisVisitorObject.createdDate,
         'Person' : thisVisitorObject.Person,
         'Reason' : thisVisitorObject.Reason,
-        'ArrivalTime' : thisVisitorObject.ArrivalTime,
-        'DepartureTime' : TimeOnly,
+        'ArrivalTime' : moment().format(),
+        'DepartureTime' : moment().format(),
         'Disclaimer' : thisVisitorObject.Disclaimer,
         'iPadOut' : getKioskId(),
         'iPadIn' : iPadIn,
@@ -161,7 +160,7 @@ $('#ListCount').text(visitorListData.length);
             tableContent += '<tr>';
             tableContent += '<td>' + newName + '</td>';
             tableContent += '<td>' + this.Reason + '</td>';
-            tableContent += '<td>' + this.ArrivalTime + '</td>';
+            tableContent += '<td>' + moment(this.ArrivalTime).format('hh:mm:ss') + '</td>';
             iPadIn = this.iPadIn;
 
               if (this.DepartureTime === '') {
@@ -169,7 +168,7 @@ $('#ListCount').text(visitorListData.length);
 
                 tableContent += '<td><button type="button" rel="' + this._id + '" class="CheckOut btn btn-warning btn-sm">Check Out</button></td>';
               } else {
-                tableContent += '<td>' + this.DepartureTime + '</td>';
+                tableContent += '<td>' + moment(this.DepartureTime).format('hh:mm:ss') + '</td>';
               }
             // tableContent += '<td><a href="#" class="linkdeletevisitor " rel="' + this._id + '">delete</a></td>';
             tableContent += '</tr>';

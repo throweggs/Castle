@@ -88,7 +88,7 @@ function addSupervisor(event) {
         'designatedAdult': $('#addSupervisor input#designatedAdult').val(),
         'disclaimer': $('#addSupervisor input#disclaimer').val(),
         'iPad' : getKioskId(),
-        'createdDate': curDate
+        'createdDate': moment().format()
 
     };
     console.log(newSupervisor);
