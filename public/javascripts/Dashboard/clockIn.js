@@ -155,37 +155,6 @@ if(direction === 'ClockIn'){
                     });
 }
 
-  //
-  //   $.getJSON( '/staff/ClockOut',({ Staff_Id: staffID, '$set': {Clock_Out:  moment().format('HH:mm:ss')}}), function(results, res) {
-  //     })
-  //     .done(function(results, res) {
-  //       console.log('clocked out on form');
-  //
-  //         // Check for successful (blank) response
-  //         if (results.msg === '') {
-  //
-  //
-  //           // $.getJSON( '/staff/StaffNotPresent',{ _id: staffID}, function(results, res) {
-  //           //   })
-  //           //   .done(function(results, res) {
-  //           //     console.log('clocked out on staff');
-  //           //   });
-  //
-  //
-  //         location.reload();
-  //         }
-  //         else {
-  //             // If something goes wrong, alert the error message that our service returned
-  //             alert('Error: ' + results.msg);
-  //         }
-  //
-  //     });
-  //
-  // }
-  //
-
-
-
 }
 
 
@@ -315,7 +284,7 @@ document.getElementById("ClockIn").disabled = false;
 });
 
 
-  $( document ).ready(function() {
+$( document ).ready(function() {
 
 
 

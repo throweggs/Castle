@@ -6,7 +6,6 @@ var Count = 0,
     Disclaimer = '',
     iPad = '',
     output = false,
-    otherReason = null,
     photographyWaverAgreement  = null,
     theText = '';
 
@@ -132,7 +131,7 @@ function addVisitor(event) {
         'firstName': toTitleCase($('#addVisitor input#firstName').val()),
         'lastName': toTitleCase($('#addVisitor input#lastName').val()),
         'reasonForVisit': $('#addVisitor select#reasonForVisit').val(),
-        'otherReason': otherReason,
+        'otherReason': $('#addVisitor input#otherReason').val(),
         'ChildNames' : [
             {'name' : toTitleCase($('#addVisitor input#Kid1').val())},
             {'name' : toTitleCase($('#addVisitor input#Kid2').val())},

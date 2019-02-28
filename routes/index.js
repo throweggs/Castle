@@ -70,6 +70,19 @@ router.get('/dashboard', function(req, res) {
 });
 
 
+router.get('/viewVisitors', function(req, res) {
+    res.render('Dashboard/viewVisitors', { title: 'Visitors' });
+});
+
+router.get('/viewWBS', function(req, res) {
+    res.render('Dashboard/viewWBS', { title: 'Womens Bouldering Social' });
+});
+
+router.get('/viewTheSession', function(req, res) {
+    res.render('Dashboard/viewTheSession', { title: 'TheSession' });
+});
+
+
 router.get('/viewStaff', function(req, res) {
     res.render('Dashboard/viewStaff', { title: 'Staff' });
 });

@@ -40,6 +40,12 @@ padding: 0px 10px 0px 0px;
 .navbar-text {
   padding: 0px 10px 0px 10px;
 }
+
+.nav-link.forms.active {
+  background-color: lightgrey;
+  font-weight: bold;
+}
+
 .fas.fa-home {
   color: white;
   margin: 0px 0px 0px 5px;

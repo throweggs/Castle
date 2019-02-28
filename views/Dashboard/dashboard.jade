@@ -1,108 +1,143 @@
 doctype html
 html
-	head
-		append styles
-			link(rel='stylesheet', href='/css/bootstrap.min.css')
-			link(rel='stylesheet', href='/stylesheets/style.css')
-			link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.7.1/css/all.css', integrity='sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr', crossorigin='anonymous')
-			script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js')
-			script(src='https://code.jquery.com/jquery-1.11.3.min.js')
-			script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous")
-			script(src='/moment/min/moment.min.js')
-			script(src='/jquery/jquery.js')
-			script(src='/js/bootstrap.min.js')
-			script(src='/javascripts/global.js')
-			script(src='/tempus/build/js/tempusdominus-bootstrap-4.min.js')
-			script(scr='/javascripts/jquery.tabletoCSV.js')
-			//- script(src='https://unpkg.com/fast-average-color/dist/index.min.js')
-			script(src='/javascripts/dashboard.js')
-			script(src='/javascripts/Dashboard/staff.js')
-			script(src='/javascripts/Dashboard/teams.js')
-			script(src='/javascripts/Dashboard/clockIn.js')
-		
+  head
+  append styles
+    script(src='https://code.jquery.com/jquery-3.3.1.min.js', integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=', crossorigin='anonymous')
+    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.0.13/css/all.css', integrity='sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp', crossorigin='anonymous')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1', crossorigin='anonymous')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
+    script(src='/moment/min/moment.min.js')
+    script(src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js")
+    link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css")
+    script(src='/javascripts/global.js')
+    script(src='/tempus/build/js/tempusdominus-bootstrap-4.min.js')
+    script(scr='/javascripts/jquery.tabletoCSV.js')
+  
+    script(src='/javascripts/dashboard.js')
 
-block content
-
-
-	
 
 
 body
-		nav.navbar.navbar-dark.sticky-top.bg-dark.flex-md-nowrap.p-0
-			a.navbar-brand.col-sm-3.col-md-2.mr-0(href='#') Castle Climbing Centre
-			input.form-control.form-control-dark.w-100(type='text', placeholder='Search', aria-label='Search')
-	
-		.container-fluid
-			.row
-				nav.col-md-2.d-none.d-md-block.bg-light.sidebar
-					.sidebar-sticky
-						h4.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted
-							a.nav-link.active(href='/dashboard')
-								i.far.fa-home
-								|     			        Dashboard 
+    nav.navbar.navbar-dark.sticky-top.bg-dark.flex-md-nowrap.p-0
+      a.navbar-brand.col-sm-3.col-md-2.mr-0(href='#') Castle Climbing Centre
+      .input-group
+        .input-group-prepend
+          select#searchOptions.custom-select
+      
+        #reportrange(style='background: #fff; width:50%; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc')
+          .row
+            .col-auto
+              i.align-right.fa.fa-caret-down
+              i.fa.fa-calendar
+            .col-auto
+              span#dateRange
 
-						h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted
-							span Visitor Forms  
-							.far.fa-list-ul
+              
+        input#searchText.form-control(type='text', aria-label='search', placeholder='Search',style='display: none; ')
+  
+      span.navbar-text.i.fas.fa-user-alt
+      span#userName
+  
+    .container-fluid
+      .row
+        nav.col-md-2.d-none.d-md-block.bg-light.sidebar
+          .sidebar-sticky
+            h4.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted
+              a.nav-link.active(href='/dashboard')
+                i.far.fa-home
+                |                   Dashboard 
 
-						ul.nav.flex-column
-							li.nav-item
-								a#visitorLink.nav-link(href='#')
-									i.fas.fa-user
-									| 									Visitors
-							li.nav-item
-								a#wbsLink.nav-link(href='#')
-									i.fas.fa-user-circle
-									|                   Women's Bouldering Social
-							li.nav-item
-								a#theSessionLink.nav-link(href='#')
-									i.fas.fa-user-circle
-									|                   The Session
-							li.nav-item
-								a#nonClimbingChildLink.nav-link(href='#')
-									i.far.fa-child
-									|                   Non-Climbing Child
-							li.nav-item
-								a#thamesWaterLink.nav-link(href='#')
-									i.far.fa-tint
-									|                   Thames thamesWater
-							li.nav-item
-								a#gardenLink.nav-link(href='#')
-									i.far.fa-leaf
-									|                   Garden and Mini Plotter
-							
-						h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted
-							span Staff Time Sheets
-							.far.fa-calendar
-						
-						ul.nav.flex-column
-					
-							li.nav-item
-								a#TeamsLink.nav-link(href='#')
-									i.fas.fa-users-cog 
-									| 									 Teams
-							li.nav-item
-								a#StaffLink.nav-link(href='#')
-									i.fas.fa-user-edit
-									| 									 Staff
-							li.nav-item
-								a#todayCheckIn.nav-link(href='#')
-									i.fas.fa-calendar-day
-									|                   Today's Check Ins
-							li.nav-item
-								a#weekCheckIn.nav-link(href='#')
-									i.fas.fa-calendar-week
-									|                   This Week's Check Ins
-							li.nav-item
-								a#departmentCheckIn.nav-link(href='#')
-									.fas.fa-calendar
-									|                   Department Check Ins
-							li.nav-item
-								a#customCheckIn.nav-link(href='#')
-									i.fas.fa-calendar-check
-									|                   Custom Check Ins
+            h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted
+              span Visitor Forms  
+              .far.fa-list-ul
+
+            ul.nav.flex-column
+              li.nav-item
+                a#visitorLink.nav-link.forms(href='/viewVisitors')
+                  i.fas.fa-user
+                  |                   Visitors
+              li.nav-item
+                a#wbsLink.nav-link.forms(href='/viewWBS')
+                  i.fas.fa-user-circle
+                  |                   Women's Bouldering Social
+              li.nav-item
+                a#theSessionLink.nav-link.forms(href='/viewTheSession')
+                  i.fas.fa-user-circle
+                  |                   The Session
+              li.nav-item
+                a#nonClimbingChildLink.nav-link.forms(href='/viewSupervisor')
+                  i.far.fa-child
+                  |                   Non-Climbing Child
+              li.nav-item
+                a#thamesWaterLink.nav-link.forms(href='/viewThamesWater')
+                  i.far.fa-tint
+                  |                   Thames thamesWater
+              li.nav-item
+                a#gardenLink.nav-link.forms(href='/viewGarden')
+                  i.far.fa-leaf
+                  |                   Garden and Mini Plotter
+              
+            h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted
+              span Staff Time Sheets
+              .far.fa-calendar
+            
+            ul.nav.flex-column
+          
+              li.nav-item
+                a#TeamsLink.nav-link(href='#')
+                  i.fas.fa-users-cog 
+                  |                    Teams
+              li.nav-item
+                a#StaffLink.nav-link(href='#')
+                  i.fas.fa-user-edit
+                  |                    Staff
+              li.nav-item
+                a#todayCheckIn.nav-link(href='#')
+                  i.fas.fa-calendar-day
+                  |                   Today's Check Ins
+              li.nav-item
+                a#weekCheckIn.nav-link(href='#')
+                  i.fas.fa-calendar-week
+                  |                   This Week's Check Ins
+              li.nav-item
+                a#departmentCheckIn.nav-link(href='#')
+                  .fas.fa-calendar
+                  |                   Department Check Ins
+              li.nav-item
+                a#customCheckIn.nav-link(href='#')
+                  i.fas.fa-calendar-check
+                  |                   Custom Check Ins
 
 
-				main.col-md-9.ml-sm-auto.col-lg-10.pt-3.px-4(role='main')
-					#mainPage
-mainPage
+        main.col-md-9.ml-sm-auto.col-lg-10.pt-3.px-4(role='main')
+          #mainPage
+          block content
+
+#PinModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='digitPasswordlbl', aria-hidden='true')
+  .vertical-alignment-helper
+    .modal-dialog.modal-sm.vertical-align-center
+      .modal-content
+        .modal-header
+          h4#digitPasswordlbl.modal-title.love-ya Enter your pin:
+        .modal-body(style='.row {text-align: center}')
+          input(type='hidden', name='formType', value='confirmPassword')
+          .form.needs-validation(novalidate='', name="addVisitor")
+            .form-group
+              .row.text-center
+                .col
+                input#firstdigit.col-2.digit.log-status.form-control.text-center(name='firstdigit', type='password', required='', size='1', maxlength='1', tabindex='0')
+                input#seconddigit.col-2.digit.log-status.form-control.text-center(name='seconddigit', type='password', required='', size='1', maxlength='1', tabindex='1')
+                input#thirddigit.col-2.digit.log-status.form-control.text-center(name='thirddigit', type='password', required='', size='1', maxlength='1', tabindex='2')
+                input#fourthdigit.col-2.digit.log-status.form-control.text-center(name='fourthdigit', type='password', required='', size='1', maxlength='1', tabindex='3')
+                .col
+                .invalid-feedback
+                  | Invalid Pin
+        .modal-footer
+          .d-flex.justify-content-center
+            #loading.spinner-border.text-primary(role='status')
+              span.sr-only(style='display:none;') Loading...
+
+        
+          button#clockIn.btn.btn-primary.digit(type='submit', tabindex='4') Confirm

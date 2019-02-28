@@ -7,6 +7,7 @@ var router = express.Router();
 router.get('/visitorlist', function(req, res) {
     var findMe = req.query;
     console.log(findMe);
+    console.log('search');
     var db = req.db;
     var collection = db.get('Visitors');
     collection.find(findMe,{},function(e,docs){

@@ -1,0 +1,26 @@
+extends dashboard
+
+block content
+  script(src='/javascripts/Dashboard/viewVisitors.js')
+
+  .row.container-fluid
+    .col.h3
+      #pageTitle
+    .col-align-end.h3
+      #listCount
+  #dataList
+    table.table.table-striped.table-hover.table-response
+        thead
+          th Date
+          th Time
+          th Full Name
+          th Reason
+          th
+            i.fas.fa-child
+          th
+            i.fas.fa-camera
+          th
+            i.fas.fa-tablet-alt
+
+        tbody
+          

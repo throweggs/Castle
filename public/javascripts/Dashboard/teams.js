@@ -208,6 +208,6 @@ $(document).on('click',function() {
 
 $(document).ready(function() {
 
-
+console.log('hit');
 
 });
