@@ -95,6 +95,10 @@ router.get('/clockIn', function(req, res) {
     res.render('Dashboard/clockIn', { title: 'Clock In / Clock Out' });
 });
 
+router.get('/DataEntry', function(req, res) {
+    res.render('Dashboard/DataEntry', { title: 'Data Entry' });
+});
+
 /* POST to Add Visitor Service */
 // router.post('/addVisitor', function(req, res) {
 //

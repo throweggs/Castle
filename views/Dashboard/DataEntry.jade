@@ -1,0 +1,1035 @@
+extends dashboard
+
+block content
+  script(src='/javascripts/Dashboard/DataEntry.js')
+  
+  h1 #{title}
+  br
+  //Visitor
+  .card
+  
+    h4.card-header 
+      button#butVisitors.btn.btn-outline-dark(type='button', autocomplete='off') show
+      |   Visitor Form  
+      
+    .card-body#visitorForm(style='display:none;')
+      form#visitorForm.needs-validation.container-fluid(novalidate='',action="submitVisitor.js", method="post")
+        .form-row
+          .col-2
+            label(for='visitorTime') Arrival Times
+            input#visitorTime.form-control(type='text', name='visitorTime', value='')
+          .col
+            label(for='firstName') First name
+            input#firstName.form-control(type='text', placeholder='', value='', required='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            label(for='lastName') Last name
+            input#lastName.form-control(type='text', placeholder='', value='', required='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+        br
+        .form-row
+          .col
+            label(for='Child 1') Child 1
+            input#child1.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            label(for='Child 2') Child 2
+            input#child2.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+        br
+        .form-row
+          .col
+            label(for='NewReason') Reason for visit
+            select#NewReason.form-control.row2.custom-select(autocomplete='false', required='')
+              option(value='')
+              option(value='Cafe') Cafe
+              option(value='Climbers Clinic') Climbers Clinic
+              option(value='Garden')  Garden
+              option(value='Geckos')  Geckos
+              option(value='Castle Climbing')  Castle Climbing Club
+              option(value='Passing By')  Passing By
+              option(value='Shop')  Shop
+              option(value='Contractor')  Contractor
+              option(value='Photography')  Photography
+              option(value='Staff Member')  Visiting a staff member
+              option(value='Other')  Other
+            .invalid-feedback
+              | Please select an option
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col
+            label(for='other Reason') Other Reason
+            input#otherReason.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+        br      
+        .form-row 
+          .col-1
+          .col-4
+            .form-check
+              input#photoWaiver.big-checkbox.form-check-input(type='checkbox')
+              label.form-check-label(for='photoWaiver') Photo Wavier
+
+          .col-5
+          .col-2
+            input#addVisitor.col.align-self-end.btn.btn-primary(type='submit', value='Add Visitor') 
+      br
+  
+  br
+  //Non Climbing Child
+  .card
+    h4.card-header
+      button#butnonClimbingChild.btn.btn-outline-dark(type='button') show
+      |   Unsupervised Non-Climbing Child  
+    
+    .card-body#nonClimbingChild(style='display:none;')
+      form#nonClimbingChild.needs-validation.container-fluid(novalidate='')
+        .form-row
+          .col-2
+            label(for='visitorTime') Arrival Times
+            input#nonClimbingChildDate.form-control(type='text', name='visitorTime', value='')
+          .col-3
+            label(for='childName') Child Name
+            input#childName.form-control(type='text', placeholder='', value='', required='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col-3
+            label(for='designatedAdult') Designated Adult
+            input#designatedAdult.form-control(type='text', placeholder='', value='', required='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col-2
+          .col-2
+            br
+            button#addSupervisor.col.align-self-end.btn.btn-primary(type='submit') Add Supervisor
+        br
+
+  br
+  //Garden Volunteer
+  .card
+    h4.card-header 
+      button#butGardenVolunteer.btn.btn-outline-dark(type='button') show
+      |    Garden Volunteer and Mini Plotter  
+    .card-body#gardenVolunteer(style='display:none;')
+      form#gardenVolunteer.needs-validation.container-fluid(novalidate='')
+        .form-row
+          .col
+            label(for='childName') Person
+            input#person.form-control(type='text', placeholder='', value='', required='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            .form-group
+              label.col(for='VolunteerChoice') Reason
+              .btn-group.col.btn-group-toggle(data-toggle='buttons')
+                .col.label.btn.btn-outline-secondary
+                  input#VolunteerChoice(type='radio', value='Volunteer', autocomplete='off', checked='')
+                  | Garden Volunteer
+                .col.label.btn.btn-outline-secondary
+                  input#miniPlotsChoice(type='radio', value='Mini Plotter', autocomplete='off')
+                  |  Mini Plotter
+        .form-row
+          .col-3
+            label(for='gardenRangeStart') Arrival Times
+            input#gardenRangeStart.form-control(type='text', name='gardenRangeStart', value='')
+          .col-3
+            label(for='gardenRangeEnd') Departure Times
+            input#gardenRangeEnd.form-control(type='text', name='gardenRangeEnd', value='')
+          .col-4
+          .col        
+            br
+            button#addGardeneer.col.align-self-end.btn.btn-primary(type='submit') Add Gardeneer
+      br
+  
+  br
+  //The Session
+  .card
+    h4.card-header 
+      button#butTheSession.btn.btn-outline-dark(type='button') show
+      |    The Session 
+    .card-body#theSession(style='display:none;')
+      form#theSession.needs-validation.container-fluid(novalidate='')
+        .form-row
+          .col-3
+            label(for='theSessionDate') Date
+            input#theSessionDate.form-control(type='text', name='gardenRangeStart', value='')
+          .col-3
+            label(for='facilitator') Facilitator
+            input#facilitator.form-control(type='text', placeholder='', value='', required='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col-3
+            .form-group
+              label#sessDetails.col(for='SessionClimbingType') Session Type
+              #sessChoice.btn-group.col.btn-group-toggle(data-toggle='buttons')
+                .col-6#BSess.label.btn.btn-outline-secondary.active
+                  input#BoulderingSession(type='radio', value='bouldering', autocomplete='off', checked='')
+                  | Bouldering
+                .col-6#TSess.label.btn.btn-outline-secondary
+                  input#TopRopeSession(type='radio', value='top roping', autocomplete='off')
+                  | Top Roping
+          .col-3
+            .form-group
+              label(for='startOptions') Session Starting Location
+              select#startOptionsRopes.form-control(style="display: none;")
+                option#AutoBelay Auto Belays
+                option#Stacks Stacks
+                option#Quarry Quarry
+                option#TallWalls Upstairs Slabs & Tall Walls
+
+              select#startOptionsBouldering.form-control
+                option#Catacombs Catacombs
+                option#compWall Competition Wall
+                option#Loft Loft
+                option#Panels Panels
+                option#Pen Pen
+                option#Mez Mez
+                option#Traverse Traverse Boulders
+                option#Outdoor Outdoor Boulders
+
+        
+        .form-row
+          .col
+            label(for='NewParticipantFirstName') First name
+            input#NewParticipantFirstName.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            label(for='NewParticipantLastName') Last name
+            input#NewParticipantLastName.form-control(type='text', placeholder='', value='' )
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            label(for='NewReason') Reason for participanting
+            select#NewReason.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            label(for='NewFirstTime') First time on the session
+            select#NewFirstTime.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+        .form-row
+          .col
+        
+            input#NewParticipantFirstName1.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+        
+            input#NewParticipantLastName1.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+          
+            select#NewReason1.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+          
+            select#NewFirstTime1.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+        .form-row
+          .col
+            input#NewParticipantFirstName2.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#NewParticipantLastName2.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#NewReason2.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#NewFirstTime2.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+        .form-row
+          .col
+            input#NewParticipantFirstName3.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#NewParticipantLastName3.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#NewReason3.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#NewFirstTime3.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+        .form-row
+          .col
+            input#NewParticipantFirstName4.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#NewParticipantLastName4.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#NewReason4.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#NewFirstTime4.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required      
+        .form-row
+          .col
+            input#NewParticipantFirstName5.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#NewParticipantLastName5.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#NewReason5.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#NewFirstTime5.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required      
+              
+        .form-row
+          .col
+            input#NewParticipantFirstName6.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#NewParticipantLastName6.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#NewReason6.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#NewFirstTime6.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required            
+        .form-row
+          .col
+            input#NewParticipantFirstName7.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#NewParticipantLastName7.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#NewReason7.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#NewFirstTime7.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required          
+        .form-row
+          .col
+            input#NewParticipantFirstName8.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#NewParticipantLastName8.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#NewReason8.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#NewFirstTime8.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+        .form-row
+          .col
+            input#NewParticipantFirstName9.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#NewParticipantLastName9.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#NewReason9.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#NewFirstTime9.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+        .form-row
+          .col
+            input#NewParticipantFirstName10.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#NewParticipantLastName10.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#NewReason10.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#NewFirstTime10.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+              
+        .form-row
+          .col        
+            br
+            button#addTheSession.col.align-self-end.btn.btn-primary(type='submit') Add Session
+      br
+
+  br
+  //WBS
+  .card
+    h4.card-header 
+      button#butWBS.btn.btn-outline-dark(type='button') show
+      |    Womans Bouldering Social
+    .card-body#WBS(style='display:none;')
+      form#wbs.needs-validation.container-fluid(novalidate='')
+        .form-row
+          .col-3
+            label(for='WBSDate') Date
+            input#WBSDate.form-control(type='text', name='WBSdate', value='')
+          .col-3
+            label(for='WBSfacilitator') Facilitator
+            input#WBSfacilitator.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col-3
+            .form-group
+              label#WBSsessDetails.col(for='SessionClimbingType') Session Type
+              #WBSsessChoice.btn-group.col.btn-group-toggle(data-toggle='buttons')
+                .col-6#BSess.label.btn.btn-outline-secondary.active
+                  input#WBSBoulderingSession(type='radio', value='bouldering', autocomplete='off', checked='')
+                  | Bouldering
+                .col-6#TSess.label.btn.btn-outline-secondary
+                  input#WBSTopRopeSession(type='radio', value='top roping', autocomplete='off')
+                  | Top Roping
+          .col-3
+            .form-group
+              label(for='startOptions') Session Starting Location
+              select#WBSstartOptionsRopes.form-control(style="display: none;")
+                option#AutoBelay Auto Belays
+                option#Stacks Stacks
+                option#Quarry Quarry
+                option#TallWalls Upstairs Slabs & Tall Walls
+
+              select#WBSstartOptionsBouldering.form-control
+                option#Catacombs Catacombs
+                option#compWall Competition Wall
+                option#Loft Loft
+                option#Panels Panels
+                option#Pen Pen
+                option#Mez Mez
+                option#Traverse Traverse Boulders
+                option#Outdoor Outdoor Boulders
+
+        
+        .form-row
+          .col
+            label(for='WBSNewParticipantFirstName') First name
+            input#WBSNewParticipantFirstName.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            label(for='WBSNewParticipantLastName') Last name
+            input#WBSNewParticipantLastName.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            label(for='WBSNewReason') Reason for participanting
+            select#WBSNewReason.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            label(for='WBSNewReason') First time on the session
+            select#WBSNewFirstTime.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+        .form-row
+          .col
+            input#WBSNewParticipantFirstName1.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#WBSNewParticipantLastName1.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#WBSNewReason1.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#WBSNewFirstTime1.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+        .form-row
+          .col
+            input#WBSNewParticipantFirstName2.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#WBSNewParticipantLastName2.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#WBSNewReason2.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#WBSNewFirstTime2.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+        .form-row
+          .col
+            input#WBSNewParticipantFirstName3.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#WBSNewParticipantLastName3.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#WBSNewReason3.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#WBSNewFirstTime3.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+        .form-row
+          .col
+            input#WBSNewParticipantFirstName4.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#WBSNewParticipantLastName4.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#WBSNewReason4.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#WBSNewFirstTime4.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required      
+        .form-row
+          .col
+            input#WBSNewParticipantFirstName5.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#WBSNewParticipantLastName5.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#WBSNewReason5.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#WBSNewFirstTime5.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required          
+        .form-row
+          .col
+            input#WBSNewParticipantFirstName6.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#WBSNewParticipantLastName6.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#WBSNewReason6.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#WBSNewFirstTime6.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required            
+        .form-row
+          .col
+            input#WBSNewParticipantFirstName7.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#WBSNewParticipantLastName7.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#WBSNewReason7.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#WBSNewFirstTime7.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required          
+        .form-row
+          .col
+            input#WBSNewParticipantFirstName8.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#WBSNewParticipantLastName8.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#WBSNewReason8.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#WBSNewFirstTime8.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+        .form-row
+          .col
+            input#WBSNewParticipantFirstName9.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#WBSNewParticipantLastName9.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#WBSNewReason9.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#WBSNewFirstTime9.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+        .form-row
+          .col
+            input#WBSNewParticipantFirstName10.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            input#WBSNewParticipantLastName10.form-control(type='text', placeholder='', value='')
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          .col
+            select#WBSNewReason10.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='I have no climbing partner today') as I have no climbing partner today
+              option(value='I am new to the Castle') as I am new to the Castle
+              option(value=' for staff input') for staff input
+              option(value='other reasons') other reasons
+          .valid-feedback
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required     
+          .col 
+            select#WBSNewFirstTime10.form-control.row2.custom-select(autocomplete='false')
+              option(selected='', value='')
+              option(value='Yes') Yes
+              option(value='No') No
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required          
+        .form-row
+          .col        
+            br
+            button#addWBS.col.align-self-end.btn.btn-primary(type='submit') Add Session
+      br

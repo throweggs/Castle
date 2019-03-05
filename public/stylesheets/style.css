@@ -3,6 +3,7 @@
 html {
   height:100%;
   box-sizing: border-box;
+
 }
 *, *:before, *:after {
   box-sizing: inherit;
@@ -15,7 +16,8 @@ html {
 
 body {
   font: sans-serif;
-  background: url(castlelogo.png) no-repeat center center fixed;
+
+  background: url(castleline.svg) no-repeat center center fixed #F4F4F4;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

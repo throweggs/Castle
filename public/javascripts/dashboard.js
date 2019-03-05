@@ -8,6 +8,7 @@ var navChoice = '',
 
 
 
+
 $(document).ready(function() {
 
 //Load StaffView jade file onto page
@@ -48,6 +49,8 @@ $(function() {
     cb(start, end);
 
 });
+
+
 
 //Access Control Functions for Dashboard
 $( document ).ready(function() {
@@ -148,7 +151,6 @@ $( document ).ready(function() {
 });
 
 $(document).on('change',function(e){
-  console.log(e.target);
   if(e.target.id == 'searchOptions'){
     searchChoice = e.target.value;
     console.log(e.target);

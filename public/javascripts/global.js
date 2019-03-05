@@ -50,7 +50,7 @@ var checksOut = false;
 
 function resetPage() {
     location.reload();
-    console.log('HIT RELOAD');
+    
 }
 //create Exportable table
 jQuery.fn.tableToCSV = function() {
