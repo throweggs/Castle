@@ -48,10 +48,13 @@ router.put('/ClockOut', function(req, res){
 // ADD
 router.post('/addStaff', function(req, res) {
     var db = req.db;
+
+    console.log( req.body);
     var collection = db.get('staff');
     collection.insert(req.body, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
+
         );
     });
 });
@@ -104,7 +107,7 @@ router.put('/updateAStaff', function(req, res){
 //ADD
 router.post('/addTeam', function(req, res) {
     var db = req.db;
-    var collection = db.get('teamsNrates');
+    var collection = db.get('teams');
     collection.insert(req.body, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
@@ -117,7 +120,7 @@ router.post('/addTeam', function(req, res) {
 router.get('/getTeams', function(req, res) {
     findMe = req.query;
     var db = req.db;
-    var collection = db.get('teamsNrates');
+    var collection = db.get('teams');
     collection.find(findMe,{},function(e,docs){
         res.json(docs);
     });
@@ -127,7 +130,7 @@ router.get('/getTeams', function(req, res) {
 router.get('/getATeam', function(req, res) {
     findMe = req.query;
     var db = req.db;
-    var collection = db.get('teamsNrates');
+    var collection = db.get('teams');
     collection.find(findMe,{},function(e,docs){
         res.json(docs);
         // console.log('get');
@@ -141,7 +144,7 @@ router.put('/updateATeam', function(req, res){
   console.log(req.body.Team_Name);
   console.log(findMe);
   var db = req.db;
-  var collection = db.get('teamsNrates');
+  var collection = db.get('teams');
   collection.update(findMe,req.body,function(e,docs){
       res.json(docs);
 

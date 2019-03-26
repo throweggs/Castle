@@ -4,6 +4,7 @@
 var teamsNRates = [],
     aStaff = [],
     theData = [],
+    teamInfo = [],
     theTeamUpdates = [];
 
 
@@ -12,24 +13,20 @@ var teamsNRates = [],
         $.getJSON( '/staff/getTeams', function( results, res ) {
         })
           .done(function(results, res) {
-              teamsNRates = results;
 
-        $.get('viewStaff').then(function(html) {
-        var theList = document.getElementById('mainPage');
-        theList.id = 'mainPage';
-        theList.innerHTML = html;
-
-      })
-        .done(function(results, res) {
           getStaffMembers();
 
         });
-      });
+
   }
 
 
 
-function insertStaff(i,created,name,pin,teams) {
+function insertStaff(member) {
+  staffID = member._id;
+  name = member.First_Name + ' ' + member.Last_Name;
+  pin = member.Pin;
+  teams = member.Teams;
           var table = document.getElementById("StaffMembersTableBody");
 
           var staffRow = table.insertRow(-1);
@@ -38,13 +35,38 @@ function insertStaff(i,created,name,pin,teams) {
                 teamsCellToggle.className = 'toggle-row';
                 teamsCellToggle.id = staffID+'_toggle';
                 teamsCellToggle.innerHTML = '<a href="#" id="'+staffID+'" class="fas fa-edit UpdateStaff toggle-row" id="'+staffID+'"></i>';
-          var nameCell = staffRow.insertCell(1);
+          var activeCell = staffRow.insertCell(1);
+            if(member.Active_Staff_Member === true){
+                activeCell.innerHTML = '<i class="far fa-check-square"></i>';
+              } else {
+                activeCell.innerHTML = '<i class="far fa-square"></i>';
+              }
+          var adminCell = staffRow.insertCell(2);
+            if(member.Super_Admin === true){
+                activeCell.innerHTML = '<i class="far fa-check-square"></i>';
+              } else {
+                activeCell.innerHTML = '<i class="far fa-square"></i>';
+              }
+          var nameCell = staffRow.insertCell(3);
                 nameCell.innerHTML = name;
-          var pinCellToggle = staffRow.insertCell(2);
+          var pinCellToggle = staffRow.insertCell(4);
                 pinCellToggle.innerHTML = '<a class="hidetext" id="'+staffID+'_Pin">'+pin+'</a>';
 
-          var createdCell = staffRow.insertCell(3);
-                createdCell.innerHTML = created;
+          var teamsCell = staffRow.insertCell(5);
+
+            $.each(teams,function(i,team){
+              if(team.rate !== 'Not In Team'){
+             teamsCell.innerHTML = teamsCell.innerHTML + ' ' + team.team;
+           }
+         });
+         var accessCell = staffRow.insertCell(5);
+
+           $.each(member.Access_Rights,function(i,team){
+             console.log(team.Name);
+             if(team.Permission === true){
+            accessCell.innerHTML = accessCell.innerHTML + ' ' + team.Name;
+          }
+        });
 
 
 
@@ -107,11 +129,6 @@ function insertStaff(i,created,name,pin,teams) {
 
               });
 
-
-
-
-
-            // });
   teamCell.innerHTML = theChoice;
 
 
@@ -124,19 +141,39 @@ function insertStaff(i,created,name,pin,teams) {
 
 //Post request to add Staff Member
 function addStaff() {
+  var selectedTeam = [];
+$.each(teamInfo, function(i, team){
+  selectedTeam[i] = {
+    team: team.Team_Name,
+    rate: $('#rates_'+team.Team_Name).val(),
+    pay: $('input[name=inlineRadioOptions_'+team.Team_Name+']:checked').val(),
+    admin: $('#admin_'+team.Team_Name).prop('checked')
+                  };
+});
+console.log(selectedTeam);
 
     var newStaffMember = {
-      'Created_Date': moment().format('MMMM Do YYYY'),
-      'Created_Time' : moment().format('HH:MM:SS'),
-      'First_Name' : $('input#firstName').val(),
-      'Last_Name' : $('input#lastName').val(),
-      'Pin' : $('input#pin').val(),
-      'Teams' : [],
+      Created_Date: moment().format('MMMM Do YYYY'),
+      Created_Time : moment().format('HH:MM:SS'),
+      First_Name : $('input#firstNameInput').val(),
+      Last_Name : $('input#lastNameInput').val(),
+      Pin : $('input#pinInput').val(),
+      Super_Admin : $('input[id=superAdmin]').prop('checked'),
+      Active_Staff_Member : $('input[id=activeStaff]').prop('checked'),
+      Teams : selectedTeam,
+      Access_Rights : [
+        {Name :  'Visitors', Permission : $('input[id=visitorFormAccess]').prop('checked')},
+        {Name :  'NonClimbingChild', Permission : $('input[id=nonClimbingChildAccess]').prop('checked')},
+        {Name :  'WBS', Permission : $('input[id=wbsAccess]').prop('checked')},
+        {Name :  'TheSession', Permission : $('input[id=theSessionAccess]').prop('checked')},
+        {Name :  'ThamesWater', Permission :  $('input[id=thamesWaterAccess]').prop('checked')},
+        {Name :  'Gardeners', Permission : $('input[id=gardenerAndMiniPlotterAccess]').prop('checked')},
+      ]
     };
 
   var myJSON = JSON.stringify(newStaffMember);
 
-
+console.log(newStaffMember);
 
 
     $.ajax({
@@ -146,8 +183,8 @@ function addStaff() {
         dataType: 'JSON',
         contentType: 'application/json',
     }).done(function( response, results ) {
-      console.log(response);
-        location.reload();
+      console.log(results);
+
         // Check for successful (blank) response
         if (response.msg === '') {
 
@@ -288,13 +325,9 @@ $("#StaffMembersTableBody").empty();
 theData = data;
 
     $.each(data, function(i, member){
-        staffID = member._id;
-        created = member.Created_Date + ' ' + member.Created_Time;
-        name = member.First_Name + ' ' + member.Last_Name;
-        pin = member.Pin;
-        teams = member.Teams;
 
-        insertStaff(i,created,name,pin,teams);
+
+        insertStaff(member);
 
     });
   });
@@ -310,6 +343,8 @@ theData = data;
 //DOM ready
 $(document).ready(function() {
 
+
+  showTheStaffPage();
 });
 
 //DOM mouse over
@@ -340,6 +375,7 @@ $(document).mouseout(function() {
 //DOM click
 $(document).on('click',function() {
 //Show teams
+      console.log(event.target.id);
 
       if ($(event.target).hasClass('UpdateStaff') === true){
         var staffID = event.target.id;
@@ -371,15 +407,11 @@ $(document).on('click',function() {
 
             $.getJSON( '/staff/getTeams', {}, function(results, res) {
 
+
               })
               .done(function(results, res) {
+                var teamInfo = results;
 
-                    var theResults = JSON.stringify(results);
-                      if (theResults === '[]') {
-                          console.log(theResults);
-                    } else {
-                        console.log(theResults);
-                    }
                     $.each(results,function(i, team){
                       theTeams +=   '<div class="input-group">';
                       theTeams +=     '<div class="input-group-prepend">';
@@ -407,7 +439,7 @@ $(document).on('click',function() {
       }
     //Update Staff Member
     if ($(event.target).hasClass('updateRate') === true){
-      console.log('button pressed');
+      console.log(event.target.id);
       var theID = event.target.id.split("_");
 
       var staffID = theID[0];
@@ -419,6 +451,87 @@ $(document).on('click',function() {
 
 
       updateAStaff(staffID,optSel,theTeam,theTeamID);
+
+
+    }
+
+    if (event.target.id === 'staffModal'){
+
+
+
+          $.getJSON( '/staff/getTeams', {}, function(results, res) {
+
+
+            })
+            .done(function(results, res) {
+                theTeams = '';
+                teamInfo = results;
+                  $.each(results,function(i, team){
+
+                    theTeams +=   '<span >'+results[i].Team_Name+'</span>';
+                    theTeams +=   '<div class="input-group">';
+                    theTeams +=   '  <div class="input-group-prepend">';
+                    theTeams +=   '    <div class="input-group-text">';
+                    theTeams +=   '      <input type="radio" name="inlineRadioOptions_'+results[i].Team_Name+'" id="pay_'+results[i].Team_Name+'" value="Not In Team" checked>';
+                    theTeams +=   '    </div>';
+                    theTeams +=   '  </div>';
+                    theTeams +=   '  <div class="input-group-append">';
+                    theTeams +=   '    <div class="input-group-text">';
+                    theTeams +=   '      <label class=" form-check-label" for="inlineRadioOptions_'+results[i].Team_Name+'"> Not In Team</label>';
+                    theTeams +=   '    </div>';
+                    theTeams +=   '  </div>';
+
+
+                    theTeams +=   '  <div class="input-group-prepend">';
+                    theTeams +=   '    <div class="input-group-text">';
+                    theTeams +=   '      <input type="radio" name="inlineRadioOptions_'+results[i].Team_Name+'" id="pay_'+results[i].Team_Name+'" value="Hourly">';
+                    theTeams +=   '    </div>';
+                    theTeams +=   '    <label class="input-group-text form-check-label" for="inlineRadioOptions_'+results[i].Team_Name+'"> Hourly</label>';
+                    theTeams +=   '  </div>';
+                    theTeams +=   '  <div class="input-group-append">';
+                    theTeams +=   '      <select class="custom-select" id="rates_'+results[i].Team_Name+'" required>';
+                    theTeams +=   '        <option></option>';
+                                            $.each(team.Team_Rates, function(i,rate){
+                                                theTeams += '<option>'+rate+'</option>';
+                                            });
+                    theTeams +=   '      </select>';
+                    theTeams +=   '  </div>';
+
+                    theTeams +=   '  <div class="input-group-prepend">';
+                    theTeams +=   '    <div class="input-group-text">';
+                    theTeams +=   '      <input type="radio" name="inlineRadioOptions_'+results[i].Team_Name+'" id="pay_'+results[i].Team_Name+'" value="Contracted">';
+                    theTeams +=   '    </div>';
+                    theTeams +=   '  </div>';
+                    theTeams +=   '  <div class="input-group-append">';
+                    theTeams +=   '    <div class="input-group-text">';
+                    theTeams +=   '      <label class=" form-check-label" for="inlineRadioOptions_'+results[i].Team_Name+'"> Contracted</label>';
+                    theTeams +=   '    </div>';
+                    theTeams +=   '  </div>';
+
+
+                    theTeams +=   '  <div class="input-group-prepend">';
+                    theTeams +=   '    <div class="input-group-text">';
+                    theTeams +=   '      <input type="checkbox" name="admin_'+results[i].Team_Name+'" id="admin_'+results[i].Team_Name+'" value="Admin">';
+                    theTeams +=   '    </div>';
+                    theTeams +=   '  </div>';
+                    theTeams +=   '  <div class="input-group-append">';
+                    theTeams +=   '    <div class="input-group-text">';
+                    theTeams +=   '      <label class=" form-check-label" for="admin_'+results[i].Team_Name+'"> Team Admin</label>';
+                    theTeams +=   '    </div>';
+                    theTeams +=   '  </div>';
+
+                    theTeams +=   '</div>';
+
+                  });
+
+                  $('#TeamList').html(theTeams);
+
+                  $.each(staffsTeams, function(i, team){
+                      document.getElementById('rates_'+team.team).selectedIndex = team.rate;
+                  });
+
+
+            });
 
 
     }

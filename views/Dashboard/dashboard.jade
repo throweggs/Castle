@@ -14,7 +14,6 @@ html
     script(src='/javascripts/global.js')
     script(src='/tempus/build/js/tempusdominus-bootstrap-4.min.js')
     script(scr='/javascripts/jquery.tabletoCSV.js')
-  
     script(src='/javascripts/dashboard.js')
 
 
@@ -26,7 +25,7 @@ body
         .input-group-prepend
           select#searchOptions.custom-select
       
-        #reportrange(style='background: #fff; width:50%; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc')
+        #reportrange(style='background: #fff; width:50%; display: none; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc')
           .row
             .col-auto
               i.align-right.fa.fa-caret-down
@@ -86,11 +85,11 @@ body
             ul.nav.flex-column
           
               li.nav-item
-                a#TeamsLink.nav-link(href='#')
+                a#TeamsLink.nav-link(href='/viewTeams')
                   i.fas.fa-users-cog 
                   |                    Teams
               li.nav-item
-                a#StaffLink.nav-link(href='#')
+                a#StaffLink.nav-link(href='/viewStaff')
                   i.fas.fa-user-edit
                   |                    Staff
               li.nav-item

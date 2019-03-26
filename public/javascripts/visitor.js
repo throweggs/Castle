@@ -76,6 +76,11 @@ $(function(){ // this will be called when the DOM is ready
         $('input#otherReason').show();
         $('input#otherReason').prop('required', true);
         $('label#otherReason').text('The company name');
+      } else if ($('#reasonForVisit').val() === "External Course Provider"){
+        $('label#otherReason').show();
+        $('input#otherReason').show();
+        $('input#otherReason').prop('required', true);
+        $('label#otherReason').text('Course Name');
       } else if ($('#reasonForVisit').val() === "Staff Member"){
         $('label#otherReason').show();
         $('input#otherReason').show();

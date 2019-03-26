@@ -11,6 +11,7 @@ var navChoice = '',
 
 $(document).ready(function() {
 
+
 //Load StaffView jade file onto page
     $('#StaffLink').click(function(){
     showTheStaffPage();
@@ -66,6 +67,11 @@ $( document ).ready(function() {
             }
         }
     });
+    $('#PinModal').on('hide.bs.modal', function (e) {
+      if(pinAccepted!==true){
+        window.location.href = "/Dashboard";
+      }
+    });
 
     $('#PinModal').on('shown.bs.modal', function (e) {
 
@@ -100,15 +106,20 @@ $( document ).ready(function() {
                     thePin = '';
                   } else {
                     thePin = results[0].Pin;
-                    theAccess = results[0].Access;
-                    theAccess.forEach(function(area){
-                      if(area===pageURL){
-                        pinAccepted = true;
-                      } else {
+                    theAccess = results[0].Access_Rights;
+                    $.each(theAccess, function(i, area){
+                        if(area.Name == pageURL){
+                          console.log('Match');
+                            if(area.Permission === true){
+                            pinAccepted = true;
+                            }
+                        }
+                    });
+                      if (pinAccepted !== true){
                         alert('Hi '+results[0].First_Name+', You are not allowed access to this page! Soz.');
                         window.location.href = "/Dashboard";
                       }
-                    });
+
 
                     $('#userName').html(  '<span class="navbar-text">'+results[0].First_Name + ' ' + results[0].Last_Name+'</span>');
 

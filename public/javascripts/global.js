@@ -50,7 +50,7 @@ var checksOut = false;
 
 function resetPage() {
     location.reload();
-    
+
 }
 //create Exportable table
 jQuery.fn.tableToCSV = function() {
@@ -230,13 +230,16 @@ var output = "";
   var validation = Array.prototype.filter.call(forms, function(form) {
   form.addEventListener('submit', function(event) {
   if (form.checkValidity() === false) {
+      console.log(event);
   event.preventDefault();
   event.stopPropagation();
   }
   if (form.checkValidity() === true) {
   checksOut = true;
+  if(event.target.id !== 'newStaff'){
   event.preventDefault();
   event.stopPropagation();
+}
   }
 
   form.classList.add('was-validated');
