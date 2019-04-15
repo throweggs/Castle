@@ -99,6 +99,10 @@ router.get('/DataEntry', function(req, res) {
     res.render('Dashboard/DataEntry', { title: 'Data Entry' });
 });
 
+router.get('/personalTrainer', function(req, res) {
+    res.render('personalTrainer', { title: 'Personal Trainer' });
+});
+
 /* POST to Add Visitor Service */
 // router.post('/addVisitor', function(req, res) {
 //

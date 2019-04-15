@@ -1,0 +1,103 @@
+extends layout
+
+block content
+	script(src='/javascripts/personalTrainer.js')
+	
+	br
+	// VISITOR LIST
+	.col
+		.visitor-list
+			.row
+				.col
+					h2 Clients in today: <span id='ListCount'></span>
+				.col
+				.col.text-right
+					// Button to Open the Modal
+					button.btn.btn-primary(type='button', data-toggle='modal', data-target='#addPerson')
+						| Sign In		
+			#visitorList
+				table.table.table-striped.table-hover
+						thead
+							th Name
+							th Trainer
+							th Arival
+							th T&Cs
+						tbody
+			
+	
+		// The Modal
+		#addPerson.modal
+			.modal-dialog
+				.modal-content
+					// Modal Header
+					.modal-header
+						h4.modal-title.fas.fa-user-plus
+						button.close(type='button', data-dismiss='modal') ×
+					// Modal body
+					.modal-body
+											
+									
+						
+
+						.form-group
+							#nameField.md-form.input-group
+								.input-group-prepend
+									span.input-group-text.md-addon Name
+								input#traineeFirstName.form-control(type='text' class='text-capitalize' placeholder='First')
+								input#traineeLastName.form-control(type='text' class='text-capitalize' placeholder='Last')
+								
+	
+						.card-deck
+							#Janos.PT.card
+								p
+								
+								#Janos.text-center
+									#Janos.i.far.fa-user.fa-3x
+								#Janos.card-body
+									#Janos.h5.text-center.card-title Janos Atkins
+
+							#Mariam.PT.card
+								p
+								#Mariam.text-center
+									#Mariam.i.far.fa-user.fa-3x
+								#Mariam.card-body
+									#Mariam.h5.text-center.card-title Mariam Al-Roubi
+
+							#Rich.PT.card
+								p
+								#Rich.text-center
+									#Rich.i.far.fa-user.fa-3x
+								#Rich.card-body
+									#Rich.h5.text-center.card-title Rich Hudson
+
+						#Disclaimer
+							.disclaimer-text
+							hr
+							h3 <b>Important information </b>
+							p You may only use the facilities under the supervision of the Personal Trainer
+							p	You will not climb in the centre without signing in to climb at Reception
+							p	You are responsible for your personal property while in the climbing centre
+							p	You will not stand underneath climbing areas while people are climbing or distract climbers/belayers andyou must check in/check out for each session.
+							p
+										
+							// Default unchecked
+							.custom-control.custom-checkbox
+								input#disclaimer.big-checkbox.custom-control-input(type='checkbox', name='disclaimer', disabled='true' value='Agreed')
+								label.custom-control-label(for='disclaimer') <b> By checking the box you are declaring that you have read and understood the Important Information listed above.  </b>
+	
+							p
+
+										
+									
+
+					// Modal footer
+					.modal-footer
+						button#submit.btn.btn-danger(type='submit', data-dismiss='modal', disabled='true') Submit
+	
+	
+		
+	
+		
+
+
+			

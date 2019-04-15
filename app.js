@@ -12,7 +12,7 @@ var bodyParser = require('body-parser');
 var moment = require('moment');
 var popper = require('popper.js');
 var tooltip = require('tooltip.js');
-
+var Chart = require('chart.js');
 
 
 
@@ -29,6 +29,7 @@ var dashboard = require('./routes/dashboard');
 var wbs = require('./routes/wbs');
 var homepage = require('./routes/homepage');
 var gardenVolunteer = require('./routes/gardenVolunteer');
+var personalTrainer = require('./routes/personalTrainer');
 var thamesWater = require('./routes/thamesWater');
 var sonos = require('./routes/sonos');
 var sonosBackend = require('./routes/sonosBackend');
@@ -64,6 +65,7 @@ app.use('/wbs', wbs);
 app.use('/homepage', homepage);
 app.use('/gardenVolunteer', gardenVolunteer);
 app.use('/thamesWater', thamesWater);
+app.use('/personalTrainer', personalTrainer);
 
 //Sonos
 app.use('/sonos', sonos);
@@ -78,11 +80,17 @@ app.use('/dashboard', dashboard);
 
 
 
-app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
-app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
+app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/')); // redirect bootstrap JS
+app.use('/jquery', express.static(__dirname + '/node_modules/jquery/'));
+app.use('/popper', express.static(__dirname + '/node_modules/popper.js/dist/'));
+app.use('/tooltip', express.static(__dirname + '/node_modules/tooltip.js/dist/'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use('/moment', express.static(__dirname + '/node_modules/moment')); // redirect moments JS
 app.use('/tempus', express.static(__dirname + '/node_modules/tempusdominus-bootstrap-4')); // redirect tempus JS
+app.use('/daterangepicker', express.static(__dirname + '/node_modules/daterangepicker')); // redirect tempus JS
+app.use('/fontawesome', express.static(__dirname + '/node_modules/@fortawesome/fontawesome-free')); // redirect tempus JS
+app.use('/chart.js', express.static(__dirname + '/node_modules/chart.js'));
+
 
 app.use('/request', express.static(__dirname + '/node_modules/request')); // redirect tempus JS
 

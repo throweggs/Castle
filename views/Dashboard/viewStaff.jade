@@ -7,7 +7,7 @@ block content
   .container
     .row
       .col-md-6
-        .h2 All Staff
+        .h1 All Staff
       .col
         |  
       .col
@@ -16,19 +16,17 @@ block content
           |   Staff
 
 
+  table#StaffMembersTable.table.table-stripped.text-nowrap
+    thead
+      tr
+        th Edit
+        th Active
+        th Super
+        th Staff Member
+        th Pin
+        
 
-    table#StaffMembersTable.table.table-hover
-      thead
-        tr
-          td Edit
-          td Active
-          td Super
-          td Staff Member
-          td Pin
-          td Teams
-          td Access Rights
-
-      tbody#StaffMembersTableBody
+    tbody#StaffMembersTableBody
 
     br
 
@@ -42,91 +40,93 @@ block content
         .modal-content
           form#newStaff.needs-validation(novalidate='')
             .modal-header
-              h5#addStaffModalLongTitle.modal-title Add Staff Member
+              h1#addStaffModalLongTitle.modal-title Add Staff Member
               button.close(type='button', data-dismiss='modal', aria-label='Close')
                 span(aria-hidden='true') ×
             .modal-body
-              h5 Details
-              .form-row
-                .col
-                  .input-group
-                    .input-group-prepend
-                      span#firstName.input-group-text.input-group-addon.primary  Name
-                    input#firstNameInput.input-group-outline-addon.primary.form-control(type='text', placeholder='First', aria-label='First', aria-describedby='firstName',required='')
-                    input#lastNameInput.input-group-outline-addon.primary.form-control(type='text', placeholder='Last', aria-label='Last', aria-describedby='lastName',required='')
-              p
-              .form-row
-                .col-4
-                  .input-group
-                    .input-group-prepend
-                      span#pin.input-group-text.input-group-addon.primary Pin
-                    input#pinInput.col-6.input-group-outline-addon.primary.form-control(type='password', placeholder='4 digits only', aria-label='Pin', aria-describedby='Pin',required='')
+              h4 Details
 
-                .col-4
-                  .input-group
-                    .input-group-prepend
-                      .input-group-text
-                        input#superAdmin(type='checkbox', aria-label='Checkbox for Super Admin')
-                    .input-group-append
-                      .input-group-text
-                        span#superAdminLabel.input-group-addon.primary Super Admin
-  
-                .col-4
-                  .input-group
-                    .input-group-prepend
-                      .input-group-text
-                        input#activeStaff(type='checkbox', aria-label='Checkbox for Super Admin', checked='true')
-                    .input-group-append
-                      .input-group-text
-                        span#activeStaffLabel.input-group-addon.primary Active Staff Member
+              .row
+                // Grid column
+                .col
+                  // Material input
+                  .md-form.mt-0
+                    input#firstNameInput.form-control(type='text', placeholder='First name',required='')
+                // Grid column
+                .col
+                  // Material input
+                  .md-form.mt-0
+                    input#lastNameInput.form-control(type='text', placeholder='Last name',required='')
+                .col
+                  // Material input
+                  .md-form.mt-0
+                    input#pinInput.form-control(type='password',maxlength="4", placeholder='Passcode 4 digits only',required='')
+              
+              p
+          
+              p
+              .row
+                .col  
+                  .custom-control.custom-checkbox
+                    input#superAdmin.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='superAdmin') Super admin
+                
+                .col  
+                  .custom-control.custom-checkbox
+                    input#activeStaff.custom-control-input(type='checkbox' checked='')
+                    label.custom-control-label(for='activeStaff') Active Staff Member
+
+          
+        
+            
                       
               p
               hr
-              h5 Teams
+              hr
+              h4 Teams
 
               #TeamList
               p
               hr              
-              h5 Form Access
+              h4 Form Access
 
-              .form-row
-                .input-group.col
-                  .input-group-prepend
-                    .input-group-text
-                      input#visitorFormAccess(type='checkbox', aria-label='Checkbox for Visitor Access')
-                  span#visitorFormAccessLabel.input-group-text.input-group-addon.primary Visitor Form
+              .row
+                .col
+                  .custom-control.custom-checkbox
+                    input#Visitors.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='Visitors') Visitor Form
               
-                .input-group.col
-                  .input-group-prepend
-                    .input-group-text
-                      input#nonClimbingChildAccess(type='checkbox', aria-label='Checkbox for Visitor Access')
-                  span#nonClimbingChildAccessLabel.input-group-text.input-group-addon.primary Non Climbing Child Forms
+                .col
+                  .custom-control.custom-checkbox
+                    input#NonClimbingChild.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='NonClimbingChild') Non Climbing Child Forms
             
-              .form-row
-                .input-group.col
-                  .input-group-prepend
-                    .input-group-text
-                      input#wbsAccess(type='checkbox', aria-label='Checkbox for Womens Bouldering Social Access')
-                  span#wbsAccessLabel.input-group-text.input-group-addon.primary Womens Bouldering Social Forms
+              .row
+                .col
+                  .custom-control.custom-checkbox
+                    input#WBS.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='WBS') Womens Bouldering Social Forms
                               
-                .input-group.col
-                  .input-group-prepend
-                    .input-group-text
-                      input#theSessionAccess(type='checkbox', aria-label='Checkbox for The Session Access')
-                  span#theSessionAccessLabel.input-group-text.input-group-addon.primary The Session Forms
+                .col
+                  .custom-control.custom-checkbox
+                    input#TheSession.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='TheSession') The Session Forms
 
-              .form-row
-                .input-group.col
-                  .input-group-prepend
-                    .input-group-text
-                      input#thamesWaterAccess(type='checkbox', aria-label='Checkbox for Thames Water Access')
-                  span#thamesWaterAccessLabel.input-group-text.input-group-addon.primary Thames Water Forms
+              .row
+                .col
+                  .custom-control.custom-checkbox
+                    input#ThamesWater.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='ThamesWater')  Thames Water Forms
                               
-                .input-group.col
-                  .input-group-prepend
-                    .input-group-text
-                      input#gardenerAndMiniPlotterAccess(type='checkbox', aria-label='Checkbox for Gardener And Mini Plotter Access ')
-                  span#gardenerAndMiniPlotterAccessLabel.input-group-text.input-group-addon.primary Gardener And Mini Plotter Forms
+                .col
+                  .custom-control.custom-checkbox
+                    input#Gardeners.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='Gardeners') Gardener And Mini Plotter Forms
+              .row
+                .col
+                  .custom-control.custom-checkbox
+                    input#PersonalTrainer.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='PersonalTrainer')  Personal Trainer Forms
 
 
             .modal-footer

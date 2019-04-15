@@ -48,8 +48,8 @@ router.put('/ClockOut', function(req, res){
 // ADD
 router.post('/addStaff', function(req, res) {
     var db = req.db;
-
-    console.log( req.body);
+    console.log('Hit NEW');
+    console.log(req.body);
     var collection = db.get('staff');
     collection.insert(req.body, function(err, result){
         res.send(
@@ -87,8 +87,9 @@ router.get('/getAStaff', function(req, res) {
 //UPDATE SINGLE
 router.put('/updateAStaff', function(req, res){
   findMe = req.body.FindMe;
-  // console.log('theID');
-  // console.log(findMe);
+  console.log('Hit UPDATE');
+  console.log(findMe);
+  console.log(req.body);
   var db = req.db;
   var collection = db.get('staff');
   collection.update(findMe,req.body,function(e,docs){

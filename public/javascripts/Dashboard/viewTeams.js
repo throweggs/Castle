@@ -83,7 +83,7 @@ function addTeam() {
     .done(function(results, res) {
       if(results.length === 0){
 
-            var rates = ['Not In Team'];
+            var rates = ['NA'];
 
                   var theRates = $('input#payRates').val();
                   var match = theRates.split(',');

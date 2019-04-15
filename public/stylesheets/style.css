@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Love+Ya+Like+A+Sister');
 
+[class^="icon-"], [class*="icon-"] {
+    display: inline-block;
+    width: 100%;
+}
+
+ i {
+    text-align: center;
+}
+
 html {
   height:100%;
   box-sizing: border-box;
@@ -9,9 +18,16 @@ html {
   box-sizing: inherit;
 }
 
+.hidetext { -webkit-text-security: disc; /* Default */ }
+
 .love-ya{
   font-family: 'Love Ya Like A Sister';
+}
 
+
+
+.PT.card {
+  cursor: pointer;
 }
 
 body {
@@ -24,7 +40,7 @@ body {
   background-size: cover;
 }
 
-input.big-checkbox[type=checkbox] {
+.big-checkbox {
     -webkit-transform: scale(2,2);
 }
 

@@ -5,7 +5,9 @@ var teamsNRates = [],
     aStaff = [],
     theData = [],
     teamInfo = [],
-    theTeamUpdates = [];
+    theTeamUpdates = [],
+    staffID = '';
+
 
 
   function showTheStaffPage(){
@@ -20,116 +22,75 @@ var teamsNRates = [],
 
   }
 
+function addHeaders(){
+  $.getJSON( '/staff/getTeams', {}, function(results, res) {
+  })
+    .done(function(results, res) {
+
+      $.each(results,function(i,team){
+      $('#StaffMembersTable >thead tr').append('<th> '+team.Team_Name+'</th>');
+      });
+
+    });
+}
+
 
 
 function insertStaff(member) {
+
   staffID = member._id;
-  name = member.First_Name + ' ' + member.Last_Name;
+  name = member.Full_Name;
   pin = member.Pin;
   teams = member.Teams;
           var table = document.getElementById("StaffMembersTableBody");
 
+
+
           var staffRow = table.insertRow(-1);
                 staffRow.id = staffID;
-          var teamsCellToggle = staffRow.insertCell(0);
+          var teamsCellToggle = staffRow.insertCell(-1);
                 teamsCellToggle.className = 'toggle-row';
                 teamsCellToggle.id = staffID+'_toggle';
-                teamsCellToggle.innerHTML = '<a href="#" id="'+staffID+'" class="fas fa-edit UpdateStaff toggle-row" id="'+staffID+'"></i>';
-          var activeCell = staffRow.insertCell(1);
+                teamsCellToggle.innerHTML = '<a  class="UpdateStaff" href="#" id="'+staffID+'"><i class="UpdateStaff fas fa-edit fa-1x"id="'+staffID+'"></i></a>';
+          var activeCell = staffRow.insertCell(-1);
             if(member.Active_Staff_Member === true){
                 activeCell.innerHTML = '<i class="far fa-check-square"></i>';
               } else {
                 activeCell.innerHTML = '<i class="far fa-square"></i>';
               }
-          var adminCell = staffRow.insertCell(2);
+          var adminCell = staffRow.insertCell(-1);
             if(member.Super_Admin === true){
-                activeCell.innerHTML = '<i class="far fa-check-square"></i>';
+                adminCell.innerHTML = '<i class="far fa-check-square"></i>';
               } else {
-                activeCell.innerHTML = '<i class="far fa-square"></i>';
+                adminCell.innerHTML = '<i class="far fa-square"></i>';
               }
-          var nameCell = staffRow.insertCell(3);
+          var nameCell = staffRow.insertCell(-1);
                 nameCell.innerHTML = name;
-          var pinCellToggle = staffRow.insertCell(4);
+          var pinCellToggle = staffRow.insertCell(-1);
                 pinCellToggle.innerHTML = '<a class="hidetext" id="'+staffID+'_Pin">'+pin+'</a>';
 
-          var teamsCell = staffRow.insertCell(5);
+
 
             $.each(teams,function(i,team){
-              if(team.rate !== 'Not In Team'){
-             teamsCell.innerHTML = teamsCell.innerHTML + ' ' + team.team;
-           }
+              var teamsCell = staffRow.insertCell(-1);
+                 if(team.pay === 'Hourly'){
+                 teamsCell.innerHTML = '<i class="fas fa-money-bill-wave"></i>&ensp; £<b>' + team.rate + '</b>';
+                 } else if(team.pay === 'Contracted'){
+                   teamsCell.innerHTML = '<i class="fas fa-file-contract"></i>';
+                 } else {
+                    teamsCell.innerHTML = '<i class="fas fa-times"></i>';
+                 }
+
+              if(team.admin === true){
+                if(teamsCell.innerHTML === '-'){
+                teamsCell.innerHTML = '<i class="fas fa-user-cog"></i>';
+                } else {
+                  teamsCell.innerHTML = teamsCell.innerHTML + '&ensp;<i class="fas fa-user-cog"></i>';
+                }
+              }
          });
-         var accessCell = staffRow.insertCell(5);
-
-           $.each(member.Access_Rights,function(i,team){
-             console.log(team.Name);
-             if(team.Permission === true){
-            accessCell.innerHTML = accessCell.innerHTML + ' ' + team.Name;
-          }
-        });
 
 
-
-
-          var teamsRow = table.insertRow(-1);
-              teamsRow.id = staffID+'_team';
-              teamsRow.style = 'display:none;';
-              teamsRow.className = 'toggle';
-
-          var blankCell = teamsRow.insertCell(0);
-          var teamCell = teamsRow.insertCell(1);
-
-
-
-              teamCell.id = 'teamRates';
-
-          var theChoice = '';
-          var theTeam = '';
-          var theTeamID = '';
-              teamsNRates.forEach(function(teamNRate){
-                  theTeam = teamNRate.Team_Name;
-                  theTeamID = teamNRate._id;
-                  theChoice +=   '<div class="input-group mb-3">';
-                  theChoice +=     '<div class="input-group-prepend">';
-                  theChoice +=         '<label class="input-group-text selectedTeamRates" for="'+staffID + '_' + theTeam+'">'+theTeam+'</label>';
-                  theChoice +=     '</div>';
-                  theChoice +=     '<select class="custom-select selectedTeamRates" id="'+staffID + '_' + theTeam+'">';
-
-                  var rates = teamNRate.Team_Rates;
-                  var selectedRate = 0;
-
-                  teams.forEach(function(team){
-                        if (team.team == teamNRate.Team_Name){
-                          selectedRate = team.rate;
-                          }
-                  });
-
-                  $.each(rates, function(i, rate){
-                            if(i === 0 ){
-                            //Blank
-                            } else {
-                            rate = '£'+rate;
-                            }
-
-
-                            if(i == selectedRate){
-                              theChoice +=         '<option value="'+i+'" selected>'+rate+'</option>';
-                            } else {
-
-                              theChoice +=         '<option value="'+i+'">'+rate+'</option>';
-                            }
-                  });
-
-                  theChoice +=     '</select>';
-                  theChoice +=     '<div class="input-group-append">';
-
-                  theChoice +=      '<button class="btn btn-outline-secondary updateRate" type="button" id="'+staffID+'_'+theTeam+'_'+theTeamID+'">Update Teams</button>';
-                  theChoice +=     '</div>';
-                  theChoice +=  '</div>';
-
-              });
-
-  teamCell.innerHTML = theChoice;
 
 
 
@@ -142,46 +103,59 @@ function insertStaff(member) {
 //Post request to add Staff Member
 function addStaff() {
   var selectedTeam = [];
+  var payVal = '';
+  var payRate = '';
 $.each(teamInfo, function(i, team){
+    payVal = $('input[name=inlineRadioOptions_'+team.Team_Name+']:checked').val();
+    if(payVal === 'Hourly'){
+      payRate = $('#rates_'+team.Team_Name).val();
+    } else {
+      payRate = 'NA';
+    }
   selectedTeam[i] = {
     team: team.Team_Name,
-    rate: $('#rates_'+team.Team_Name).val(),
-    pay: $('input[name=inlineRadioOptions_'+team.Team_Name+']:checked').val(),
+    pay: payVal,
+    rate: payRate,
     admin: $('#admin_'+team.Team_Name).prop('checked')
                   };
 });
 console.log(selectedTeam);
 
-    var newStaffMember = {
-      Created_Date: moment().format('MMMM Do YYYY'),
-      Created_Time : moment().format('HH:MM:SS'),
-      First_Name : $('input#firstNameInput').val(),
-      Last_Name : $('input#lastNameInput').val(),
+    var staffMember = {
+      Created: moment(),
+      Created_Date: moment().format('L'),
+      Created_Time : moment().format('LT'),
+      Full_Name: $('input#firstNameInput').val() + ' ' + $('input#lastNameInput').val(),
+      Name: {
+          First: $('input#firstNameInput').val(),
+          Last : $('input#lastNameInput').val()
+            },
       Pin : $('input#pinInput').val(),
       Super_Admin : $('input[id=superAdmin]').prop('checked'),
       Active_Staff_Member : $('input[id=activeStaff]').prop('checked'),
       Teams : selectedTeam,
       Access_Rights : [
-        {Name :  'Visitors', Permission : $('input[id=visitorFormAccess]').prop('checked')},
-        {Name :  'NonClimbingChild', Permission : $('input[id=nonClimbingChildAccess]').prop('checked')},
-        {Name :  'WBS', Permission : $('input[id=wbsAccess]').prop('checked')},
-        {Name :  'TheSession', Permission : $('input[id=theSessionAccess]').prop('checked')},
-        {Name :  'ThamesWater', Permission :  $('input[id=thamesWaterAccess]').prop('checked')},
-        {Name :  'Gardeners', Permission : $('input[id=gardenerAndMiniPlotterAccess]').prop('checked')},
+        {Name :  'Visitors', Permission : $('input[id=Visitors]').prop('checked')},
+        {Name :  'NonClimbingChild', Permission : $('input[id=NonClimbingChild]').prop('checked')},
+        {Name :  'WBS', Permission : $('input[id=WBS]').prop('checked')},
+        {Name :  'TheSession', Permission : $('input[id=TheSession]').prop('checked')},
+        {Name :  'ThamesWater', Permission :  $('input[id=ThamesWater]').prop('checked')},
+        {Name :  'Gardeners', Permission : $('input[id=Gardeners]').prop('checked')},
+        {Name :  'PersonalTrainer', Permission : $('input[id=PersonalTrainer]').prop('checked')},
       ]
     };
 
-  var myJSON = JSON.stringify(newStaffMember);
+  var myJSON = '';
 
-console.log(newStaffMember);
+console.log(staffMember);
 
-
+if(staffID === ''){
+console.log('new');
     $.ajax({
-        type: 'POST',
-        data: myJSON,
-        url: 'staff/addStaff',
-        dataType: 'JSON',
-        contentType: 'application/json',
+      type: "Post",
+      url: "staff/addStaff",
+      contentType: 'application/json',
+      data: JSON.stringify(staffMember),
     }).done(function( response, results ) {
       console.log(results);
 
@@ -195,6 +169,31 @@ console.log(newStaffMember);
         }
 
     });
+
+} else {
+  console.log('staffID');
+  staffMember.FindMe = staffID;
+    $.ajax({
+        type: 'put',
+        data: JSON.stringify(staffMember),
+        url: 'staff/updateAStaff',
+        dataType: 'JSON',
+        contentType: 'application/json',
+    }).done(function( response, results ) {
+      console.log(results);
+
+        // Check for successful (blank) response
+        if (response.msg === 'success') {
+
+        }
+        else {
+            // If something goes wrong, alert the error message that our service returned
+            alert('Error: ' + response.msg);
+        }
+
+    });
+
+  }
 }
 
 function toggleShow(staffID){
@@ -345,10 +344,12 @@ $(document).ready(function() {
 
 
   showTheStaffPage();
+  addHeaders();
 });
 
 //DOM mouse over
 $(document).mouseover(function() {
+
   //Show Pin
   if(event.target.className === 'hidetext'){
       var theID = event.target.id;
@@ -375,10 +376,11 @@ $(document).mouseout(function() {
 //DOM click
 $(document).on('click',function() {
 //Show teams
-      console.log(event.target.id);
+
 
       if ($(event.target).hasClass('UpdateStaff') === true){
-        var staffID = event.target.id;
+        staffID = event.target.id;
+console.log(staffID)
         var staffMemeber = [];
         var theTeams = '';
         var staffsTeams = [];
@@ -392,44 +394,102 @@ $(document).on('click',function() {
           })
           .done(function(results, res) {
                 var theResults = JSON.stringify(results);
-                    staffMemeber = results;
-                  if (theResults === '[]') {
-                      console.log(theResults);
-                } else {
-                    console.log(theResults);
-                }
+                    staffMember = results;
+                    console.log(results);
                 staffsTeams = results[0].Teams;
-                $('#firstNameInput').val(results[0].First_Name);
-                $('#lastNameInput').val(results[0].Last_Name);
+                $('#firstNameInput').val(results[0].Name.First);
+                $('#lastNameInput').val(results[0].Name.Last);
                 $('#pinInput').val(results[0].Pin);
-                document.getElementById("adminCheckBox").checked = results[0].admin;
+                document.getElementById("superAdmin").checked = results[0].admin;
+
+                var accessName = '';
+                $.each(results[0].Access_Rights, function(i,area){
+                  accessName = area.Name;
+                  document.getElementById(accessName).checked = area.Permission;
+                });
 
 
             $.getJSON( '/staff/getTeams', {}, function(results, res) {
-
+              teamInfo = results;
 
               })
-              .done(function(results, res) {
-                var teamInfo = results;
+              .done(function(teamInfo, res) {
+                    teamInfo = teamInfo;
+                    $.each(teamInfo,function(i, team){
+                        var checkNIT = '',
+                            checkHourly = '',
+                            checkContracted = '',
+                            checkAdmin = '',
+                            hourlyRate = '';
+                        var theRate = '',
+                            isSelected = '';
 
-                    $.each(results,function(i, team){
-                      theTeams +=   '<div class="input-group">';
-                      theTeams +=     '<div class="input-group-prepend">';
-                      theTeams +=         '<label class="input-group-text input-group-addon primary selectedTeamRates" for="'+results[i].Team_Name+'_rates">'+results[i].Team_Name+'</label>';
-                      theTeams +=     '</div>';
-                      theTeams +=     '<select class="custom-select .input-group-outline-addon.primary selectedTeamRates" id="'+results[i].Team_Name+'_rates">';
-                      $.each(team.Team_Rates, function(i,rate){
-                          theTeams += '<option>'+rate+'</option>';
+                      $.each(results[0].Teams,function(ii, staffTeam){
+
+                        if(team.Team_Name === staffTeam.team){
+                        theRate = staffTeam.rate;
+                          if(staffTeam.pay === 'Not In Team'){
+                             checkNIT = 'checked';
+                          } else if(staffTeam.pay === 'Hourly'){
+                             checkHourly = 'checked';
+                          } else if(staffTeam.pay === 'Contracted'){
+                             checkContracted = 'checked';
+                          }
+                          if(staffTeam.admin === true){
+                            checkAdmin = 'checked';
+                          }
+
+                        }
                       });
-                      theTeams +=   '</select>';
-                      theTeams +=  '</div>';
-                    });
+
+                          theTeams +=   '<span><h5>'+team.Team_Name+':  &ensp; ('+team.Team_Manager+')</h5></span>';
+                          theTeams += '<div class="input-group">';
+                          theTeams +=   '<div class="custom-control custom-radio custom-control-inline">';
+                          theTeams +=   '  <input type="radio" class="custom-control-input" id="pay1_'+team.Team_Name+'" name="inlineRadioOptions_'+team.Team_Name+'" value="Not In Team" '+checkNIT+'>';
+                          theTeams +=   '  <label class="custom-control-label" for="pay1_'+team.Team_Name+'">Not In Team</label>';
+                          theTeams +=   '</div>';
+
+                          theTeams +=   '<div class="custom-control custom-radio custom-control-inline">';
+                          theTeams +=   '  <input type="radio" class="custom-control-input" id="pay2_'+team.Team_Name+'" name="inlineRadioOptions_'+team.Team_Name+'" value="Hourly" '+checkHourly+'>';
+                          theTeams +=   '  <label class="custom-control-label" for="pay2_'+team.Team_Name+'">Hourly</label>';
+                          theTeams +=   '</div>';
+
+                          theTeams +=   '<div class="custom-control custom-radio custom-control-inline">';
+                          theTeams +=   '  <input type="radio" class="custom-control-input" id="pay3_'+team.Team_Name+'" name="inlineRadioOptions_'+team.Team_Name+'" value="Contracted" '+checkContracted+'>';
+                          theTeams +=   '  <label class="custom-control-label" for="pay3_'+team.Team_Name+'">Contracted &ensp; &ensp;</label>';
+                          theTeams +=   '</div>';
+
+                          theTeams +=   '<div class="custom-control custom-checkbox">';
+                          theTeams +=   '  <input type="checkbox" class="custom-control-input" name="admin_'+team.Team_Name+'" id="admin_'+team.Team_Name+'" value="Admin" '+checkAdmin+'>';
+                          theTeams +=   '  <label class="custom-control-label" for="admin_'+team.Team_Name+'"> Team Admin</label>';
+                          theTeams +=   '</div>';
+                          theTeams +=   '</div>';
+
+                          theTeams +=   '<select class="custom-select custom-control-inline" id="rates_'+team.Team_Name+'" required>';
+                          theTeams +=   '  <option disabled selected>Choose Hourly Rate</option>';
+
+                                        $.each(team.Team_Rates, function(i,rate){
+
+                                          if(rate === theRate){
+                                            console.log('matched Rate');
+                                                isSelected = 'selected';
+
+                                          } else {
+                                            console.log('unmatched Rate');
+                                          isSelected = '';
+                                          }
+                                          if(rate === 'Not In Team' || rate === 'NA'){
+                                          } else {
+                                          rate = '£' + rate;
+                                          }
+                                            theTeams += '<option '+ isSelected+'>'+rate+'</option>';
+                                        });
+                          theTeams +=   '</select>';
+                          theTeams +=   '<hr>';
+
+                        });
+
                     $('#TeamList').html(theTeams);
-
-                    $.each(staffsTeams, function(i, team){
-                        document.getElementById(team.team+'_rates').selectedIndex = team.rate;
-                    });
-
 
               });
 
@@ -468,59 +528,40 @@ $(document).on('click',function() {
                 teamInfo = results;
                   $.each(results,function(i, team){
 
-                    theTeams +=   '<span >'+results[i].Team_Name+'</span>';
-                    theTeams +=   '<div class="input-group">';
-                    theTeams +=   '  <div class="input-group-prepend">';
-                    theTeams +=   '    <div class="input-group-text">';
-                    theTeams +=   '      <input type="radio" name="inlineRadioOptions_'+results[i].Team_Name+'" id="pay_'+results[i].Team_Name+'" value="Not In Team" checked>';
-                    theTeams +=   '    </div>';
-                    theTeams +=   '  </div>';
-                    theTeams +=   '  <div class="input-group-append">';
-                    theTeams +=   '    <div class="input-group-text">';
-                    theTeams +=   '      <label class=" form-check-label" for="inlineRadioOptions_'+results[i].Team_Name+'"> Not In Team</label>';
-                    theTeams +=   '    </div>';
-                    theTeams +=   '  </div>';
 
+                    theTeams +=   '<span><h5>'+results[i].Team_Name+':  &ensp; ('+results[i].Team_Manager+')</h5></span>';
+                    theTeams += '<div class="input-group">';
+                    theTeams +=   '<div class="custom-control custom-radio custom-control-inline">';
+                    theTeams +=   '  <input type="radio" class="custom-control-input" id="pay1_'+results[i].Team_Name+'" name="inlineRadioOptions_'+results[i].Team_Name+'" value="Not In Team" checked>';
+                    theTeams +=   '  <label class="custom-control-label" for="pay1_'+results[i].Team_Name+'">Not In Team</label>';
+                    theTeams +=   '</div>';
 
-                    theTeams +=   '  <div class="input-group-prepend">';
-                    theTeams +=   '    <div class="input-group-text">';
-                    theTeams +=   '      <input type="radio" name="inlineRadioOptions_'+results[i].Team_Name+'" id="pay_'+results[i].Team_Name+'" value="Hourly">';
-                    theTeams +=   '    </div>';
-                    theTeams +=   '    <label class="input-group-text form-check-label" for="inlineRadioOptions_'+results[i].Team_Name+'"> Hourly</label>';
-                    theTeams +=   '  </div>';
-                    theTeams +=   '  <div class="input-group-append">';
-                    theTeams +=   '      <select class="custom-select" id="rates_'+results[i].Team_Name+'" required>';
-                    theTeams +=   '        <option></option>';
+                    theTeams +=   '<div class="custom-control custom-radio custom-control-inline">';
+                    theTeams +=   '  <input type="radio" class="custom-control-input" id="pay2_'+results[i].Team_Name+'" name="inlineRadioOptions_'+results[i].Team_Name+'" value="Hourly">';
+                    theTeams +=   '  <label class="custom-control-label" for="pay2_'+results[i].Team_Name+'">Hourly</label>';
+                    theTeams +=   '</div>';
+
+                    theTeams +=   '<div class="custom-control custom-radio custom-control-inline">';
+                    theTeams +=   '  <input type="radio" class="custom-control-input" id="pay3_'+results[i].Team_Name+'" name="inlineRadioOptions_'+results[i].Team_Name+'" value="Contracted">';
+                    theTeams +=   '  <label class="custom-control-label" for="pay3_'+results[i].Team_Name+'">Contracted &ensp; &ensp;</label>';
+                    theTeams +=   '</div>';
+
+                    theTeams +=   '<div class="custom-control custom-checkbox">';
+                    theTeams +=   '  <input type="checkbox" class="custom-control-input" name="admin_'+results[i].Team_Name+'" id="admin_'+results[i].Team_Name+'" value="Admin">';
+                    theTeams +=   '  <label class="custom-control-label" for="admin_'+results[i].Team_Name+'"> Team Admin</label>';
+                    theTeams +=   '</div>';
+                    theTeams +=   '</div>';
+
+                    theTeams +=   '<select class="custom-select custom-control-inline" id="rates_'+results[i].Team_Name+'" required>';
+                    theTeams +=   '  <option disabled selected>Choose Hourly Rate</option>';
                                             $.each(team.Team_Rates, function(i,rate){
                                                 theTeams += '<option>'+rate+'</option>';
                                             });
-                    theTeams +=   '      </select>';
-                    theTeams +=   '  </div>';
-
-                    theTeams +=   '  <div class="input-group-prepend">';
-                    theTeams +=   '    <div class="input-group-text">';
-                    theTeams +=   '      <input type="radio" name="inlineRadioOptions_'+results[i].Team_Name+'" id="pay_'+results[i].Team_Name+'" value="Contracted">';
-                    theTeams +=   '    </div>';
-                    theTeams +=   '  </div>';
-                    theTeams +=   '  <div class="input-group-append">';
-                    theTeams +=   '    <div class="input-group-text">';
-                    theTeams +=   '      <label class=" form-check-label" for="inlineRadioOptions_'+results[i].Team_Name+'"> Contracted</label>';
-                    theTeams +=   '    </div>';
-                    theTeams +=   '  </div>';
+                    theTeams +=   '</select>';
+                    theTeams +=   '<hr>';
 
 
-                    theTeams +=   '  <div class="input-group-prepend">';
-                    theTeams +=   '    <div class="input-group-text">';
-                    theTeams +=   '      <input type="checkbox" name="admin_'+results[i].Team_Name+'" id="admin_'+results[i].Team_Name+'" value="Admin">';
-                    theTeams +=   '    </div>';
-                    theTeams +=   '  </div>';
-                    theTeams +=   '  <div class="input-group-append">';
-                    theTeams +=   '    <div class="input-group-text">';
-                    theTeams +=   '      <label class=" form-check-label" for="admin_'+results[i].Team_Name+'"> Team Admin</label>';
-                    theTeams +=   '    </div>';
-                    theTeams +=   '  </div>';
 
-                    theTeams +=   '</div>';
 
                   });
 
