@@ -1,68 +1,36 @@
 extends dashboard
 
 block content
-  script(src='/javascripts/Dashboard/viewWBS.js')
 
-  #list.visitor-list.col-10.col-xm-7
-    .row
-      .col-3
-        .visitor-title.h1 <span id='pageTitle' ></span><br>
-      .col-2
-        button.btn.btn-primary(type='button', data-toggle='modal', data-target='#searchDates')
-          | Search Dates
-      .col-4
-        .input-group
-          .input-group-prepend
-            span#SearchIcon.input-group-text
-              .fas.fa-search
-          input#searchFieldInput.form-control(type='text', aria-label='Select Search Field')
-          .input-group-append
-            button.btn.btn-outline-secondary.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') <span id='searchLabel' ></span>
-            .dropdown-menu#dropdown-menu
-              #dropDownMenuOptions
-      .col-1.text-left
-        #ListCount
-      .col-2.text-right
-        button.btn.btn-primary#export(data-export="export") Export
-    #dataList
-      table.table.table-striped.table-hover.table-response
-          thead
-            //- th Date
-            //- th Time
-            //- th Full Name
-            //- th Reason
-            //- th Child
-            //- th Disclaimer
-          tbody
+
+  .row.container-fluid
+    .col.h3 Women's Bouldering Social
+      
+    .col-align-end.h3
+      #listCount
+
+  
+
+    
           
-  // Modal
-  .form
-  #searchDates.modal.fade(tabindex='-1', role='dialog', aria-labelledby='searchDates', aria-hidden='true')
-    .modal-dialog(role='document')
-      .modal-content
-        .modal-header
-          h5#searchDatesLabel.modal-title Search Dates
-          button.close(type='button', data-dismiss='modal', aria-label='Close')
-            span(aria-hidden='true') ×
-        .modal-body
-          .col
-            .form-group
-              | Start Date
-              #startDate.input-group.date(data-target-input='nearest')
-                input#startDateInput.form-control.datetimepicker-input(type='text', data-target='#startDate')
-                .input-group-append(data-target='#startDate', data-toggle='datetimepicker')
-                  .input-group-text
-                    i.fa.fa-calendar
-          .col
-            | End Date
-            .form-group
-              #endDate.input-group.date(data-target-input='nearest')
-                input#endDateInput.form-control.datetimepicker-input(type='text', data-target='#endDate')
-                .input-group-append(data-target='#endDate', data-toggle='datetimepicker')
-                  .input-group-text
-                    i.fa.fa-calendar
-                      
-        
-        .modal-footer
-          button.btn.btn-secondary(type='reset', value="Reset", onclick="resetPage()", data-dismiss='modal') Reset
-          button.btn.btn-primary(type='button', id='searchNow', onclick="GetFormData()", data-dismiss='modal') Search
+  .container-fluid
+    .chart-container
+      canvas#myChart   
+    .row
+      .col-md
+        div
+          table#visitorTable.table.table-hover.table-striped.text-nowrap(cellspacing="0" width="100%")
+              thead
+                th.th-sm
+                  i.fas.fa-plus
+                th  Date
+
+                th Facilitator
+                th Session Type
+                th Start Location
+                th # Participants
+                th iPad
+          
+              tbody
+      
+  script(src='/javascripts/Dashboard/viewWBS.js')

@@ -2,61 +2,60 @@ extends layout
 include GDPR
 
 block content
-  script(src='/javascripts/thamesWater.js')
-  
-  br
-  // VISITOR LIST
-  .col
-    .visitor-list
-      .row
-        .col
-          h2 Thames Water workers in today: <span id='ListCount'></span>
-        .col
-        .col.text-right
-          // Button to Open the Modal
-          button.btn.btn-primary(type='button', data-toggle='modal', data-target='#addPerson')
-            | Add Me    
-      #workerList
-        table.table.table-striped.table-hover
-            thead
-              th Full Name
-              th Time In
-              th Time Out
-            tbody
-      
-  
-    // The Modal
-    #addPerson.modal
-      .modal-dialog
-        .modal-content
-          form#addWorker.needs-validation.container-fluid(novalidate='', name="addWorker")      
-            // Modal Header
-            .modal-header
-              h4.modal-title.fas.fa-user-plus
-              button.close(type='button', data-dismiss='modal') ×
-            // Modal body
-            .modal-body
-                
-              .col
-                .input-group.mb-3
-                  .input-group-prepend
-                    span#basic-addon1.input-group-text Full Name
-                  input#workerName.form-control(type='text', placeholder='Full Name', aria-label='Full Name', aria-describedby='basic-addon1', required='true')
+	script(src='/javascripts/thamesWater.js')
+	
+	br
+	// VISITOR LIST
+	.col
+		.visitor-list
+			.row
+				.col
+					h2 Thames Water workers in today: <span id='ListCount'></span>
+				.col
+				.col.text-right
+					// Button to Open the Modal
+					button.btn.btn-primary(type='button', data-toggle='modal', data-target='#addPerson')
+						| Add Me    
+			#workerList
+				table.table.table-striped.table-hover
+						thead
+							th Full Name
+							th Time In
+							th Time Out
+						tbody
+			
+	
+		// The Modal
+		#addPerson.modal
+			form#addWorker.needs-validation.container-fluid(novalidate='', name="addWorker") 
+				.modal-dialog
+					.modal-content
+						// Modal Header
+						.modal-header
+							.modal-title
+								i.fas.fa-user-plus
+								| &nbsp; Thame Water Worker
+							button.close(type='button', data-dismiss='modal') ×
+						// Modal body
+						.modal-body
+							.form-group
+								.input-group
+									.input-group-prepend
+										span.input-group-text Name
+									input#workerName.form-control(type='text', placeholder='Full Name', aria-label='Full Name', aria-describedby='basic-addon1', required='true')    
+							.col
+								.custom-control.custom-checkbox
+									input#disclaimer.big-checkbox.custom-control-input(type='checkbox')
+									label.custom-control-label(for='disclaimer')<h6> I will not climb in the centre or use the centre unless I have registered or signed in appropriately to do so.</h6>
 
-              .col
-                .form-group.form-check
-                  input#disclaimer.form-check-input(type='checkbox',value='Agreed', required='true')
-                  label.form-check-label(for='disclaimer') I will not climb in the centre or use the centre unless I have registered or signed in appropriately to do so.
-        
-
-            // Modal footer
-            .modal-footer
-              button#submit.btn.btn-danger(type='submit', data-dismiss='modal', disabled='true') Submit
-  
-  
-    
-  
-    
+						// Modal footer
+						.modal-footer
+							button#submit.col.align-self-end.btn.btn-success(type='submit', data-dismiss='modal', disabled='true') Submit
+	
+	
+		
+	
+		
 
 
-      
+			

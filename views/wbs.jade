@@ -12,7 +12,8 @@ block content
         #showSession
       .col-2.text-right
         button#openFacilitatorModal.btn.btn-outline-success(type='button', data-toggle='modal', data-target='#facilitatorModal')
-          i.far.fa-edit  Info
+          i.fas.fa-edit &nbsp
+          | &nbsp Info
   .col
     li <strong>The Session is not suitable for novice climbers.</strong> You need to be a registered bouldering member. Please ask reception who will be able to guide you through the registration process.
     li <u>This is not a teaching session</u>, <u>nor is it supervised</u>. 
@@ -82,7 +83,9 @@ block content
       .modal-content
         // Modal Header
         .modal-header
-          h4.modal-title.i.far.fa-edit  Session Info
+          .modal-title
+            i.fas.fa-edit
+            | &nbsp Session Info
           button.close(type='button', data-dismiss='modal') ×
         // Modal body
         .modal-body
@@ -91,10 +94,10 @@ block content
             .form-group
               #facilitatorField.input-group
                 .input-group-prepend
-                  span.input-group-text Facilitator:
+                  span.input-group-text Facilitator
                 input#facilitatorName.form-control(type='text')
           .form-group#sessionType
-            label.col.form-check-label(for='SessionClimbingType') Session Type:
+            label.col.form-check-label(for='SessionClimbingType') Session Type
             .btn-group.col.btn-group-toggle(data-toggle='buttons')
               .col-6#BSess.label.btn.btn-outline-secondary.active
                 input#BoulderingSession(type='radio', value='bouldering', autocomplete='off', checked='', disabled='true')
@@ -107,7 +110,7 @@ block content
                   
           .col-12
             .form-group
-              label(for='startOptions') Session Starting Location:
+              label(for='startOptions') Session Starting Location
               #startOptions.list-group(role='tablist',, style="display: none;")
                 
                   
@@ -115,4 +118,4 @@ block content
 
         // Modal footer
         .modal-footer
-          button#facilitatorSubmit.btn.btn-danger(type='submit', data-dismiss='modal', disabled='true') Submit
+          button#facilitatorSubmit.col.align-self-end.btn.btn-success(type='submit', data-dismiss='modal') Add Details

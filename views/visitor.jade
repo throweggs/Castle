@@ -64,21 +64,22 @@ block content
       label.col-lg-2.col-sm-12.col-form-label(for='reasonForVisit') Reason for visit
       .col-lg-8.col-sm-12
         select#reasonForVisit.select.form-control.input-lg(name='reasonForVisit' required='')
-          option(value='')
-          option(value='Cafe') Cafe
-          option(value='Climbers Clinic') Climbers Clinic
-          option(value='Garden')  Garden
-          option(value='Geckos')  Geckos
-          option(value='Castle Climbing')  Castle Climbing Club
-          option(value='External Course Provider')  External Course Provider
-          option(value='Passing By')  Passing By
-          option(value='Shop')  Shop
-          option(value='Contractor')  Contractor
-          option(value='Photography')  Photography
-          option(value='Staff Member')  Visiting a staff member
+          option.dropdown-menu(value='Please Select', disabled='')
+          option.dropdown-menu(value='Cafe') Cafe
+          option.dropdown-menu(value='Climbers Clinic') Climbers Clinic
+          option.dropdown-menu(value='Garden')  Garden
+          option.dropdown-menu(value='Geckos')  Geckos
+          option.dropdown-menu(value='Castle Climbing')  Castle Climbing Club
+          option.dropdown-menu(value='External Course Provider')  External Course Provider
+          option.dropdown-menu(value='Passing By')  Passing By
+          option.dropdown-menu(value='Shop')  Shop
+          option.dropdown-menu(value='Contractor')  Contractor
+          option.dropdown-menu(value='Photography')  Photography
+          option.dropdown-menu(value='Staff Member')  Visiting a staff member
           option(value='Other')  Other
         .invalid-feedback
           | Please select an option
+
 
     .form-group.row
       label#otherReason.col-lg-2.col-sm-12.col-form-label(for='otherReason', style='display: none;') Please State Other Reason

@@ -1,13 +1,29 @@
 @import url('https://fonts.googleapis.com/css?family=Love+Ya+Like+A+Sister');
 
-[class^="icon-"], [class*="icon-"] {
+/* [class^="icon-"], [class*="icon-"] {
     display: inline-block;
     width: 100%;
-}
+} */
 
  i {
     text-align: center;
 }
+
+/* .fa-angle-right:hover{
+color: red
+addClass: 'data-fa-transform="rotate-90"';
+}
+.fa-angle-right i:hover{
+
+}
+.fa-angle-right i before:hover{
+color: red
+} */
+
+.list-group-item-action{
+  background-color: #2B3E50
+}
+
 
 html {
   height:100%;
@@ -24,16 +40,19 @@ html {
   font-family: 'Love Ya Like A Sister';
 }
 
-
+/* .nav-link{
+  color: #fff;
+} */
 
 .PT.card {
   cursor: pointer;
 }
 
 body {
-  font: sans-serif;
-
-  background: url(castleline.svg) no-repeat center center fixed #F4F4F4;
+  /* font: sans-serif; */
+  /* color: #404040 ; */
+  background: url(castleline.svg) no-repeat center center fixed #2B3E50;
+  /* background: url(castleline.svg) no-repeat center center fixed; */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

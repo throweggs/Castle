@@ -13,37 +13,50 @@ var colours = [
 {area: 'Other', colour: 'rgb(201, 203, 207)'}//grey
 ];
 
+var colourChoice = [
+'#DF691A',' #6610f2',' #6f42c1 ',' #e83e8c',' #d9534f',' #f0ad4e',' #f0ad4e',' #5cb85c',' #20c997',' #5bc0de',' #fff',' #868e96',' #343a40',' #DF691A',' #4E5D6C',' #5cb85c',' #5bc0de',' #f0ad4e',' #d9534f',' #abb6c2',' #4E5D6C'
+];
+
+
 function renderChart() {
-  data1 = [20000, 14000, 12000, 15000, 18000, 19000, 22000];
-  data2 = [20000, 5000, 12000, 30000, 4000, 9000, 2000];
-  labels =  ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+
     var ctx = document.getElementById("myChart").getContext('2d');
+
     var myChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: graphData,
         options: {
 
-          aspectRatio : 8,
+          aspectRatio : 6,
           scales: {
             yAxes: [{
+              stacked: false,
                 ticks: {
 
                     min: 0,
-                    stepSize: 1,
+                    stepSize: 4,
                 }
             }],
             xAxes: [{
-                type: 'time',
-                distribution: 'series',
+              barPercentage: 1,
+              stacked: true,
+              type: 'time',
+              autoSkip: 'true',
                 time: {
-                    displayFormats: {
-                        week: 'L'
-                    }
-                }
+                    unit: 'day',
+                },
             }]
         }
     }
     });
+}
+
+function resetChart() {
+  var theChart = document.getElementById("myChart");
+  var theContainer = document.getElementsByClassName("chart-container");
+  theContainer.parentNode.removeChild(theChart);
+$( "#chartContainer" ).append( $( 'canvas#myChart' ) );
+
 }
 
 $(document).ready(function() {
@@ -103,7 +116,6 @@ if(searchChoice === 'Date'){
 
       // jQuery AJAX call for JSON
       $.getJSON( '/users/visitorlist', theSearch, function( data ) {
-          console.log(theSearch);
         })
           .done(function( data ) {
 
@@ -111,6 +123,7 @@ if(searchChoice === 'Date'){
         visitorListData = data;
         dataLength = data.length;
           $('#listCount').text('Records Found: '+dataLength);
+
 //get Date Range
           var firstDate = moment(data[0].created).startOf('day').subtract(1,'day').format('L');
           var lastDate = moment(data[dataLength-1].created).startOf('day').add(1,'day').format('L');
@@ -126,28 +139,28 @@ if(searchChoice === 'Date'){
 //get Catergories
             $.each(data,function(i,theData){
               var reasonMatch = false;
-              var count = '';
+              var count = 0;
               $.each(graphData.datasets,function(ii,aReason){
-                count = ii;
+                count = ii+1;
                   if(theData.reasonForVisit === aReason.label){
                     reasonMatch = true;
-                    console.log(theData.created);
+
                     graphData.datasets[ii].date.push(moment(theData.created).startOf('day').format('L'));
                   }
               });
             if (reasonMatch === false){
                 var lineColour = '';
                 var rfv = theData.reasonForVisit.replace(" ","_");
-              $.each(colours,function(i, colour){
-                if(colour.area === rfv){
-                  lineColour = colour.colour;
-                }
-              });
+              // $.each(colours,function(i, colour){
+              //   if(colour.area === rfv){
+              //     lineColour = colour.colour;
+              //   }
+              // });
               graphData.datasets.push({
                           pointRadius : 0,
                            fill: false,
-                           borderColor: lineColour,
-                           backgroundColor: lineColour,
+                           borderColor: colourChoice[count],
+                           backgroundColor: colourChoice[count],
                            label: theData.reasonForVisit,
                            data: [],
                            date: [moment(theData.created).startOf('day').format('L')]
@@ -237,7 +250,7 @@ if(searchChoice === 'Date'){
           // Inject the whole content string into our existing HTML table
           $('table#visitorTable tbody').html(tableContent);
           theExport = tableContent;
-          console.log(tableContent);
+
       });
     }
 
@@ -256,7 +269,7 @@ $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
 
 
 $(document).on('keyup',function (e){
-  console.log(e.target.id);
+
   if(e.target.id === 'searchText'){
     searchText = e.target.value;
     populateVisitorTable();

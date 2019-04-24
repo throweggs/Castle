@@ -211,14 +211,16 @@ var output = "";
   }
 
   function updatePage() {
+
     document.getElementById("kioskIdValue").innerHTML = "<i>" + getKioskId() + "</i>";
   }
 
   function getKioskId() {
+
     try {
       return window.kioskpro_id.toString();
     }
-    catch(e) {
+    catch(error) {
       return "Non Kiosk iPad";
     }
   }
