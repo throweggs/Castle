@@ -3,20 +3,34 @@ extends dashboard
 block content
 
 
-  .row.container-fluid
-    .col.h3 Women's Bouldering Social
-      
-    .col-align-end.h3
-      #listCount
-
   
-
-    
           
   .container-fluid
-    .chart-container
-      canvas#myChart   
     .row
+      .col-8
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;") # of Participants
+          canvas#dateChart  
+      .col-2
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;;") Reason for Visit
+          canvas#rfvChart 
+          br
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;;") First Time
+          canvas#ftChart 
+      .col-2
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;;") # session run by
+          canvas#fChart   
+
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;;") Average &nbsp
+            i.fas.fa-user.fa-.5x
+            | /session per Facilitator
+          canvas#fanChart   
+    .row
+      
       .col-md
         div
           table#visitorTable.table.table-hover.table-striped.text-nowrap(cellspacing="0" width="100%")

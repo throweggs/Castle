@@ -119,6 +119,20 @@ if(searchChoice === 'Date'){
         })
           .done(function( data ) {
 
+            var exportTable = "<table>";
+            exportTable +='<tr>';
+            exportTable +='<th>Date</th>';
+            exportTable +='<th>Time</th>';
+            exportTable +='<th>First Name</th>';
+            exportTable +='<th>Last Name</th>';
+            exportTable +='<th>Reason</th>';
+            exportTable +='<th>Description</th>';
+            exportTable +='<th>Child 1</th>';
+            exportTable +='<th>Child 2</th>';
+            exportTable +='<th>Photo Waver</th>';
+            exportTable +='</tr>';
+
+
             // Stick our visitor data array into a visitorlist variable in the visitorlist object
         visitorListData = data;
         dataLength = data.length;
@@ -189,6 +203,7 @@ if(searchChoice === 'Date'){
         $('#ListCount').text(visitorListData.length);
         var disclaimerTick,
             photoTick,
+            waverAgreed,
             supervisingChild,
             childPointer,
             child,
@@ -196,10 +211,18 @@ if(searchChoice === 'Date'){
             reasonFV;
           // For each item in our JSON, add a table row and cells to the content string
           $.each(data, function(i, item){
-
+                disclaimerTick = '';
+                photoTick = '';
+                waverAgreed = '';
+                supervisingChild = '';
+                childPointer = '';
+                child = '';
+                reasonFVPointer = '';
+                reasonFV = '';
 
                 if (this.PhotographyWaverAgreement === 'Agreed'){
                 photoTick = '<i class="far fa-check-square"></i>';
+                waverAgreed = 'Agreed';
                 } else {
                 photoTick = '<i class="far fa-square"></i>';
                 }
@@ -238,18 +261,33 @@ if(searchChoice === 'Date'){
               tableContent += '<td>' + moment(this.created).format('L') + '</td>';
               tableContent += '<td>' + moment(this.created).format('LT') + '</td>';
               tableContent += '<td>' + this.fullName + '</td>';
-                // tableContent += '<td><a href="#" data-toggle="tooltip" title="' + ReasonFV + '" class="linkShowVisitor" rel="' + this._id + '">' + this.reasonForVisit + '</a><p hidden>'+ ': ' + ReasonFV +'</p></td>';
               tableContent += '<td '+ reasonFVPointer +' data-toggle="tooltip" title="' + reasonFV + '" rel="' + this._id + '">' + this.reasonForVisit + '<p hidden>'+ ': ' + reasonFV +'</p></td>';
               tableContent += '<td '+ childPointer +' data-toggle="tooltip" title="' + child + '" rel="' + this._id + '">' + supervisingChild + '<p hidden>'+ child +'</p></td>';
               tableContent += '<td>'+ photoTick + ' <p hidden> '+ this.PhotographyWaverAgreement +'</p></td>';
               tableContent += '<td>'+ this.iPad + ' <p hidden> '+ this.iPad +'</p></td>';
-              // tableContent += '<td><a href="#" class="linkdeletevisitor " rel="' + this._id + '">delete</a></td>';
               tableContent += '</tr>';
+
+              exportTable += '<tr>';
+              exportTable += '<td>'+ moment(this.created).format('L')+'</td>';
+              exportTable += '<td>' + moment(this.created).format('LT') + '</td>';
+              exportTable += '<td>' + this.firstName + '</td>';
+              exportTable += '<td>' + this.lastName + '</td>';
+              exportTable += '<td>' + this.reasonForVisit + '</td>';
+              exportTable += '<td>' + reasonFV + '</td>';
+              exportTable += '<td>' +  this.ChildNames[0].name + '</td>';
+              exportTable += '<td>' +  this.ChildNames[1].name + '</td>';
+              exportTable += '<td>' + waverAgreed + '</td>';
+
           });
 
+          exportTable += '</tr>';
           // Inject the whole content string into our existing HTML table
           $('table#visitorTable tbody').html(tableContent);
-          theExport = tableContent;
+          $('table#exportTable').html(exportTable);
+          $('table#visitorTable').show();
+          $('#loading').hide();
+
+
 
       });
     }
@@ -258,8 +296,8 @@ if(searchChoice === 'Date'){
 $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
   //do something, like clearing an input
 
-  searchStart = picker.startDate.format('YYYY-MM-DD');
-  searchEnd = picker.endDate.format('YYYY-MM-DD');
+  searchStart = picker.startDate.format('L');
+  searchEnd = picker.endDate.format('L');
   populateVisitorTable();
 
 

@@ -4,7 +4,7 @@ html(lang='en')
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
     append styles
-  
+
       link(rel='stylesheet', href='/chart.js/dist/Chart.min.css')
       link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
       //- link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.min.css')
@@ -19,11 +19,11 @@ html(lang='en')
       script(src='/tooltip/umd/tooltip.min.js')
       script(src='/fontawesome/js/all.js')
       script(src='/bootstrap/dist/js/bootstrap.min.js')
-  
 
-      script(src='/tempus/build/js/tempusdominus-bootstrap-4.min.js')
-  
-      script(src="/daterangepicker/daterangepicker.js")
+
+      //- script(src='/tempus/build/js/tempusdominus-bootstrap-4.min.js')
+
+      //- script(src="/daterangepicker/daterangepicker.js")
       script(scr='/javascripts/jquery.tabletoCSV.js')
       script(src='/javascripts/global.js')
 
@@ -39,21 +39,21 @@ body
       .navbar-nav.mr-auto
         span.navbar-text
           #DateTime
-      .navbar-text.kiosk 
+      .navbar-text.kiosk
         #kioskIdValue
     .navbar-text #{title}
     a.btn.btn-default.pull-right(href='/', title='Home')
       h3.i.fas.fa-home.fa-2x
-    
-        
-      //- 
-      //- 
+
+
+      //-
+      //-
       //- .col-auto
       //-   .text-left
       //-     a.navbar-brand(href="#", data-toggle='modal', data-target='#AreYouSure')
       //-       img.d-inline-block.align-centre(src='logo.png', alt='')
       //-       | Castle Climbing Centre
-      //- 
+      //-
       //-     #DateTime
       //- .col.text-centre
       //-   .navbar-text
@@ -76,12 +76,12 @@ body
         .modal-footer
           a.btn.btn-danger.btn-xl.submit-btn(href='/') Yes
           a.btn.btn-success.btn-xl.submit-btn(href='#', data-dismiss='modal', aria-label='Close') No
-  //- 
-  //- 
+  //-
+  //-
   //Header
   .header.col-12
   #failAlert
-  //- 
+  //-
   //- // Button trigger modal
   //- button.btn.btn-primary(type='button', data-toggle='modal', data-target='#SuccessModal')
   //-   | Launch demo modal
@@ -95,13 +95,11 @@ body
             span(aria-hidden='true') ×
         .modal-body
           #TheText
-  //- 
-  //- 
-  //- 
+  //-
+  //-
+  //-
   include GDPR
-  
-  
-  
-  block content
 
-  
+
+
+  block content

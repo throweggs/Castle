@@ -1,13 +1,13 @@
 var express = require('express');
 var path = require('path');
-var request = require('request');
-var rp = require('request-promise');
+// var request = require('request');
+// var rp = require('request-promise');
 var $ = require('jquery');
 var jquery = require('jquery');
 var jQuery = require('jquery');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
+// var logger = require('morgan');
+// var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var moment = require('moment');
 var popper = require('popper.js');
@@ -18,7 +18,7 @@ var Chart = require('chart.js');
 
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/forms');
+var db = monk('co-forms:27017/forms');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -44,10 +44,10 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Make our db accessible to our router
@@ -86,13 +86,13 @@ app.use('/popper', express.static(__dirname + '/node_modules/popper.js/dist/'));
 app.use('/tooltip', express.static(__dirname + '/node_modules/tooltip.js/dist/'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use('/moment', express.static(__dirname + '/node_modules/moment')); // redirect moments JS
-app.use('/tempus', express.static(__dirname + '/node_modules/tempusdominus-bootstrap-4')); // redirect tempus JS
+// app.use('/tempus', express.static(__dirname + '/node_modules/tempusdominus-bootstrap-4')); // redirect tempus JS
 app.use('/daterangepicker', express.static(__dirname + '/node_modules/daterangepicker')); // redirect tempus JS
 app.use('/fontawesome', express.static(__dirname + '/node_modules/@fortawesome/fontawesome-free')); // redirect tempus JS
 app.use('/chart.js', express.static(__dirname + '/node_modules/chart.js'));
 
 
-app.use('/request', express.static(__dirname + '/node_modules/request')); // redirect tempus JS
+// app.use('/request', express.static(__dirname + '/node_modules/request')); // redirect tempus JS
 
 
 
@@ -113,6 +113,9 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error', { title: 'Error' });
+
 });
+
+
 
 module.exports = app;

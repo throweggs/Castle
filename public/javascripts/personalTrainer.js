@@ -22,22 +22,9 @@ $(document).ready(function() {
 
       $('#submit').on('click', addPerson);
 
-      $('#timeIn').datetimepicker({
-        useCurrent: true,
-        format: 'LT'
-      });
-      $('#timeOut').datetimepicker({
-        useCurrent: false,
-        format: 'LT'
-      });
-      $("#timeIn").on("change.datetimepicker", function (e) {
-          $('#timeOut').datetimepicker('minDate', e.date);
-      });
-      $("#timeOut").on("change.datetimepicker", function (e) {
-          $('#timeIn').datetimepicker('maxDate', e.date);
-      });
 
       $(".PT.card").on("click", function(e){
+        console.log('clicked');
         trainer = event.target.id;
         $(".PT.card").removeClass('text-white bg-primary');
         $("#" + trainer + ".PT.card").addClass('text-white bg-primary');
@@ -85,61 +72,15 @@ function TiggerCheckOut(event) {
 
     }
 
-function updatePerson(thisVisitorObject){
-
-    var updates = {
-        'FindPerson': thisVisitorObject._id,
-        'createdDate': thisVisitorObject.createdDate,
-        'Person' : thisVisitorObject.Person,
-        'Reason' : thisVisitorObject.Reason,
-        'ArrivalTime' : thisVisitorObject.ArrivalTime,
-        'DepartureTime' : moment().format(),
-        'Disclaimer' : thisVisitorObject.Disclaimer,
-        'iPadOut' : getKioskId(),
-        'iPadIn' : iPadIn,
-    };
-
-    $.ajax({
-      type: "put",
-      url: "gardenVolunteer/updatePerson",
-      contentType: 'application/json',
-      data: JSON.stringify(updates)
-    }).done(function( response, results ) {
-      populateTable();
-      // location.reload();
-        console.log(response);
-        // Check for successful (blank) response
-        if (response.ok === 1) {
-
-            // Clear the form inputs
-            // $('#addPerson input').val('');
-
-            // // Update the table
-            // populateTable();
-
-        }
-        else {
-
-            // If something goes wrong, alert the error message that our service returned
-            alert('Error: ' + response.msg);
-
-        }
-
-    });
-  }
-
-
 
 // Fill table with data
 function populateTable() {
-
-  console.log("Populate Tab");
 
     // Empty content string
     var tableContent = '';
 
     // jQuery AJAX call for JSON
-    $.getJSON( '/personalTrainer/getDay', {createdDate: moment().format('MMMM Do YYYY')}, function( data ) {
+    $.getJSON( '/personalTrainer/getDay', {createdDate: moment().format('L')}, function( data ) {
 
       // Stick our visitor data array into a visitorlist variable in the visitorlist object
 
@@ -156,7 +97,7 @@ $('#ListCount').text(data.length);
             tableContent += '<tr>';
             tableContent += '<td>' + newName + '</td>';
             tableContent += '<td>' + trainer.trainer + '</td>';
-            tableContent += '<td>' + moment(trainer.ArrivalTime).format('hh:mm:ss') + '</td>';
+            tableContent += '<td>' + trainer.arrivalTime + '</td>';
             tableContent += '<td>' +  tncs + '</td>';
 
             iPadIn = this.iPadIn;
@@ -174,7 +115,6 @@ $('#ListCount').text(data.length);
 
 //Post request to add the person
 function addPerson(event) {
-  event.preventDefault();
 if(trainer === 'Mariam'){
   trainer = 'Mariam Al-Roubi';
 } else if (trainer === 'Rich'){
@@ -184,11 +124,11 @@ if(trainer === 'Mariam'){
 }
 
   var newPerson = {
-    createdDate : moment().format('MMMM Do YYYY'),
+    createdDate : moment().format('L'),
     fullName : $('input#traineeFirstName').val() + ' ' + $('input#traineeLastName').val(),
     name : { first : $('input#traineeFirstName').val(), last : $('input#traineeLastName').val()},
     trainer : trainer,
-    arrivalTime : moment().format(),
+    arrivalTime : moment().format('LT'),
     disclaimer : $('input#disclaimer').is(':checked'),
     iPadIn : getKioskId(),
   };

@@ -3,35 +3,39 @@ extends dashboard
 block content
 
 
-  .row.container-fluid
-    .col.h3
-      #pageTitle
-    .col-align-end.h3
-      #listCount
+	.row.container-fluid
+		.col.h3
+			#pageTitle
+		.col-align-end.h3
+			#listCount
 
-  
 
-    
-          
-  .container-fluid
-    .chart-container
-      canvas#myChart   
-    .row
-      .col-md
-        div
-          table#visitorTable.table.table-stripped.text-nowrap(cellspacing="0" width="100%")
-              thead
-                th.th-sm Date
-                th.th-sm Time
-                th.th-sm Full Name
-                th.th-sm Reason
-                th.th-sm
-                  i.fas.fa-child
-                th.th-sm
-                  i.fas.fa-camera
-                th.th-sm
-                  i.fas.fa-tablet-alt
 
-              tbody
-      
-  script(src='/javascripts/Dashboard/viewVisitors.js')
+
+
+	.container-fluid
+		.chart-container
+			canvas#myChart
+
+
+		.row
+			.col-md
+				div
+					table#visitorTable.table.table-stripped.text-nowrap(cellspacing="0" width="100%" style="display: none")
+
+						thead
+							th.th-sm Date
+							th.th-sm Time
+							th.th-sm Full Name
+							th.th-sm Reason
+							th.th-sm
+								i.fas.fa-child
+							th.th-sm
+								i.fas.fa-camera
+							th.th-sm
+								i.fas.fa-tablet-alt
+
+						tbody
+
+
+	script(src='/javascripts/Dashboard/viewVisitors.js')

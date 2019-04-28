@@ -3,19 +3,33 @@ extends dashboard
 block content
 
 
-  .row.container-fluid
-    .col.h3
-      #pageTitle
-    .col-align-end.h3
-      #listCount
-
   
-
-    
           
   .container-fluid
-    .chart-container
-      canvas#myChart   
+    .row
+      .col-8
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;margin-top: 16px;") # of Participants
+          canvas#dateChart 
+          br 
+      .col-2
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;margin-top: 16px;") Reason for Visit
+          canvas#rfvChart 
+          br
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;margin-top: 16px;") First Time
+          canvas#ftChart 
+      .col-2
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;margin-top: 16px;") # session run by
+          canvas#fChart   
+
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;margin-top: 16px;") Average &nbsp
+            i.fas.fa-user.fa-.5x
+            | /session per Facilitator
+          canvas#fanChart   
     .row
       .col-md
         div
