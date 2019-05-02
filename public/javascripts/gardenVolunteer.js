@@ -20,20 +20,16 @@ $(document).ready(function() {
 
       $('#submit').on('click', addPerson);
 
-      $('#timeIn').datetimepicker({
-        useCurrent: true,
-        format: 'LT'
-      });
-      $('#timeOut').datetimepicker({
-        useCurrent: false,
-        format: 'LT'
-      });
-      $("#timeIn").on("change.datetimepicker", function (e) {
-          $('#timeOut').datetimepicker('minDate', e.date);
-      });
-      $("#timeOut").on("change.datetimepicker", function (e) {
-          $('#timeIn').datetimepicker('maxDate', e.date);
-      });
+      // $('#timeIn').moment().format('LT');
+      // $('#timeOut').moment().format('LT');
+      // $('#timeOut').text($('#timeOut').format('LT');
+      //
+      // $("#timeIn").on("change.datetimepicker", function (e) {
+      //     $('#timeOut').datetimepicker('minDate', e.date);
+      // });
+      // $("#timeOut").on("change.datetimepicker", function (e) {
+      //     $('#timeIn').datetimepicker('maxDate', e.date);
+      // });
 
 
       $('input#VolunteerChoice').on('change',function(){
@@ -94,15 +90,15 @@ function TiggerCheckOut(event) {
 function updatePerson(thisVisitorObject){
 
     var updates = {
-        'FindPerson': thisVisitorObject._id,
-        'createdDate': thisVisitorObject.createdDate,
-        'Person' : thisVisitorObject.Person,
-        'Reason' : thisVisitorObject.Reason,
-        'ArrivalTime' : thisVisitorObject.ArrivalTime,
-        'DepartureTime' : moment().format(),
-        'Disclaimer' : thisVisitorObject.Disclaimer,
-        'iPadOut' : getKioskId(),
-        'iPadIn' : iPadIn,
+        FindPerson: thisVisitorObject._id,
+        createdDate: thisVisitorObject.createdDate,
+        Person : thisVisitorObject.Person,
+        Reason : thisVisitorObject.Reason,
+        ArrivalTime : thisVisitorObject.ArrivalTime,
+        DepartureTime : moment().format('LT'),
+        Disclaimer : thisVisitorObject.Disclaimer,
+        iPadOut : getKioskId(),
+        iPadIn : iPadIn,
     };
 
     $.ajax({
@@ -145,7 +141,7 @@ function populateTable() {
     var tableContent = '';
 
     // jQuery AJAX call for JSON
-    $.getJSON( '/gardenVolunteer/getDay', {createdDate: moment().format('MMMM Do YYYY')}, function( data ) {
+    $.getJSON( '/gardenVolunteer/getDay', {createdDate: moment().format('L')}, function( data ) {
 
       // Stick our visitor data array into a visitorlist variable in the visitorlist object
       visitorListData = data;
@@ -160,7 +156,7 @@ $('#ListCount').text(visitorListData.length);
             tableContent += '<tr>';
             tableContent += '<td>' + newName + '</td>';
             tableContent += '<td>' + this.Reason + '</td>';
-            tableContent += '<td>' + moment(this.ArrivalTime).format('hh:mm:ss') + '</td>';
+            tableContent += '<td>' +this.ArrivalTime + '</td>';
             iPadIn = this.iPadIn;
 
               if (this.DepartureTime === '') {
@@ -168,7 +164,7 @@ $('#ListCount').text(visitorListData.length);
 
                 tableContent += '<td><button type="button" rel="' + this._id + '" class="CheckOut btn btn-warning btn-sm">Check Out</button></td>';
               } else {
-                tableContent += '<td>' + moment(this.DepartureTime).format('hh:mm:ss') + '</td>';
+                tableContent += '<td>' + this.DepartureTime + '</td>';
               }
             // tableContent += '<td><a href="#" class="linkdeletevisitor " rel="' + this._id + '">delete</a></td>';
             tableContent += '</tr>';
@@ -187,13 +183,14 @@ function addPerson(event) {
 
 
   var newPerson = {
-    'createdDate': moment().format('MMMM Do YYYY'),
-    'Person' : $('input#volunteerName').val(),
-    'Reason' : GardenChoice,
-    'ArrivalTime' : moment().format(),
-    'DepartureTime' : "",
-    'Disclaimer' : $('input#Disclaimer').val(),
-    'iPadIn' : getKioskId(),
+    createdDate: moment().format('L'),
+    created: moment().format(),
+    Person : $('input#volunteerName').val(),
+    Reason : GardenChoice,
+    ArrivalTime : moment().format('LT'),
+    DepartureTime : "",
+    Disclaimer : $('input#Disclaimer').val(),
+    iPadIn : getKioskId(),
   };
 
 var myJSON = JSON.stringify(newPerson);
