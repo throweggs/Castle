@@ -49,6 +49,16 @@ router.get('/NCClist', function(req, res) {
     });
 });
 
+router.get('/TWlist', function(req, res) {
+  var findMe = req.query;
+  console.log(findMe);
+    var db = req.db;
+    var collection = db.get('thamesWater');
+    collection.find(findMe,{},function(e,docs){
+        res.json(docs);
+    });
+});
+
 
 /*
  * POST to addVisitor.

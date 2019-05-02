@@ -22,10 +22,10 @@ block content
     table#TeamsTable.table.table-hover
       thead
         tr
-          td Rates
-          td Teams
-          td Manager
-          td Rates
+          th Edit
+          th Teams
+          th Manager
+          th Rates
 
 
       tbody#TeamsTableBody
@@ -41,6 +41,8 @@ block content
         .modal-content
           .modal-header
             h5#addTimeModalLongTitle.modal-title Add Team
+            h5#teamID.modal-title(style='display:None;')
+            
             button.close(type='button', data-dismiss='modal', aria-label='Close')
               span(aria-hidden='true') ×
           .modal-body
@@ -64,6 +66,7 @@ block content
 
 
           .modal-footer
+            button#deleteTeam.btn.text-left.btn-danger(type='button', onClick='removeTeam()' style='display: none;') Delete Team
             button.btn.btn-secondary(type='button', data-dismiss='modal') Close
             button.btn.btn-primary(type='submit', onClick='addTeam()') Save changes
   //- 

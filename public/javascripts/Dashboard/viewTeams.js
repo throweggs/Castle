@@ -14,7 +14,7 @@ var options = [ 'Team', 'Manager', 'Rate'];
     } else if(searchChoice === 'Rate'){
       theSearch = { Team_Rates : { $regex: searchText, $options: 'i' } };
     }
-    console.log(theSearch);
+
       var findIt =  theSearch;
         // jQuery AJAX call for JSON
         $.getJSON( '/staff/getTeams',findIt, function( results, res ) {
@@ -22,7 +22,6 @@ var options = [ 'Team', 'Manager', 'Rate'];
           })
           .done(function(results, res) {
               teamsNRates = results;
-              console.log(results);
             insertTeams();
 
           });
@@ -45,7 +44,7 @@ function insertTeams(){
           var ratesToggle = teamsRow.insertCell(0);
                 ratesToggle.className = 'toggle-row';
                 ratesToggle.id = team._id+'_toggle';
-                ratesToggle.innerHTML = '<a href="#" class="fas fa-edit toggle-row" id="'+team._id+'"></i>';
+                ratesToggle.innerHTML = '<a  class="UpdateTeam far fa-edit" href="#" id="'+team._id+'"><i class="UpdateTeam far fa-edit"></i></a>';
           var teamCell = teamsRow.insertCell(1);
                 teamCell.innerHTML = team.Team_Name;
           var mangerCell = teamsRow.insertCell(2);
@@ -54,12 +53,10 @@ function insertTeams(){
           var theText = '';
           var theRate = team.Team_Rates;
           $.each(theRate, function(i, rate){
-            if (i === 0){
-              theText = '£';
-            } else if (i < theRate.length-1){
-              theText = theText + rate + ', £';
+            if (i < theRate.length-1){
+              theText = theText +'£' + rate + ',  ';
             } else {
-              theText = theText + rate;
+              theText = theText + '£' +rate;
             }
           });
                 ratesCell.innerHTML = theText;
@@ -72,18 +69,20 @@ function insertTeams(){
 
 //DB CALLS  =============================================
 
-
+function removeTeam(){
+alert('this function is to be finished');
+}
 
 
 //Post request to add Staff Member
 function addTeam() {
 
-  $.getJSON( '/staff/getATeam', {Team_Name: $('input#teamName').val() }, function(results, res) {
+  $.getJSON( '/staff/getATeam', {_id: $('#teamID').text() }, function(results, res) {
     })
     .done(function(results, res) {
       if(results.length === 0){
 
-            var rates = ['NA'];
+            var rates = [];
 
                   var theRates = $('input#payRates').val();
                   var match = theRates.split(',');
@@ -104,10 +103,11 @@ function addTeam() {
 
 
                 var newTeam = {
-                  'Created_Date': moment().format('MMMM Do YYYY'),
-                  'Created_Time' : moment().format('HH:MM:SS'),
-                  'Team_Name' : $('input#teamName').val(),
-                  'Team_Manager' : $('input#managerName').val(),
+                  Created_Date: moment().format('MMMM Do YYYY'),
+                  Created_Time : moment().format('HH:MM:SS'),
+                  Team_Name : $('input#teamName').val(),
+                  Team_ID:  $('input#teamName').val().replace(/\s/g,''),
+                  Team_Manager : $('input#managerName').val(),
                   // 'Team_Staff' : $('input#managerName').val(),
 
                   'Team_Rates' : rates,
@@ -137,10 +137,65 @@ function addTeam() {
 
                 });
         } else {
-          alert('The team "'+ $('input#teamName').val() + '" already excists');
+          var rates =[];
+          var theRates = $('input#payRates').val();
+          var match = theRates.split(',');
+          for (var a in match)
+          {
+              var rate = match[a].replace('£', '');
+                  rate = $.trim(rate);
+
+                if(rate.length === 0){
+                  //blank
+                } else if(rate.length > 0){
+                rates.push(rate);
+                }
+
+          }
+
+      var newTeam = {
+        FindMe: $('#teamID').text(),
+        created: moment(),
+        Team_Name : $('input#teamName').val(),
+        Team_ID:  $('input#teamName').val().replace(/\s/g,''),
+        Team_Manager : $('input#managerName').val(),
+        // 'Team_Staff' : $('input#managerName').val(),
+
+        Team_Rates : rates,
+      };
+
+    var myJSON = JSON.stringify(newTeam);
+
+
+
+
+      $.ajax({
+          type: 'PUT',
+          data: myJSON,
+          url: 'staff/updateATeam',
+          dataType: 'JSON',
+          contentType: 'application/json',
+      }).done(function( response, results ) {
+        console.log(results);
+        // Check for successful (blank) response
+          if (results === 'success') {
+            location.reload();
+          }
+          else {
+              // If something goes wrong, alert the error message that our service returned
+              alert('Error: ' + response);
+          }
+
+      });
         }
 });
 }
+
+
+
+
+
+
 
 //DOM WATCH  =============================================
 
@@ -151,39 +206,29 @@ $(document).on('keyup',function (e){
   }
 });
 
-$(document).mouseover(function() {
-  //Show Pin
-  if(event.target.className === 'hidetext'){
-      var theID = event.target.id;
-      document.getElementById(theID).classList.remove("hidetext");
-      document.getElementById(theID).classList.add("showtext");
-  }
-
-});
-
-$(document).mouseout(function() {
-  //Hide Pin
-  if(event.target.className === 'showtext'){
-      var theID = event.target.id;
-      document.getElementById(theID).classList.remove("showtext");
-      document.getElementById(theID).classList.add("hidetext");
-  }
-
-
-
-
-});
 
 $(document).on('click',function() {
 //Show teams
-//   if(event.target.className === 'fas fa-edit toggle-row'){
-//     var theID = '#'+event.target.id+'_team';
-//     $(theID).toggle();
-// }
 
 
-
+      if ($(event.target).hasClass('UpdateTeam') === true){
+        teamID = event.target.id;
+          $.getJSON( '/staff/getATeam', {_id: teamID }, function(results, res) {
+          })
+          .done(function(info, res){
+            console.log(info);
+            console.log(res);
+              $('#addTeamModal').modal('show');
+              $('#deleteTeam').modal('show');
+              $('#teamID').text(teamID);
+              $('#addTimeModalLongTitle').text('Update Team');
+              $('input#teamName').val(info[0].Team_Name);
+              $('input#managerName').val(info[0].Team_Manager);
+              $('input#payRates').val(info[0].Team_Rates);
+          });
+      }
 });
+
 
 $(document).ready(function() {
   showTheTeamPage();

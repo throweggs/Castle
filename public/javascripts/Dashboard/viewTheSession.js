@@ -1,7 +1,7 @@
 aallowed = false;
 var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
     searchChoice = 'Facilitator';
-var options = [ 'Date', 'Facilitator','Participant', 'Session Type', 'Start Location', 'iPad'];
+var options = [ 'Date', 'Facilitator', 'Participant', 'Session Type', 'Start Location', 'iPad'];
 
 var theData = [],
     labels = [];
@@ -63,7 +63,7 @@ function renderBarChart(id, labels, label, theData, type) {
       legend: {
        display: false
      },
-      aspectRatio : 3,
+      aspectRatio : 2,
 
 }
 });
@@ -132,20 +132,19 @@ function populateVisitorTable() {
     theData = [];
     labels = [];
 
-
-if(searchChoice === 'Date'){
-  theSearch = {created: { $gt: moment(searchStart).format(), $lt: moment(searchEnd).add('24','hours').format() }};
-} else if(searchChoice === 'Participant'){
-  theSearch = {Participants: {$elemMatch: { First_Name: { $regex: searchText, $options: 'i' } } } };
-} else if(searchChoice === 'Facilitator'){
-  theSearch = {Facilitator: { $regex: searchText, $options: 'i' }};
-} else if(searchChoice === 'Session Type'){
-  theSearch = { Session_Type :  { $regex: searchText, $options: 'i' }};
-} else if(searchChoice === 'Start Location'){
-  theSearch = {Start_Location: { $regex: searchText, $options: 'i' }};
-} else if(searchChoice === 'iPad'){
-  theSearch = {iPad: { $regex: searchText, $options: 'i' }};
-}
+    if(searchChoice === 'Date'){
+      theSearch = {created: { $gt: moment(searchStart).format(), $lt: moment(searchEnd).add('24','hours').format() }};
+    } else if(searchChoice === 'Participant'){
+      theSearch ={ $or: [ {Participants: {$elemMatch: { First_Name: { $regex: searchText, $options: 'i' } } }}, {Participants: {$elemMatch: { Last_Name: { $regex: searchText, $options: 'i' } } } } ] };
+    } else if(searchChoice === 'Facilitator'){
+      theSearch = {Facilitator: { $regex: searchText, $options: 'i' }};
+    } else if(searchChoice === 'Session Type'){
+      theSearch = { Session_Type :  { $regex: searchText, $options: 'i' }};
+    } else if(searchChoice === 'Start Location'){
+      theSearch = {Start_Location: { $regex: searchText, $options: 'i' }};
+    } else if(searchChoice === 'iPad'){
+      theSearch = {iPad: { $regex: searchText, $options: 'i' }};
+    }
 
 
 
@@ -158,7 +157,17 @@ if(searchChoice === 'Date'){
         })
           .done(function( data ) {
 
-
+            var exportTable = "<table>";
+            exportTable +='<tr>';
+            exportTable +='<th>Date</th>';
+            exportTable +='<th>Facilitator</th>';
+            exportTable +='<th>Session Type</th>';
+            exportTable +='<th>Start Location</th>';
+            exportTable +='<th>Participant Count</th>';
+            exportTable +='<th>Participant</th>';
+            exportTable +='<th>Reason For Visit</th>';
+            exportTable +='<th>First Time</th>';
+            exportTable +='</tr>';
             // Stick our visitor data array into a visitorlist variable in the visitorlist object
         visitorListData = data;
         dataLength = data.length;
@@ -181,6 +190,7 @@ if(searchChoice === 'Date'){
         var dateChart = {id : 'dateChart', labels : labels, label: '# of Participants', theData: theData, type: 'bar'},
         rfvChart = {id : 'rfvChart', labels : [], label: 'reson for visit', theData: [], type: 'doughnut'},
         ftChart = {id : 'ftChart', labels : [], label: 'first time', theData: [], type: 'doughnut'},
+        dayofWeekChart = {id : 'dayofWeekChart', labels : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'], label: 'Participants per day of week', totParticipantsOnDay:[0,0,0,0,0,0,0],  sessionsOnDay: [0,0,0,0,0,0,0], averageParticipantsOnDay:[0,0,0,0,0,0,0], type: 'doughnut'},
         fanChart = {id : 'fanChart', labels : [], label: 'Facilitator against #', numSessions: [], totalPart: [], averagePart: [], type: 'doughnut'};
         var participantsCount;
 
@@ -188,8 +198,23 @@ if(searchChoice === 'Date'){
           $.each(data, function(i, item){
               participantsCount = item.Participants.length;
 
-              var fanlabelFound = false;
+              //Number of Participants for any day of the week
+              var dow = moment(item.created).isoWeekday();
 
+              dayofWeekChart.sessionsOnDay[dow]++;
+              dayofWeekChart.totParticipantsOnDay[dow] = dayofWeekChart.totParticipantsOnDay[dow] + participantsCount;
+
+            $.each(dayofWeekChart.labels, function(day,weekday){
+              if( dayofWeekChart.totParticipantsOnDay[day] >0){
+              dayofWeekChart.averageParticipantsOnDay[day] = (dayofWeekChart.totParticipantsOnDay[day]/dayofWeekChart.sessionsOnDay[day]).toFixed(1);
+            } else {
+              dayofWeekChart.averageParticipantsOnDay[day] = 0;
+            }
+            });
+
+
+              //Facilitator against Number of Participants on a session
+              var fanlabelFound = false;
             $.each(fanChart.labels,function(i,label){
               if(label===item.Facilitator){
                 fanChart.numSessions[i] ++;
@@ -205,7 +230,6 @@ if(searchChoice === 'Date'){
               }
 
 
-
               if(previousDate ===item.Create_Date){
                 dateChart.numSessions = dateChart.theData + { t:moment(item.created).format('L'), y: participantsCount};
 
@@ -218,10 +242,10 @@ if(searchChoice === 'Date'){
 
               tableContent += '<tr>';
               tableContent += '<td><div class="showMore" onmouseover="rotateMe(this)" id="'+item._id+'" onclick="showParticipants(this);"><i class="fas fa-angle-right"></i></div> </td>';
-              tableContent += '<td>' + moment(item.created).format('L') + '</td>';
+              tableContent += '<td>' + moment(item.created).format('LL') + '</td>';
               tableContent += '<td>' + item.Facilitator + '</td>';
-              tableContent += '<td>' + item.Session_Type + '</td>';
-              tableContent += '<td>' + item.Start_Location + '</td>';
+              tableContent += '<td>' +  toTitleCase(item.Session_Type) + '</td>';
+              tableContent += '<td>' + toTitleCase(item.Start_Location) + '</td>';
               tableContent += '<td>' + participantsCount + '</td>';
               tableContent += '<td>'+ item.iPadin + ' <p hidden> '+ this.iPad +'</p></td>';
               // tableContent += '<td><a href="#" class="linkdeletevisitor " rel="' + this._id + '">delete</a></td>';
@@ -262,16 +286,28 @@ if(searchChoice === 'Date'){
                     tableContent +=     '<td>'+person.Reason+'</td>';
                     tableContent +=     '<td>'+person.First_Time+'</td>';
                     tableContent +=  ' </tr>';
+
+                    exportTable += '<tr>';
+                    exportTable += '<td>'+ moment(item.created).format('L')+'</td>';
+                    exportTable += '<td>' + item.Facilitator + '</td>';
+                    exportTable += '<td>' + toTitleCase(item.Session_Type) + '</td>';
+                    exportTable += '<td>' + toTitleCase(item.Start_Location) + '</td>';
+                    exportTable += '<td>' + participantsCount + '</td>';
+                    exportTable += '<td>' + person.First_Name+' '+person.Last_Name + '</td>'
+                    exportTable += '<td>' +person.Reason + '</td>';
+                    exportTable += '<td>' + person.First_Time + '</td>';
+                    exportTable +=  ' </tr>';
+
                   });
 
               tableContent += '</table>';
               tableContent += '</td>';
               tableContent += '</tr>';
           });
-
+          exportTable += '</tr>';
 
           $.each(fanChart.labels,function(i,label){
-          fanChart.averagePart[i] = fanChart.totalPart[i]/fanChart.numSessions[i];
+          fanChart.averagePart[i] = (fanChart.totalPart[i]/fanChart.numSessions[i]).toFixed(1);
           });
           console.log(fanChart)
 
@@ -286,7 +322,9 @@ if(searchChoice === 'Date'){
           renderDoughnutChart(ftChart.id, ftChart.labels,ftChart.label,ftChart.theData,ftChart.type);
           renderDoughnutChart('fChart', fanChart.labels,fanChart.label,fanChart.numSessions,fanChart.type);
           renderDoughnutChart('fanChart', fanChart.labels,fanChart.label,fanChart.averagePart,fanChart.type);
+          renderDoughnutChart('dayofWeekChart', dayofWeekChart.labels,dayofWeekChart.label,dayofWeekChart.averageParticipantsOnDay,dayofWeekChart.type);
           renderBarChart(dateChart.id, dateChart.labels,dateChart.label,dateChart.theData,dateChart.type);
+
       });
     }
 

@@ -23,14 +23,15 @@ function renderChart() {
     var ctx = document.getElementById("myChart").getContext('2d');
 
     var myChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: graphData,
         options: {
-
+          display: false,
           aspectRatio : 6,
           scales: {
             yAxes: [{
-              stacked: false,
+                display: false,
+                type: 'logarithmic',
                 ticks: {
 
                     min: 0,
@@ -139,64 +140,62 @@ if(searchChoice === 'Date'){
           $('#listCount').text('Records Found: '+dataLength);
 
 //get Date Range
+          var dateRange = [];
           var firstDate = moment(data[0].created).startOf('day').subtract(1,'day').format('L');
+
           var lastDate = moment(data[dataLength-1].created).startOf('day').add(1,'day').format('L');
 
-          var theDate = firstDate,
-              count = 0;
 
-            while (theDate !== lastDate) {
+          var theDate = firstDate;
 
-               graphData.labels.push(theDate);
-              theDate =  moment(theDate).add(1, 'day').format('L');
+
+          while ( theDate < lastDate ){
+            dateRange.push(theDate);
+            theDate = moment(theDate).add(1,'days').format('L');
+
+
             }
-//get Catergories
-            $.each(data,function(i,theData){
-              var reasonMatch = false;
-              var count = 0;
-              $.each(graphData.datasets,function(ii,aReason){
-                count = ii+1;
-                  if(theData.reasonForVisit === aReason.label){
-                    reasonMatch = true;
+          graphData.labels = dateRange;
 
-                    graphData.datasets[ii].date.push(moment(theData.created).startOf('day').format('L'));
-                  }
-              });
-            if (reasonMatch === false){
-                var lineColour = '';
-                var rfv = theData.reasonForVisit.replace(" ","_");
-              // $.each(colours,function(i, colour){
-              //   if(colour.area === rfv){
-              //     lineColour = colour.colour;
-              //   }
-              // });
-              graphData.datasets.push({
-                          pointRadius : 0,
-                           fill: false,
-                           borderColor: colourChoice[count],
-                           backgroundColor: colourChoice[count],
-                           label: theData.reasonForVisit,
-                           data: [],
-                           date: [moment(theData.created).startOf('day').format('L')]
-                         });
-            }
-            });
-// Count Catergories
-          $.each(graphData.datasets,function(i,aDataSet){
-            $.each(aDataSet.date,function(ii,aDate){
-              $.each(graphData.labels,function(iii,aLabel){
-                if(aLabel === aDate){
-                  if(graphData.datasets[i].data[iii] > 0){
-                    graphData.datasets[i].data[iii] = graphData.datasets[i].data[iii] +1;
+          $.each(data, function(i,item){
+          var dov = moment(item.created).format('L');
+          var rfv = item.reasonForVisit;
+          var found = false;
+              $.each(graphData.datasets,function(ri, theData){
+                if(theData.label === rfv){
+                  found = true;
+
+                  $.each(dateRange,function(di,date){
+                    if (dov === date){
+                      if((graphData.datasets[ri].data[di]/graphData.datasets[ri].data[di]) === 1){
+                          graphData.datasets[ri].data[di]++;
+                        } else {
+                          graphData.datasets[ri].data[di] = 1;
+                      }
                     } else {
-                    graphData.datasets[i].data[iii] = 1;
-                  }
-                } else {
-                  graphData.datasets[i].data[iii] = 0;
+                      if((graphData.datasets[ri].data[di]/graphData.datasets[ri].data[di]) === 1){
+                        } else {
+                          graphData.datasets[ri].data[di] = 0;
+                      }
+                    }
+
+                  });
                 }
               });
-            });
+              if(found === false){
+                graphData.datasets.push({
+                  label: rfv,
+                  data: [],
+                  borderColor: colourChoice[graphData.datasets.length],
+                  pointHoverBorderColor: colourChoice[graphData.datasets.length],
+                  pointHoverBackgroundColor: colourChoice[graphData.datasets.length],
+                  borderWidth: 2,
+                  pointRadius: 0,
+                  fill: false,
+                });
+              }
           });
+
 
           renderChart();
 

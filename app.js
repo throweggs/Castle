@@ -13,12 +13,13 @@ var moment = require('moment');
 var popper = require('popper.js');
 var tooltip = require('tooltip.js');
 var Chart = require('chart.js');
+// var easyAutocomplete = require('easy-autocomplete');
 
 
 
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('co-forms:27017/forms');
+var db = monk('localhost:27017/forms');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -90,6 +91,8 @@ app.use('/moment', express.static(__dirname + '/node_modules/moment')); // redir
 app.use('/daterangepicker', express.static(__dirname + '/node_modules/daterangepicker')); // redirect tempus JS
 app.use('/fontawesome', express.static(__dirname + '/node_modules/@fortawesome/fontawesome-free')); // redirect tempus JS
 app.use('/chart.js', express.static(__dirname + '/node_modules/chart.js'));
+app.use('/easy-autocomplete', express.static(__dirname + '/node_modules/easy-autocomplete'));
+
 
 
 // app.use('/request', express.static(__dirname + '/node_modules/request')); // redirect tempus JS

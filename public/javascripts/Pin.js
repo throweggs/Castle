@@ -83,7 +83,7 @@ $( document ).ready(function() {
                 if(typedPin === thePin){
                   $('#PinModal').modal("hide");
                 } else {
-                  console.log('no match');
+
                   $('#firstdigit').addClass('is-invalid');
                   $('#firstdigit').val('');
                   $('#seconddigit').addClass('is-invalid');

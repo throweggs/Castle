@@ -7,29 +7,35 @@ block content
           
   .container-fluid
     .row
-      .col-8
+      .col-6
         .chart-container
-          p.text-center(style="margin-block: 0px; margin-bottom: 0px;margin-top: 16px;") # of Participants
-          canvas#dateChart 
-          br 
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;") # of Participants
+          canvas#dateChart  
       .col-2
         .chart-container
-          p.text-center(style="margin-block: 0px; margin-bottom: 0px;margin-top: 16px;") Reason for Visit
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;") Reason for Visit
           canvas#rfvChart 
           br
+          br
         .chart-container
-          p.text-center(style="margin-block: 0px; margin-bottom: 0px;margin-top: 16px;") First Time
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;") First Time
           canvas#ftChart 
       .col-2
         .chart-container
-          p.text-center(style="margin-block: 0px; margin-bottom: 0px;margin-top: 16px;") # session run by
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;") # session run by
           canvas#fChart   
-
+          br
         .chart-container
-          p.text-center(style="margin-block: 0px; margin-bottom: 0px;margin-top: 16px;") Average &nbsp
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;") Average &nbsp
             i.fas.fa-user.fa-.5x
-            | /session per Facilitator
-          canvas#fanChart   
+            | / session / Facilitator
+          canvas#fanChart  
+      .col-2
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;") 
+            i.fas.fa-user.fa-.5x
+            | &nbsp / day of week
+          canvas#dayofWeekChart    
     .row
       .col-md
         div

@@ -119,7 +119,7 @@ router.post('/addTeam', function(req, res) {
 
 //GET ALL
 router.get('/getTeams', function(req, res) {
-    findMe = req.query;
+    findMe = req.body.FindMe;
     var db = req.db;
     var collection = db.get('teams');
     collection.find(findMe,{},function(e,docs){
@@ -134,10 +134,12 @@ router.get('/getATeam', function(req, res) {
     var collection = db.get('teams');
     collection.find(findMe,{},function(e,docs){
         res.json(docs);
-        // console.log('get');
-        // console.log( docs);
+        console.log('get');
+        console.log( docs);
     });
 });
+
+
 
 //UPDATE SINGLE
 router.put('/updateATeam', function(req, res){

@@ -1,5 +1,6 @@
 var startLocation = '',
     facilitatorName = '',
+    facilitatorNameList = {},
     participantsArray = [],
     createdTime = '',
     createdDate = '',
@@ -40,6 +41,55 @@ var startLocation = '',
 
 
       }
+
+      function findFacilitator(){
+         var theData = [];
+         optons = {};
+        $.getJSON( '/users/theSessionlist', function( data ) {
+
+          })
+            .done(function( data ) {
+
+              $.each(data,function(li,litem){
+              var found = false;
+                $.each(theData,function(fi,fitem){
+                  if(litem.Facilitator === fitem)
+                  found = true;
+                  });
+                  if(found === false){
+                    theData.push(litem.Facilitator);
+                  }
+              });
+
+    facilitatorNameList.data = theData;
+    options.data = theData;
+
+    return theData;
+      });
+
+    }
+
+    var options = {
+      data: findFacilitator(),
+      placeholder: "Facilitator Name",
+      list: {
+      showAnimation: {
+        type: "fade", //normal|slide|fade
+        time: 400,
+        callback: function() {}
+      },
+
+      hideAnimation: {
+        type: "slide", //normal|slide|fade
+        time: 400,
+        callback: function() {}
+      },
+      match: {
+    			enabled: true
+    		}
+    }
+    };
+
 
   //List all the stored Participants, and creates a new entry field
   function ShowParticipants(){
@@ -135,6 +185,15 @@ var startLocation = '',
       getSession();
       ShowParticipants();
 
+
+      $('input#facilitatorName').on('click keyup keydown blur change',function(){
+        if($('input#facilitatorName').val().length > 2){
+          $('label#sessDetails').show();
+          $('#startOptions').show();
+        $('input#facilitatorName').val(toTitleCase($('input#facilitatorName').val()));
+        }
+
+      });
       //adds the session information in to the options of the modal, so it makes sence when editing details.
       $('#openFacilitatorModal').on('click',function(){
 
@@ -224,7 +283,12 @@ var startLocation = '',
       $('button#addMe').click(function(){
         submitLine();
       });
+      $("#facilitatorName").on('click',function(){
+          console.log('click');
+      });
 
+
+    $("#facilitatorName").easyAutocomplete(options);
 
 
   });

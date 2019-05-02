@@ -1,0 +1,35 @@
+extends dashboard
+
+block content
+
+
+  
+          
+  .container-fluid
+    .row
+      .col-8
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;") # of Visitors
+          canvas#dateChart  
+      .col-2
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;") 
+            i.fas.fa-user.fa-.5x
+            | &nbsp / day of week
+          canvas#dayofWeekChart   
+
+    .row
+      
+      .col-md
+        div
+          table#visitorTable.table.table-hover.table-striped.text-nowrap(cellspacing="0" width="100%")
+              thead
+                th Date
+                th Time
+                th Supervior's Name
+                th Child's Name
+                th iPad
+          
+              tbody
+      
+  script(src='/javascripts/Dashboard/viewNCC.js')

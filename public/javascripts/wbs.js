@@ -1,5 +1,6 @@
 var startLocation = '',
     facilitatorName = '',
+    facilitatorNameList = {},
     participantsArray = [],
     createdTime = '',
     createdDate = '',
@@ -10,6 +11,8 @@ var startLocation = '',
     iPadIn = '',
     sessionType = 'bouldering';
 
+var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
+    searchChoice = 'Facilitator';
 
 // FIll in options for the Facilitator Modals
   var topRopingAreas = ' <a class="list-group-item  list-group-item-action" id="Auto Belays" data-toggle="list" href="#list-AutoBelays" role="tab" aria-controls="AutoBelays">Auto Belays</a>';
@@ -27,6 +30,8 @@ var startLocation = '',
       boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Outdoor Boulders" data-toggle="list" href="#list-OutdoorBoulders" role="tab" aria-controls="OutdoorBoulders">Outdoor Boulders</a>';
 
 
+
+
 //ADDS the session info to the page
   function showSession(){
       if(facilitatorName === ''){
@@ -42,6 +47,56 @@ var startLocation = '',
 
       }
 
+
+
+  function findFacilitator(){
+     var theData = [];
+     optons = {};
+    $.getJSON( '/users/wbslist', function( data ) {
+
+      })
+        .done(function( data ) {
+
+          $.each(data,function(li,litem){
+          var found = false;
+            $.each(theData,function(fi,fitem){
+              if(litem.Facilitator === fitem)
+              found = true;
+              });
+              if(found === false){
+                theData.push(litem.Facilitator);
+              }
+          });
+
+facilitatorNameList.data = theData;
+options.data = theData;
+console.log(options);
+return theData;
+  });
+
+}
+
+var options = {
+  data: findFacilitator(),
+  placeholder: "Facilitator Name",
+  list: {
+  showAnimation: {
+    type: "fade", //normal|slide|fade
+    time: 400,
+    callback: function() {}
+  },
+
+  hideAnimation: {
+    type: "slide", //normal|slide|fade
+    time: 400,
+    callback: function() {}
+  },
+  match: {
+			enabled: true
+		}
+}
+};
+
   //List all the stored Participants, and creates a new entry field
   function ShowParticipants(){
 
@@ -56,9 +111,10 @@ var startLocation = '',
 
       }
 
+
 $(document).on('keyup blur change', function(e){
   var data = e.target.id;
-  console.log(e.target.classList);
+
   if($('#'+data).hasClass('is-invalid')==true){
     if($('#'+data).val().length > 1){
       $('#'+data).removeClass('is-invalid');
@@ -127,6 +183,9 @@ $(document).on('keyup blur change', function(e){
 
 // ----------------------------------------- DOM READY ----------------------------------------- //
   $( document ).ready(function() {
+    console.log(options);
+    findFacilitator();
+    console.log(options);
       $("#dataProtection").modal('show');
       //Women's Social is only ever Bouldering so hiding to choice.
       $('.form-group#sessionType').hide();
@@ -134,6 +193,16 @@ $(document).on('keyup blur change', function(e){
       getSession();
       ShowParticipants();
 
+
+
+      $('input#facilitatorName').on('click keyup keydown blur change',function(){
+        if($('input#facilitatorName').val().length > 2){
+          $('label#sessDetails').show();
+          $('#startOptions').show();
+        $('input#facilitatorName').val(toTitleCase($('input#facilitatorName').val()));
+        }
+
+      });
 
 
       //adds the session information in to the options of the modal, so it makes sence when editing details.
@@ -224,21 +293,29 @@ $(document).on('keyup blur change', function(e){
       $('button#addMe').click(function(){
         submitLine();
       });
+      $("#facilitatorName").on('click',function(){
+          console.log('click');
+      });
+
+
+    $("#facilitatorName").easyAutocomplete(options);
 
   });
+
 
 
   //----------- DATABASE CALLS ------------//
 
   //Post request to create the session
   function addSession() {
-    createdDate = moment().format('MMMM Do YYYY');
-    createdTime = moment().format('HH:MM:SS');
+    createdDate = moment().format('LL');
+    createdTime = moment().format('LTS');
 
       var newSession = {
-        'Created_Date': moment().format('MMMM Do YYYY'),
+        'Created_Date': moment().format('LL'),
+        'Created_Time': moment().format('LTS'),
         'created': moment().format(),
-          'Facilitator': toTitleCase(facilitatorName),
+          'Facilitator': facilitatorName.trim(),
           'Session_Type': sessionType,
           'Start_Location': startLocation,
           'Participants': participantsArray,
@@ -286,20 +363,17 @@ $(document).on('keyup blur change', function(e){
             var theResults = JSON.stringify(results);
               if (theResults === '[]') {
                     foundSession = false;
-                      console.log('false');
-                      console.log(results);
+
             } else {
-                    facilitatorName = results[0].Facilitator;
+                    facilitatorName = results[0].Facilitator.trim();
                     createdTime = results[0].Created_Time;
-                    console.log(createdTime);
+
                     theID = results[0]._id;
                     sessionType =  results[0].Session_Type;
                     startLocation = results[0].Start_Location;
                     foundSession = true;
                     participantsArray = results[0].Participants;
                     iPadIn = results[0].iPadIn;
-                      console.log('true');
-                    console.log(results);
 
                     showSession();
                     ShowParticipants();
@@ -323,11 +397,7 @@ $(document).on('keyup blur change', function(e){
           // Check for successful (blank) response
           if (results === 'success') {
             resetPage();
-              // Clear the form inputs
-              // $('#addSession input').val('');
 
-              // // Update the table
-              // populateTable();
 
           }
           else {

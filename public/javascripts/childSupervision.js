@@ -84,14 +84,14 @@ function addSupervisor(event) {
 
     // If it is, compile all user info into one object
     var newSupervisor = {
-        'childName': $('#addSupervisor input#childName').val(),
-        'designatedAdult': $('#addSupervisor input#designatedAdult').val(),
-        'disclaimer': $('#addSupervisor input#disclaimer').val(),
-        'iPad' : getKioskId(),
-        'createdDate': moment().format()
+        childName: $('#addSupervisor input#childName').val(),
+        designatedAdult: $('#addSupervisor input#designatedAdult').val(),
+        disclaimer: $('#addSupervisor input#disclaimer').val(),
+        iPad : getKioskId(),
+        created: moment().format()
 
     };
-    console.log(newSupervisor);
+
 
 var myJSON = JSON.stringify(newSupervisor);
   console.log(myJSON);

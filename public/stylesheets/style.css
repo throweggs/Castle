@@ -5,6 +5,10 @@
     width: 100%;
 } */
 
+.easy-autocomplete-container {
+  color: black;
+}
+
  i {
     text-align: center;
 }
@@ -43,6 +47,10 @@ html {
 /* .nav-link{
   color: #fff;
 } */
+
+.fa-edit {
+  cursor: pointer;
+}
 
 .PT.card {
   cursor: pointer;
