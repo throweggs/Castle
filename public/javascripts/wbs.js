@@ -165,6 +165,10 @@ $(document).on('keyup blur change', function(e){
           Details : { $push: { Participants : {
           First_Name : toTitleCase($('#NewParticipantFirstName').val()),
           Last_Name :  toTitleCase($('#NewParticipantLastName').val()),
+          Name: [
+            {First : toTitleCase($('#NewParticipantFirstName').val())},
+            {Last :  toTitleCase($('#NewParticipantLastName').val())},
+          ],
           Reason: $('#NewReason option:selected').val(),
           Arrival_Time : moment().format(),
           First_Time : $('#NewFirstTime option:selected').val(),
