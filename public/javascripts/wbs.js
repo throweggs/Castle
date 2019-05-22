@@ -416,7 +416,7 @@ $(document).on('keyup blur change', function(e){
         var updates = {
             FindDate: {Created_Date: moment().format('LL')},
             Details : { $set:  {
-            Facilitator: toTitleCase(facilitatorName),
+            Facilitator: facilitatorName,
             Session_Type: sessionType,
             Start_Location: startLocation,
             iPadIn : iPadIn }},
