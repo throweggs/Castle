@@ -165,6 +165,10 @@ $(document).on('keyup blur change', function(e){
           Details : { $push: { Participants : {
           First_Name : toTitleCase($('#NewParticipantFirstName').val()),
           Last_Name :  toTitleCase($('#NewParticipantLastName').val()),
+          Name: [
+            {Fist:  toTitleCase($('#NewParticipantFirstName').val())},
+            {Last: toTitleCase($('#NewParticipantLastName').val())},
+          ],
           Reason: $('#NewReason option:selected').val(),
           Arrival_Time : moment().format(),
           First_Time : $('#NewFirstTime option:selected').val(),
@@ -183,9 +187,9 @@ $(document).on('keyup blur change', function(e){
 
 // ----------------------------------------- DOM READY ----------------------------------------- //
   $( document ).ready(function() {
-    console.log(options);
+
     findFacilitator();
-    console.log(options);
+
       $("#dataProtection").modal('show');
       //Women's Social is only ever Bouldering so hiding to choice.
       $('.form-group#sessionType').hide();
@@ -357,7 +361,7 @@ $(document).on('keyup blur change', function(e){
   //Get request for session
   function getSession(){
     // var DateOnly = moment().format('MMMM Do YYYY');
-    $.getJSON( '/wbs/getSession', {Created_Date: moment().format('MMMM Do YYYY')}, function(results, res) {
+    $.getJSON( '/wbs/getSession', {Created_Date: moment().format('LL')}, function(results, res) {
       })
       .done(function(results, res) {
             var theResults = JSON.stringify(results);
@@ -385,7 +389,7 @@ $(document).on('keyup blur change', function(e){
 
     //Put request to update to Participants, on  pre made sesion
   function updateParticipants(update){
-      console.log('UPDATE: ' + moment().format('MMMM Do YYYY'));
+      console.log('UPDATE: ' + moment().format('LL'));
 
 
       $.ajax({
@@ -412,11 +416,11 @@ $(document).on('keyup blur change', function(e){
 
     //Put request to update to Participants, on  pre made sesion
   function updateSession(){
-        console.log('UPDATE: ' + moment().format('MMMM Do YYYY'));
+        console.log('UPDATE: ' + moment().format('LL'));
         var updates = {
-            FindDate: {Created_Date: moment().format('MMMM Do YYYY')},
+            FindDate: {Created_Date: moment().format('LL')},
             Details : { $set:  {
-            Facilitator: facilitatorName,
+            Facilitator: toTitleCase(facilitatorName),
             Session_Type: sessionType,
             Start_Location: startLocation,
             iPadIn : iPadIn }},

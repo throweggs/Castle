@@ -132,19 +132,24 @@ function addVisitor(event) {
 
     // If it is, compile all user info into one object
     var newVisitor = {
-        'fullName': toTitleCase($('#addVisitor input#firstName').val() + ' ' + $('#addVisitor input#lastName').val()),
-        'firstName': toTitleCase($('#addVisitor input#firstName').val()),
-        'lastName': toTitleCase($('#addVisitor input#lastName').val()),
-        'reasonForVisit': $('#addVisitor select#reasonForVisit').val(),
-        'otherReason': $('#addVisitor input#otherReason').val(),
-        'ChildNames' : [
-            {'name' : toTitleCase($('#addVisitor input#Kid1').val())},
-            {'name' : toTitleCase($('#addVisitor input#Kid2').val())},
+        fullName: toTitleCase($('#addVisitor input#firstName').val() + ' ' + $('#addVisitor input#lastName').val()),
+        firstName: toTitleCase($('#addVisitor input#firstName').val()),
+        lastName: toTitleCase($('#addVisitor input#lastName').val()),
+        Name: [
+          {First: toTitleCase($('#addVisitor input#firstName').val())},
+          {Last:  toTitleCase($('#addVisitor input#lastName').val())},
+        ],
+
+        reasonForVisit: $('#addVisitor select#reasonForVisit').val(),
+        otherReason: $('#addVisitor input#otherReason').val(),
+        ChildNames : [
+            {name : toTitleCase($('#addVisitor input#Kid1').val())},
+            {name : toTitleCase($('#addVisitor input#Kid2').val())},
           ],
-        'PhotographyWaverAgreement' : photographyWaverAgreement,
-        'disclaimer': $('#addVisitor input#disclaimer').val(),
-        'created': moment().format(),
-        'iPad' : getKioskId(),
+        PhotographyWaverAgreement : photographyWaverAgreement,
+        disclaimer: $('#addVisitor input#disclaimer').val(),
+        created: moment().format(),
+        iPad : getKioskId(),
 
     };
     console.log(newVisitor);

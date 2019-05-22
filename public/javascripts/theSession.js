@@ -10,6 +10,8 @@ var startLocation = '',
     iPadIn = '',
     sessionType = 'bouldering';
 
+var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
+    searchChoice = 'Facilitator';
 
 // FIll in options for the Facilitator Modals
   var topRopingAreas = ' <a class="list-group-item list-group-item-action" id="Auto Belays" data-toggle="list" href="#list-AutoBelays" role="tab" aria-controls="AutoBelays">Auto Belays</a>';
@@ -161,6 +163,10 @@ var startLocation = '',
                     Details : { $push: { Participants : {
                     First_Name : toTitleCase($('#NewParticipantFirstName').val()),
                     Last_Name :  toTitleCase($('#NewParticipantLastName').val()),
+                    Name: [
+                      {Fist:  toTitleCase($('#NewParticipantFirstName').val())},
+                      {Last: toTitleCase($('#NewParticipantLastName').val())},
+                    ],
                     Reason: $('#NewReason option:selected').val(),
                     Arrival_Time : moment().format(),
                     First_Time : $('#NewFirstTime option:selected').val(),
@@ -179,6 +185,7 @@ var startLocation = '',
 
 // ----------------------------------------- DOM READY ----------------------------------------- //
   $( document ).ready(function() {
+      findFacilitator();
       $("#dataProtection").modal('show');
 
       //Database call to get details of session if already entered.
@@ -298,11 +305,12 @@ var startLocation = '',
 
   //Post request to create the session
   function addSession() {
-      createdDate = moment().format('MMMM Do YYYY');
-      createdTime = moment().format('HH:MM:SS');
+      createdDate = moment().format('LL');
+      createdTime = moment().format('LTS');
 
       var newSession = {
-          'Created_Date': moment().format('MMMM Do YYYY'),
+          'Created_Date': moment().format('LL'),
+          'Created_Time': moment().format('LTS'),
           'created': moment().format(),
           'Facilitator': toTitleCase(facilitatorName),
           'Session_Type': sessionType,
@@ -346,7 +354,7 @@ var startLocation = '',
   //Get request for session
   function getSession(){
     // var DateOnly = moment().format('MMMM Do YYYY');
-    $.getJSON( '/theSession/getSession', {Created_Date: moment().format('MMMM Do YYYY')}, function(results, res) {
+    $.getJSON( '/theSession/getSession', {Created_Date: moment().format('LL')}, function(results, res) {
       })
       .done(function(results, res) {
             var theResults = JSON.stringify(results);
@@ -371,9 +379,8 @@ var startLocation = '',
 
     //Put request to update to Participants, on  pre made sesion
   function updateParticipants(update){
-    console.log('hit');
-      console.log('UPDATE: ' + moment().format('MMMM Do YYYY'));
-    console.log(update);
+
+      console.log('UPDATE: ' + moment().format('LL'));
 
       $.ajax({
         type: "put",
@@ -403,11 +410,11 @@ var startLocation = '',
 
   //Put request to update to Participants, on  pre made sesion
   function updateSession(){
-      console.log('UPDATE: ' + moment().format('MMMM Do YYYY'));
+      console.log('UPDATE: ' + moment().format('LL'));
       var updates = {
-          FindDate: {Created_Date: moment().format('MMMM Do YYYY')},
+          FindDate: {Created_Date: moment().format('LL')},
           Details : { $set:  {
-          Facilitator: facilitatorName,
+          Facilitator: toTitleCase(facilitatorName),
           Session_Type: sessionType,
           Start_Location: startLocation,
           iPadIn : iPadIn }},
