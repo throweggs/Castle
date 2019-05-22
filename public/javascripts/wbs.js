@@ -161,7 +161,7 @@ $(document).on('keyup blur change', function(e){
         }
         if(theCount === 4){
         var update = {
-         FindDate: {Created_Date: moment().format('MMMM Do YYYY')},
+         FindDate: {Created_Date: moment().format('LL')},
           Details : { $push: { Participants : {
           First_Name : toTitleCase($('#NewParticipantFirstName').val()),
           Last_Name :  toTitleCase($('#NewParticipantLastName').val()),
