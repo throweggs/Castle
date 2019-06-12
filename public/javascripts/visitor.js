@@ -12,6 +12,25 @@ var Count = 0,
     //==========================================
     // Contact Number removed for GDPR REASONS
     //==========================================
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          document.getElementById("disclaimer").addEventListener('click', function(event) {
+            if (form.checkValidity() === false) {
+              $("#disclaimer").removeClass('active');
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
+
 
 
 $(function(){ // this will be called when the DOM is ready
@@ -36,14 +55,14 @@ $(function(){ // this will be called when the DOM is ready
         $('#Kid2').show();
         // $('#Kids').find('input').attr('required', true);
         $('#Kid1').prop('required', true);
-        $('#Kid2').prop('required', false);
+
       } else {
         $('#Kids').hide();
         $('#Kid1').hide();
         $('#Kid2').hide();
         // $('#Kids').find('input').attr('required', false);
         $('#Kid1').prop('required', false);
-        $('#Kid2').prop('required', false);
+
       }
    });
 
@@ -54,13 +73,13 @@ $(function(){ // this will be called when the DOM is ready
         $('#Kid1').hide();
         $('#Kid2').hide();
         $('input#Kid1').prop('required', false);
-        $('input#Kid2').prop('required', false);
+
       } else {
         $('#Kids').show();
         $('#Kid1').show();
         $('#Kid2').show();
         $('input#Kid1').prop('required', true);
-        $('input#Kid2').prop('required', false);
+
       }
       });
 
