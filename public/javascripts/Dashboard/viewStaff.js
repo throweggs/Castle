@@ -120,7 +120,7 @@ $.each(teamInfo, function(i, team){
 
     if(payVal === 'Hourly'){
         payRate = $('#rates_'+team._id).val();
-          
+
           if(payRate!==''){
             payRate = payRate.split('£');
             payRate = payRate[1];
@@ -150,7 +150,8 @@ $.each(teamInfo, function(i, team){
           First: $('input#firstNameInput').val(),
           Last : $('input#lastNameInput').val()
             },
-      Pin : $('input#pinInput').val(),
+      Pin: $('input#pinInput').val(),
+      Present: false, 
       Super_Admin : $('input[id=superAdmin]').prop('checked'),
       Active_Staff_Member : $('input[id=activeStaff]').prop('checked'),
       Teams : selectedTeam,

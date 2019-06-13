@@ -35,31 +35,40 @@ var theStaff = [],
     colour = '';
     // $('#ListStaff').html('<img src="/loading.gif" alt="loading" height="42" width="42">');
 
-      getTeamName = teamsNRates[i].Team_Name;
+      getTeamName = teamsNRates[i].FindMe;
+      console.log(getTeamName);
 
-          $.getJSON( '/staff/findStaffInTeam', {Teams:{$elemMatch: {team: getTeamName}}}, function(results, res) {
+          $.getJSON( '/staff/findStaffInTeam', {
+                                                Teams: {$elemMatch: {
+                                                                    team: getTeamName,
+                                                                     pay: {$ne: "Not In Team" }
+                                                                   }
+                                                        }
+                                                }, function(results, res) {
             })
             .done(function(results, res) {
               theStaff = results;
+              console.log(theStaff);
 
               $.each(theStaff, function(i, staff){
+
                 var theTeams = staff.Teams;
 
-
+                console.log(staff);
                     if (staff.Present === true){
-                      presence = ' <i class="h4 fas fa-sign-in-alt"></i>';
-                      colour = 'list-group-item-success';
+                      presence = ' <i class="fas fa-sign-in-alt"></i>';
+                      colour = ' list-group-item-success';
                   } else if (staff.Present === false){
-                      presence = ' <i class="h4 fas fa-sign-out-alt"></i>';
-                      colour = 'list-group-item-primary';
+                      presence = ' <i class="fas fa-sign-out-alt"></i>';
+                      colour = ' list-group-item-danger';
                     }
 
 
                 var staffID = staff._id;
 
-                var staffName = staff.First_Name + ' ' +staff.Last_Name;
+                var staffName = staff.Full_Name;
 
-                staffList += '<a class="staff list-group-item '+colour+' list-group-item-action" id="'+staffID+'" data-toggle="list" href="#" role="tab" aria-controls="'+staff+'">'+presence+'  '+staffName+'</a>';
+                staffList += '<a class="staff list-group-item list-group-item-orange-action '+colour+'" id="'+staffID+'" data-toggle="list" href="#" role="tab" aria-controls="'+staff+'">'+presence+'&nbsp  '+staffName+'</a>';
 
               });
               staffList += '</div>';
@@ -78,8 +87,8 @@ var newClockIn = '';
 
 if(direction === 'ClockIn'){
    newClockIn = {
-    'Clocked_In' : moment().format('HH:mm:ss'),
-    'Date' : moment().format('MMMM Do YYYY'),
+    'Clocked_In' : moment().format('LT'),
+    'Date' : moment().format('L'),
     'Staff_Id' : staffID,
     'Team_Name' : teamID,
 
@@ -120,10 +129,10 @@ if(direction === 'ClockIn'){
     $('#ListStaff').html('<img src="/loading.gif" alt="loading" height="42" width="42">');
     $('#ListTeam').html('<img src="/loading.gif" alt="loading" height="42" width="42">');
 
-          console.log('UPDATE: ' + moment().format('MMMM Do YYYY'));
+          console.log('UPDATE: ' + moment().format('L'));
 
                 var newClockOut  = [{Staff_Id : staffID},
-                                    {Clocked_Out: moment().format('HH:mm:ss')}];
+                                    {Clocked_Out: moment().format('LT')}];
 
 
     console.log(newClockOut);
@@ -179,7 +188,7 @@ function getAStaff(staffID){
 
 //Put request to update a Staff
 function updateAStaff(theID,theteam){
-      console.log('UPDATE: ' + moment().format('MMMM Do YYYY'));
+      console.log('UPDATE: ' + moment().format('L'));
 
 
       $.getJSON( '/staff/getAStaff', {_id: theID }, function(results, res) {
@@ -188,7 +197,7 @@ function updateAStaff(theID,theteam){
               var theResults = JSON.stringify(results);
 
               results[0].FindMe = {_id: theID};
-              results[0].ClockIns = {'team': theteam, 'time' : moment().format('HH mm ss')};
+              results[0].ClockIns = {'team': theteam, 'time' : moment().format('LT')};
 
                 $.ajax({
                   type: "put",
@@ -212,6 +221,8 @@ function getTeamsAndRates() {
     })
       .done(function(results, res) {
         teamsNRates = results;
+        console.log('teamsNRates');
+        console.log(teamsNRates);
         getTeams();
 
       });
@@ -285,10 +296,6 @@ document.getElementById("ClockIn").disabled = false;
 
 
 $( document ).ready(function() {
-
-
-
-
 
     $(":input[type='password']").keyup(function(event){
         if ($(this).next('[type="password"]').length > 0){
