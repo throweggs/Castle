@@ -197,6 +197,7 @@ var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
         if($('input#facilitatorName').val().length > 2){
           $('label#sessDetails').show();
           $('#startOptions').show();
+
         $('input#facilitatorName').val(toTitleCase($('input#facilitatorName').val()));
         }
 
@@ -210,6 +211,7 @@ var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
         if($('input#facilitatorName').val().length > 2){
           $('label#sessDetails').show();
           $('#sessChoice').show();
+          $('label#startOptions').show();
           $('#startOptions').show();
         }
 
@@ -237,6 +239,8 @@ var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
         } else if($('input#facilitatorName').val().length <= 2){
             $('label#sessDetails').hide();
             $('#sessChoice').hide();
+            $('label#startOptions').hide();
+            $('#startOptions').hide();
           }
       });
 
