@@ -234,7 +234,7 @@ var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
         if($('input#facilitatorName').val().length > 2){
           $('label#sessDetails').show();
           $('#sessChoice').show();
-        } else if($('input#facilitatorName').val()<2){
+        } else if($('input#facilitatorName').val().length <= 2){
             $('label#sessDetails').hide();
             $('#sessChoice').hide();
           }
