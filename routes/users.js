@@ -10,11 +10,24 @@ router.get('/visitorlist', function(req, res) {
     console.log('search');
     var db = req.db;
     var collection = db.get('Visitors');
-    collection.find(findMe,{},function(e,docs){
+    collection.find(findMe,{sort: {created: -1}},function(e,docs){
         res.json(docs);
         console.log(docs);
     });
 });
+
+router.get('/visitorlist5', function(req, res) {
+    var findMe = req.query;
+    console.log(findMe);
+    console.log('search');
+    var db = req.db;
+    var collection = db.get('Visitors');
+    collection.find(findMe,{sort: {created: -1}, limit: 5},function(e,docs){
+        res.json(docs);
+        console.log(docs);
+    });
+});
+
 
 router.get('/wbslist', function(req, res) {
   var findMe = req.query;
@@ -22,7 +35,7 @@ router.get('/wbslist', function(req, res) {
     var db = req.db;
     var collection = db.get('wbs');
 
-    collection.find(findMe,{sort: {created: 1}},function(e,docs){
+    collection.find(findMe,{sort: {created: -1}},{$limit: 5},function(e,docs){
         res.json(docs);
     });
 });

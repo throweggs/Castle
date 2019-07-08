@@ -58,7 +58,7 @@ function insertStaff(member) {
           var staffRow = table.insertRow(-1);
                 staffRow.id = staffID;
           var teamsCellToggle = staffRow.insertCell(-1);
-                teamsCellToggle.className = 'toggle-row';
+                teamsCellToggle.className = 'toggle-row UpdateStaff';
                 teamsCellToggle.id = staffID+'_toggle';
                 teamsCellToggle.innerHTML = '<a  class="UpdateStaff" href="#" id="'+staffID+'"><i class="UpdateStaff fas fa-edit fa-1x"id="'+staffID+'"></i></a>';
           var activeCell = staffRow.insertCell(-1);
@@ -111,7 +111,7 @@ function insertStaff(member) {
 
 //Post request to add Staff Member
 function addStaff() {
-  console.log('addStaff');
+
   var selectedTeam = [];
   var payVal = '';
   var payRate = '';
@@ -142,16 +142,18 @@ $.each(teamInfo, function(i, team){
 
 
     var staffMember = {
-      Created: moment(),
-      Created_Date: moment().format('L'),
-      Created_Time : moment().format('LT'),
+      Created: {
+         Created: moment(),
+         Created_Date: moment().format('L'),
+         Created_Time : moment().format('LT'),
+                },
       Full_Name: $('input#firstNameInput').val() + ' ' + $('input#lastNameInput').val(),
       Name: {
           First: $('input#firstNameInput').val(),
           Last : $('input#lastNameInput').val()
             },
       Pin: $('input#pinInput').val(),
-      Present: false, 
+      Present: false,
       Super_Admin : $('input[id=superAdmin]').prop('checked'),
       Active_Staff_Member : $('input[id=activeStaff]').prop('checked'),
       Teams : selectedTeam,
@@ -170,6 +172,7 @@ $.each(teamInfo, function(i, team){
 
 
 if(aNewStaff === true){
+  console.log('new staff');
     $.ajax({
       type: "Post",
       url: "staff/addStaff",
@@ -180,11 +183,16 @@ if(aNewStaff === true){
 
         // Check for successful (blank) response
         if (results === 'success') {
+            console.log('success');
           window.location.reload();
+            resetPage();
+          console.log('reset');
         }
         else {
             // If something goes wrong, alert the error message that our service returned
             alert('Error: ' + response.msg);
+            window.location.reload();
+              resetPage();
         }
 
     });
@@ -204,15 +212,21 @@ if(aNewStaff === true){
         // Check for successful (blank) response
         if (results === 'success') {
           window.location.reload();
+            resetPage();
         }
         else {
             // If something goes wrong, alert the error message that our service returned
             alert('Error: ' + response.msg);
+
         }
 
     });
 
   }
+
+staffID = '';
+window.location.reload();
+  resetPage();
 }
 
 
@@ -235,7 +249,13 @@ function getAStaff(staffID){
 
   }
 
+function clearModal(){
 
+    $(this).removeData('bs.modal');
+    console.log(this);
+    console.log('cleared');
+    resetPage();
+};
 
 //Get Staff Members Files
 function getStaffMembers() {
@@ -254,7 +274,11 @@ theData = data;
 }
 
 
-
+$('body').on('hidden.bs.modal', '.modal', function () {
+        $(this).removeData('bs.modal');
+        console.log('cleared');
+        resetPage();
+      });
 
 
 
