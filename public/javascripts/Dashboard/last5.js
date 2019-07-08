@@ -24,6 +24,9 @@ var colourChoice = [
 
 
 $(document).ready(function() {
+      setTimeout(function() {
+      location.reload();
+    }, 30000);
     populateVisitorTable('Visitors');
 
   $('#visitorLink').addClass('active');
