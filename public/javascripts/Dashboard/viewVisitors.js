@@ -182,7 +182,7 @@ if(searchChoice === 'Date'){
           var lastDate = moment(data[dataLength-1].created).startOf('day').add(1,'day').format('L');
 
           var theDate = firstDate;
-          $('#theDates').text(moment(firstDate).startOf('day').add(1,'day').format('L') + ' - ' + lastDate)
+          $('#theDates').text(moment(data[0].created).startOf('day').format('L') + ' - ' + moment(data[dataLength-1].created).startOf('day').format('L'))
 
           while ( theDate < lastDate ){
 
