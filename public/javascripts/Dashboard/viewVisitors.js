@@ -1,7 +1,11 @@
 var allowed = false;
-var theSearch = {fullName: { $regex: '', $options: 'i' }},
-    searchChoice = 'Full Name';
-var options = [ 'Date', 'Full Name', 'Child Name', 'Reason', 'iPad'];
+var searchStart = moment().startOf('month').format('l'),
+    searchEnd = moment().endOf('month').format('l');
+console.log( searchStart);
+console.log( searchEnd);
+var theSearch =  {created: { $gt: moment(searchStart).format(), $lt: moment(searchEnd).add('24','hours').format() }};
+    searchChoice = 'default';
+var options = ['', 'Date', 'Full Name', 'Child Name', 'Reason', 'iPad'];
 var graphData = {labels : [], datasets : []};
 
 var colours = [
@@ -26,8 +30,12 @@ function renderChart() {
         type: 'line',
         data: graphData,
         options: {
-          display: false,
-          aspectRatio : 6,
+          display: true,
+        responsive: true,
+          legend: {
+           display: true
+         },
+          aspectRatio : 2,
           scales: {
             yAxes: [{
                 display: false,
@@ -50,6 +58,30 @@ function renderChart() {
         }
     }
     });
+}
+
+function renderDoughnutChart(labels, theData) {
+    var ctx = document.getElementById('rfvChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: labels,
+            backgroundColor: colourChoice,
+            data: theData,
+            borderWidth: 1
+        }]
+    },
+    options: {
+      responsive: true,
+      legend: {
+       display: false
+     },
+      aspectRatio : 3,
+
+}
+});
 }
 
 function resetChart() {
@@ -141,15 +173,20 @@ if(searchChoice === 'Date'){
 
 //get Date Range
           var dateRange = [];
+          var rfvinfo = {
+            labels: [],
+            visitors: [],
+          };
           var firstDate = moment(data[0].created).startOf('day').subtract(1,'day').format('L');
-
+          ;
           var lastDate = moment(data[dataLength-1].created).startOf('day').add(1,'day').format('L');
 
-
           var theDate = firstDate;
-
+          $('#theDates').text(firstDate + ' - ' + lastDate)
 
           while ( theDate < lastDate ){
+
+
             dateRange.push(theDate);
             theDate = moment(theDate).add(1,'days').format('L');
 
@@ -162,17 +199,24 @@ if(searchChoice === 'Date'){
           var rfv = item.reasonForVisit;
           var found = false;
               $.each(graphData.datasets,function(ri, theData){
+
                 if(theData.label === rfv){
                   found = true;
+                  rfvinfo.visitors[ri]++;
 
                   $.each(dateRange,function(di,date){
+
                     if (dov === date){
+
+
+                    graphData.datasets[ri].count++;
                       if((graphData.datasets[ri].data[di]/graphData.datasets[ri].data[di]) === 1){
                           graphData.datasets[ri].data[di]++;
                         } else {
                           graphData.datasets[ri].data[di] = 1;
                       }
                     } else {
+
                       if((graphData.datasets[ri].data[di]/graphData.datasets[ri].data[di]) === 1){
                         } else {
                           graphData.datasets[ri].data[di] = 0;
@@ -183,8 +227,12 @@ if(searchChoice === 'Date'){
                 }
               });
               if(found === false){
+                rfvinfo.labels.push(rfv);
+                rfvinfo.visitors.push(1);
+
                 graphData.datasets.push({
                   label: rfv,
+                  count: 0,
                   data: [],
                   borderColor: colourChoice[graphData.datasets.length],
                   pointHoverBorderColor: colourChoice[graphData.datasets.length],
@@ -198,6 +246,18 @@ if(searchChoice === 'Date'){
 
 
           renderChart();
+          renderDoughnutChart( rfvinfo.labels, rfvinfo.visitors)
+
+          var rfvinfoContent = '';
+          $.each(rfvinfo.labels, function(i, item){
+
+            rfvinfoContent += '<tr>';
+            rfvinfoContent += '<td>' + rfvinfo.labels[i] + '</td>';
+            rfvinfoContent += '<td>'+ rfvinfo.visitors[i] +'</td>';
+            rfvinfoContent += '</tr>';
+          });
+
+          $('table#rfvTable tbody').html(rfvinfoContent);
 
         $('#ListCount').text(visitorListData.length);
         var disclaimerTick,
@@ -257,7 +317,7 @@ if(searchChoice === 'Date'){
 
 
               tableContent += '<tr>';
-              tableContent += '<td>' + moment(this.created).format('L') + '</td>';
+              tableContent += '<td>' + moment(this.created).format('DD/MM/YYYY') + '</td>';
               tableContent += '<td>' + moment(this.created).format('LT') + '</td>';
               tableContent += '<td>' + this.fullName + '</td>';
               tableContent += '<td '+ reasonFVPointer +' data-toggle="tooltip" title="' + reasonFV + '" rel="' + this._id + '">' + this.reasonForVisit + '<p hidden>'+ ': ' + reasonFV +'</p></td>';
@@ -267,7 +327,7 @@ if(searchChoice === 'Date'){
               tableContent += '</tr>';
 
               exportTable += '<tr>';
-              exportTable += '<td>'+ moment(this.created).format('L')+'</td>';
+              exportTable += '<td>'+ moment(this.created).format('DD/MM/YYYY')+'</td>';
               exportTable += '<td>' + moment(this.created).format('LT') + '</td>';
               exportTable += '<td>' + this.firstName + '</td>';
               exportTable += '<td>' + this.lastName + '</td>';

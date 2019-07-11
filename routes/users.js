@@ -10,7 +10,7 @@ router.get('/visitorlist', function(req, res) {
     console.log('search');
     var db = req.db;
     var collection = db.get('Visitors');
-    collection.find(findMe,{sort: {created: -1}},function(e,docs){
+    collection.find(findMe,{sort: {created: 1}},function(e,docs){
         res.json(docs);
         console.log(docs);
     });

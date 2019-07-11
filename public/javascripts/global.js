@@ -1,3 +1,5 @@
+// moment.locale('en-GB'); ?
+
 var checksOut = false;
 function toTitleCase(str) {
     return str.replace(/(?:^|\s)\w/g, function(match) {

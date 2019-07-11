@@ -3,8 +3,21 @@ extends dashboard
 block content
 
 	.container-fluid
-		.chart-container
-			canvas#myChart
+		.row
+			.col-8
+				.chart-container
+					canvas#myChart
+				.chart-container
+					canvas#rfvChart 
+			.col-4
+				h4#theDates.text-center
+				.chart-container
+					table#rfvTable.table.table-stripped.text-nowrap(cellspacing="0" width="100%")
+						thead
+							th.th-sm Reason
+							th.th-sm Number
+						tbody
+			
 
 
 		.row
