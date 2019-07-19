@@ -2,7 +2,7 @@
 // table = '',
 
 var teamsNRates = [],
-    aNewStaff = false,
+    aNewStaff = true,
     aStaff = [],
     theData = [],
     teamInfo = [],
@@ -59,7 +59,7 @@ function insertStaff(member) {
                 staffRow.id = staffID;
           var teamsCellToggle = staffRow.insertCell(-1);
                 teamsCellToggle.className = 'toggle-row UpdateStaff';
-                teamsCellToggle.id = staffID+'_toggle';
+                teamsCellToggle.id = staffID;
                 teamsCellToggle.innerHTML = '<a  class="UpdateStaff" href="#" id="'+staffID+'"><i class="UpdateStaff fas fa-edit fa-1x"id="'+staffID+'"></i></a>';
           var activeCell = staffRow.insertCell(-1);
             if(member.Active_Staff_Member === true){
@@ -101,7 +101,7 @@ function insertStaff(member) {
 
 
 
-
+staffID = '';
 
 }
 
@@ -199,7 +199,8 @@ if(aNewStaff === true){
 
 } else {
 
-  staffMember.FindMe = staffID;
+  staffMember.FindMe = $('h1#modalStaffID').val();
+  console.log(staffMember.FindMe);
     $.ajax({
         type: 'put',
         data: JSON.stringify(staffMember),
@@ -211,7 +212,8 @@ if(aNewStaff === true){
 
         // Check for successful (blank) response
         if (results === 'success') {
-          window.location.reload();
+          staffID = '';
+          window.location.reload(true);
             resetPage();
         }
         else {
@@ -278,6 +280,7 @@ $('body').on('hidden.bs.modal', '.modal', function () {
         $(this).removeData('bs.modal');
         console.log('cleared');
         resetPage();
+        window.location.reload();
       });
 
 
@@ -326,6 +329,7 @@ $(document).on('click',function() {
       if ($(event.target).hasClass('UpdateStaff') === true){
         aNewStaff = false;
         staffID = event.target.id;
+        console.log(staffID);
 
         var staffMemeber = [];
         var theTeams = '';
@@ -341,6 +345,8 @@ $(document).on('click',function() {
 
                 staffMember = getAStaffresults;
                 staffsTeams = staffMember[0].Teams;
+                $('#modalStaffID').val(staffID);
+                $('#addStaffModalLongTitle').text('Update Staff');
                 $('#firstNameInput').val(staffMember[0].Name.First);
                 $('#lastNameInput').val(staffMember[0].Name.Last);
                 $('#pinInput').val(staffMember[0].Pin);
@@ -349,7 +355,6 @@ $(document).on('click',function() {
 
                 $.each(staffMember[0].Access_Rights, function(i,area){
                   var accessName = area.Name;
-                  console.log(accessName);
                   document.getElementById(accessName).checked = area.Permission;
                 });
 

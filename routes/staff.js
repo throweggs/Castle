@@ -94,8 +94,8 @@ router.put('/updateAStaff', function(req, res){
   var collection = db.get('staff');
   collection.update(findMe,req.body,function(e,docs){
       res.json(docs);
-      // console.log('udateAStaff');
-      // console.log( docs);
+      console.log('udateAStaff');
+      console.log( docs);
   });
 });
 

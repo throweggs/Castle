@@ -19,7 +19,7 @@ var Chart = require('chart.js');
 
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/forms');
+var db = monk('co-forms:27017/forms');
 
 var index = require('./routes/index');
 var users = require('./routes/users');

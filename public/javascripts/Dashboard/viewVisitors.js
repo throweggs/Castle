@@ -33,9 +33,10 @@ function renderChart() {
           display: true,
         responsive: true,
           legend: {
+            position: 'top',
            display: true
          },
-          aspectRatio : 2,
+          aspectRatio : 3,
           scales: {
             yAxes: [{
                 display: false,
@@ -70,13 +71,15 @@ function renderDoughnutChart(labels, theData) {
             label: labels,
             backgroundColor: colourChoice,
             data: theData,
-            borderWidth: 1
+            borderWidth: 1,
+            borderColor: '#333'
         }]
     },
     options: {
       responsive: true,
       legend: {
-       display: false
+        position: 'right',
+        display: true
      },
       aspectRatio : 3,
 
