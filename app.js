@@ -36,6 +36,7 @@ var sonos = require('./routes/sonos');
 var sonosBackend = require('./routes/sonosBackend');
 var sonosHistory = require('./routes/sonosHistory');
 var staff = require('./routes/staff');
+var lockers = require('./routes/lockers');
 
 var app = express();
 
@@ -68,6 +69,8 @@ app.use('/gardenVolunteer', gardenVolunteer);
 app.use('/thamesWater', thamesWater);
 app.use('/personalTrainer', personalTrainer);
 
+
+
 //Sonos
 app.use('/sonos', sonos);
 app.use('/sonosBackend', sonosBackend);
@@ -78,6 +81,7 @@ app.use('/staff', staff);
 
 //Dashboard
 app.use('/dashboard', dashboard);
+app.use('/lockers', lockers);
 
 
 

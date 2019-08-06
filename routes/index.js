@@ -73,6 +73,10 @@ router.get('/last5', function(req, res) {
     res.render('Dashboard/last5', { title: 'last 5' });
 });
 
+router.get('/viewLockers', function(req, res) {
+    res.render('Dashboard/viewLockers', { title: 'lockers' });
+});
+
 router.get('/viewWBS', function(req, res) {
     res.render('Dashboard/viewWBS', { title: 'Womens Bouldering Social' });
 });

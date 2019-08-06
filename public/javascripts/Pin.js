@@ -39,10 +39,12 @@ $( document ).ready(function() {
             typedPin += $("#thirddigit").val();
             typedPin += $("#fourthdigit").val();
           pageURL = $(location).attr("href");
+
           pageURL = pageURL.split('/');
           pageURL = pageURL[3].split('#!');
           pageURL = pageURL[0].split('view');
           pageURL = pageURL[1];
+
 
 
             $.getJSON( '/staff/getAStaff', {Pin: typedPin }, function(results, res) {

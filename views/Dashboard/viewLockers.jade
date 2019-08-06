@@ -1,0 +1,112 @@
+extends dashboard
+
+block content
+
+	.container
+		.row
+			.col-md-6
+				.h1 Lockers
+			.col
+				|  
+			.col
+				button#newLocker.newLocker.btn.btn-outline-primary(type='button', data-toggle='modal', data-target='#newLockerModal')
+					i.fas.fa-plus
+					| &nbsp Locker
+			.col
+				button#newKey.newKey.btn.btn-outline-primary(type='button', data-toggle='modal', data-target='#newKeyModal')
+					i.fas.fa-plus
+					| &nbsp Key
+					
+	.container-fluid
+		.row
+			.col-md
+				div
+					table#lockers.table.table-stripped.text-nowrap(cellspacing="0" width="100%" style="display: none")
+
+						thead
+							th.th-sm Locker #
+							th.th-sm Key
+							th.th-sm Owner
+							th.th-sm # Keys
+
+						tbody#LockersTableBody
+		
+			.col-md-auto
+				div
+					table#keys.table.table-stripped.text-nowrap(cellspacing="0" width="100%" style="display: none")
+
+						thead
+							th.th-sm Key Code
+							th.th-sm Spares
+
+						tbody#KeysTableBody
+
+
+	// Modal
+	#newLockerModal.modal.fade.bd-example-modal-lg(tabindex='-1', role='dialog', aria-labelledby='addLockerModalCenterTitle', aria-hidden='true')
+		.modal-dialog.modal-dialog-centered.modal-lg(role='document')
+			.modal-content
+				form#newLocker.needs-validation(novalidate='')
+					.modal-header
+						h1#addLockerModalLongTitle.modal-title Add Locker
+						h1#modalLockerID.modal-title( style="display: none")
+						button.close(type='button', data-dismiss='modal', aria-label='Close')
+							span(aria-hidden='true') ×
+					.modal-body
+						h4 Details
+
+						.row
+
+							.col
+
+								.md-form.mt-0
+									input#lockerNumberInput.form-control(type='text', placeholder='Locker Number',required='')
+
+							.col
+
+								.md-form.mt-0
+									input#keyInput.form-control(type='text', placeholder='Key Code',required='')
+									input#keyID.form-control(type='text', placeholder='Key Code',required='',, style="display: none")
+							.col
+
+								.md-form.mt-0
+									input#ownerInput.form-control(type='text', placeholder='Owner',required='')
+						
+						
+					.modal-footer
+						button.btn.btn-secondary(type='button', data-dismiss='modal',onClick='clearModal()') Close
+						submit#newLocker.btn.btn-primary(type='submit', onClick='addLocker()', style="display: none") Save changes
+	//- 
+	// Modal
+	#newKeyModal.modal.fade.bd-example-modal-lg(tabindex='-1', role='dialog', aria-labelledby='addKeyModalCenterTitle', aria-hidden='true')
+		.modal-dialog.modal-dialog-centered.modal-lg(role='document')
+			.modal-content
+				form#newKey.needs-validation(novalidate='')
+					.modal-header
+						h1#addKeyModalLongTitle.modal-title Add Key
+						h1#modalKeyID.modal-title( style="display: none")
+						button.close(type='button', data-dismiss='modal', aria-label='Close')
+							span(aria-hidden='true') ×
+					.modal-body
+						h4#fullCodeInput Details &nbsp
+						.row
+
+							.col
+								.md-form.mt-0
+									input#keyBatchInput.form-control(type='text', placeholder='Key Batch',required='')
+
+							.col
+								.md-form.mt-0
+									input#keyNumberInput.form-control(type='text', placeholder='Key Number',required='')
+
+							.col
+								.md-form.mt-0
+									input#copiesInput.form-control(type='text', placeholder='Copies',required='')
+						
+						
+					.modal-footer
+						button.btn.btn-secondary(type='button', data-dismiss='modal',onClick='clearModal()') Close
+						button.btn.btn-primary(type='submit', onClick='addKey()') Save changes
+
+
+	script(src='/javascripts/Dashboard/viewLockers.js')

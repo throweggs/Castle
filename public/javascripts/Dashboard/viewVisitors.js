@@ -1,8 +1,6 @@
 var allowed = false;
 var searchStart = moment().startOf('month').format('l'),
     searchEnd = moment().endOf('month').format('l');
-console.log( searchStart);
-console.log( searchEnd);
 var theSearch =  {created: { $gt: moment(searchStart).format(), $lt: moment(searchEnd).add('24','hours').format() }};
     searchChoice = 'default';
 var options = ['', 'Date', 'Full Name', 'Child Name', 'Reason', 'iPad'];
@@ -18,12 +16,11 @@ var colours = [
 ];
 
 var colourChoice = [
-'#DF691A',' #6610f2',' #6f42c1 ',' #e83e8c',' #d9534f',' #f0ad4e',' #f0ad4e',' #5cb85c',' #20c997',' #5bc0de',' #fff',' #868e96',' #343a40',' #DF691A',' #4E5D6C',' #5cb85c',' #5bc0de',' #f0ad4e',' #d9534f',' #abb6c2',' #4E5D6C'
+'#DF691A',' #6610f2',' #6f42c1 ',' #e83e8c',' #d9534f',' #f0ad4e',' #5cb85c',' #20c997',' #5bc0de',' #fff',' #868e96',' #343a40',' #DF691A',' #4E5D6C',' #5cb85c',' #5bc0de',' #f0ad4e',' #d9534f',' #abb6c2',' #4E5D6C'
 ];
 
 
 function renderChart() {
-
     var ctx = document.getElementById("myChart").getContext('2d');
 
     var myChart = new Chart(ctx, {
@@ -81,7 +78,7 @@ function renderDoughnutChart(labels, theData) {
         position: 'right',
         display: true
      },
-      aspectRatio : 3,
+      aspectRatio : 2,
 
 }
 });
@@ -245,6 +242,22 @@ if(searchChoice === 'Date'){
                   fill: false,
                 });
               }
+          });
+          //sum of array
+          var arraySum = 0;
+          $.each(rfvinfo.visitors,function(i, dataset){
+            arraySum = arraySum + dataset;
+          });
+
+          $.each(rfvinfo.labels,function(i, dataset){
+            if (dataset === ''){
+              dataset = 'No Reason Given';
+            }
+
+            var theNumber = rfvinfo.visitors[i]/arraySum * 100;
+            var newLabel = theNumber.toFixed(2) + '% - ' + dataset
+
+            rfvinfo.labels[i] = newLabel;
           });
 
 

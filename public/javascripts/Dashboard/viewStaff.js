@@ -165,6 +165,7 @@ $.each(teamInfo, function(i, team){
         {Name :  'TW', Permission :  $('input[id=TW]').prop('checked')},
         {Name :  'Gardeners', Permission : $('input[id=Gardeners]').prop('checked')},
         {Name :  'PersonalTrainer', Permission : $('input[id=PersonalTrainer]').prop('checked')},
+        {Name :  'Lockers', Permission : $('input[id=Lockers]').prop('checked')},
       ]
     };
 
