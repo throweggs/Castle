@@ -78,7 +78,7 @@ function renderDoughnutChart(labels, theData) {
         position: 'right',
         display: true
      },
-      aspectRatio : 2,
+      aspectRatio : 3,
 
 }
 });
