@@ -43,7 +43,8 @@ var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
 
 
         $( "#showSession" ).html( sessionDetails );
-
+        $('#FacilitatorWarning').hide();
+        $('#addMe').show();
 
       }
 
@@ -200,9 +201,7 @@ $(document).on('keyup blur change', function(e){
 
 
       $('input#facilitatorName').on('click keyup keydown blur change',function(){
-        if($('input#facilitatorName').val().length > 2){
-          $('label#sessDetails').show();
-          $('#startOptions').show();
+        if($('input#facilitatorName').val().length > 1){
         $('input#facilitatorName').val(toTitleCase($('input#facilitatorName').val()));
         }
 
@@ -217,7 +216,7 @@ $(document).on('keyup blur change', function(e){
         var text = document.getElementById('facilitatorName');
         text.value = facilitatorName;
 
-        if($('input#facilitatorName').val().length > 2){
+        if($('input#facilitatorName').val().length > 1){
           $('label#sessDetails').show();
           $('#startOptions').show();
         }
@@ -242,9 +241,9 @@ $(document).on('keyup blur change', function(e){
       $('#sessChoice').show();
 
       $('input#facilitatorName').keyup(function(){
-        if($('input#facilitatorName').val().length > 2){
+        if($('input#facilitatorName').val().length > 1){
         $('#startOptions').show();
-        } else if($('input#facilitatorName').val()<2){
+      } else if($('input#facilitatorName').val() <= 1){
             $('#startOptions').hide();
           }
       });

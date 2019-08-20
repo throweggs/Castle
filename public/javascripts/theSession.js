@@ -8,7 +8,7 @@ var startLocation = '',
     foundSession = false,
     theID = '',
     iPadIn = '',
-    sessionType = 'bouldering';
+    sessionType = '';
 
 var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
     searchChoice = 'Facilitator';
@@ -40,7 +40,8 @@ var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
 
 
         $( "#showSession" ).html( sessionDetails );
-
+        $('#FacilitatorWarning').hide();
+        $('#participants').show();
 
       }
 
@@ -194,12 +195,9 @@ var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
 
 
       $('input#facilitatorName').on('click keyup keydown blur change',function(){
-        if($('input#facilitatorName').val().length > 2){
-          $('label#sessDetails').show();
-          $('#startOptions').show();
+
 
         $('input#facilitatorName').val(toTitleCase($('input#facilitatorName').val()));
-        }
 
       });
       //adds the session information in to the options of the modal, so it makes sence when editing details.
@@ -208,7 +206,7 @@ var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
         var text = document.getElementById('facilitatorName');
         text.value = facilitatorName;
 
-        if($('input#facilitatorName').val().length > 2){
+        if($('input#facilitatorName').val().length > 1){
           $('label#sessDetails').show();
           $('#sessChoice').show();
           $('label#startOptions').show();
@@ -222,6 +220,9 @@ var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
         } else if(sessionType === 'top roping'){
             document.getElementById("BSess").classList.remove("active");
             document.getElementById("TSess").classList.add("active");
+        } else {
+          document.getElementById("BSess").classList.remove("active")
+          document.getElementById("TSess").classList.remove("active");
         }
         if(startLocation===''){
 
@@ -233,10 +234,10 @@ var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
       $('#startOptions').html(boulderingAreas);
 
       $('input#facilitatorName').keyup(function(){
-        if($('input#facilitatorName').val().length > 2){
+        if($('input#facilitatorName').val().length > 1){
           $('label#sessDetails').show();
           $('#sessChoice').show();
-        } else if($('input#facilitatorName').val().length <= 2){
+        } else if($('input#facilitatorName').val().length <= 1){
             $('label#sessDetails').hide();
             $('#sessChoice').hide();
             $('label#startOptions').hide();

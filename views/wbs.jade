@@ -13,7 +13,7 @@ block content
       .col-2.text-right
         button#openFacilitatorModal.btn.btn-outline-success(type='button', data-toggle='modal', data-target='#facilitatorModal')
           i.fas.fa-edit &nbsp
-          | &nbsp Info
+          | &nbsp Set Up WBS
   .col
     li <strong>The Session is not suitable for novice climbers.</strong> You need to be a registered bouldering member. Please ask reception who will be able to guide you through the registration process.
     li <u>This is not a teaching session</u>, <u>nor is it supervised</u>. 
@@ -23,7 +23,11 @@ block content
   
   //Participants    
   hr
-  form#addMe.needs-validation.container-fluid(novalidate='')
+  #FacilitatorWarning.alert.alert-danger( role="alert")
+    h1.text-center Registration for the Women's Bouldering Social is not yet open.
+    h4.text-center   Please ask at Reception.
+    
+  form#addMe.needs-validation.container-fluid(novalidate='', style="display: none;")
     .form-row
       .col
         label(for='NewParticipantFirstName') First name

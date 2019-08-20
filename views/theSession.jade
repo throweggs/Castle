@@ -13,7 +13,7 @@ block content
       .col-2.text-right
         button#openFacilitatorModal.btn.btn-outline-success(type='button', data-toggle='modal', data-target='#facilitatorModal')
           i.fas.fa-edit &nbsp
-          | &nbsp Info
+          | &nbsp Set Up Session
   .col
     li <strong>Participants of The Session must be registered roped climbers</strong> and therefore confident putting on a harness correctly, tying in with the correct knot and belaying competently.
     li Those registered as bouldering only members may attend the Wednesday night mixed bouldering session.
@@ -25,8 +25,13 @@ block content
   
 
       hr
+    #FacilitatorWarning.alert.alert-danger( role="alert")
+      h1.text-center Registration for The Session is not yet open.
+      h4.text-center   Please ask at Reception.
 
-    form.needs-validation.container-fluid(novalidate='')
+    
+
+    form#participants.needs-validation.container-fluid(novalidate='', style="display: none;")
       .form-row
         .col
           label(for='NewParticipantFirstName') First name
@@ -106,8 +111,8 @@ block content
             .form-group
               label#sessDetails.col.form-check-label(for='SessionClimbingType', style="display: none;") Session Type
               #sessChoice.btn-group.col.btn-group-toggle(data-toggle='buttons', style="display: none;")
-                .col-6#BSess.label.btn.btn-outline-primary.active
-                  input#BoulderingSession(type='radio', value='bouldering', autocomplete='off', checked='')
+                .col-6#BSess.label.btn.btn-outline-primary
+                  input#BoulderingSession(type='radio', value='bouldering', autocomplete='off')
                   | Bouldering
                 .col-6#TSess.label.btn.btn-outline-primary
                   input#TopRopeSession(type='radio', value='top roping', autocomplete='off')
