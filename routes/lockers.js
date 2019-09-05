@@ -55,6 +55,7 @@ router.get('/getKeys', function(req, res) {
 //GET SINGLE
 router.get('/getALocker', function(req, res) {
     findMe = req.query;
+    console.log(findMe);
     var db = req.db;
     var collection = db.get('lockers');
     collection.find(findMe,{},function(e,docs){
@@ -66,13 +67,15 @@ router.get('/getALocker', function(req, res) {
 
 //GET SINGLE
 router.get('/getAKey', function(req, res) {
+
     findMe = req.query;
+
     var db = req.db;
     var collection = db.get('keys');
     collection.find(findMe,{},function(e,docs){
         res.json(docs);
-        // console.log('get');
-        // console.log( docs);
+        console.log('get');
+        console.log( docs);
     });
 });
 

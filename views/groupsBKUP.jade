@@ -1,0 +1,511 @@
+extends layout
+
+block content
+  script(src='/javascripts/groups.js')
+  
+  br
+  // Button Facilitator modal
+  .container-fluid
+    .row
+      .col-7
+        //Session INFORMATION
+        h2#groupDisplayName Group name: Harringay School
+      .col-3
+        //Session INFORMATION
+        h3#groupDisplayDate Date: 12/34/12
+        #groupID(style='display: none;')
+        #groupName(style='display: none;')
+        #groupDate(style='display: none;')
+      .col-2.text-right
+        //Duplicate Sessions
+        button#DuplicateGroupForm.btn.btn-success(type='button',onClick='duplicationForm();') Duplicate Form
+        
+    //Particpation statment
+    .card.text-white.bg-primary.mb-3
+      .card-header
+        .row
+          .col
+            h3.card-title Participation Statement 
+          .col-auto
+          .col-right
+            button#showParticipantationStatement.btn.btn-dark(type='button' ,onclick="$('#participantationStatement').toggle()" required='') View
+              
+      #participantationStatement.card-body( )
+        .card-text All climbing activities have a risk of serious injury or death. Participants must recognise that even if they follow all good practice there may still be the risk of accident and injury. 
+        .card-text It is the responsibility of the participant to adhere to the conditions of use.
+        .card-text <strong>As with all sporting activities, injuries are possible in climbing and might be sustained despite the safety systems in place.</strong> 
+        .card-text Sessions are supervised by qualified, experienced instructors. Climbers should never climb, boulder or belay without the permission of their instructor. They must remain with their Instructor at all times and follow directions given.
+        .card-text <br>
+        .card-text Please indicate if you have any relevant injuries, disabilities, physical or mental health conditions that the instructor should be aware of. If your answer is “YES” then please make sure you speak to the instructor about it before the start of the session.
+
+    //Group Leader
+    .card.text-white.border-info.mb-3
+      .card-header
+        .row
+          .col  
+            h3.card-title Group Leader 
+          .col
+            h3
+              i#groupLeaderCompletion.fa.fa-check(aria-hidden="true" style='display:none; color:green;')
+          .col-auto
+          .col-right
+            button#showGroupLeaderInfo.btn.btn-dark(type='button' ,onclick="$('#groupLeaderInfo').toggle()" required='') View
+      #groupLeaderInfo.card-body(style='display: none;')
+        form#groupLeaderForm.needs-validation
+          .card-text Have you checked the details of the participants above and are the details, to the best of your knowledge, correct?
+          .btn-group.btn-group-toggle(data-toggle='checkedDetails')
+            button#checkedDetailsNo.btn.btn-outline-primary.active(type='button', name='checkedDetailsNo', autocomplete='off', checked='') No
+            button#checkedDetailsYes.btn.btn-outline-primary(type='button', name='checkedDetailsYes', autocomplete='off',checked='') Yes
+          br
+          br
+          .card-text For any of the participants who are under 16 years of age, have you been given permission by their parent or guardian to involve them in this potentially dangerous activity and do you accept full responsibility for the welfare of each child according to the instructions of their parent or guardian?
+          .btn-group.btn-group-toggle(data-toggle='parentalPermission')
+            button#parentalPermissionNo.btn.btn-outline-primary.active(type='button', name='parentalPermissionNo', autocomplete='off', checked='') No
+            button#parentalPermissionYes.btn.btn-outline-primary(type='button', name='parentalPermissionYes', autocomplete='off') Yes
+          
+          hr
+          
+          .row
+            .col
+              input#glName.form-control( type="text", placeholder="Group Leader's Name", required)
+              br
+              input#glOrg.form-control( type="text", placeholder='Organisation')
+            .col
+              input#glAdd1.form-control( type="text", placeholder='Address Line 1', required)
+              input#glAdd2.form-control( type="text", placeholder='Address Line 2')
+              input#glAdd3.form-control( type="text", placeholder='Address Line 3')
+              input#glPC.form-control( type="text", placeholder='Post Code', required)
+
+          hr
+          // Disclaimer
+          .card-text The above information has been given to the best of my knowledge
+          button#groupLeaderAgreement.btn-agree.btn.btn-outline-primary(type='submit') I Agree
+
+    //Participants
+    .card.text-white.border-primary.mb-3
+      .card-header  
+        .row
+          .col  
+            h3.card-title Group Participants
+          .col-auto
+          .col-right
+            button#showParticipantsInfo.btn.btn-dark(type='button' ,onclick="$('#participantsInfo').toggle()" required='') View
+      #participantsInfo.card-body(style='display: none;')
+        form#participants.needs-validation.container-fluid(novalidate='',)
+          .form-row
+            .col-1
+              label #
+    
+            .col-3
+              label(for='NewParticipantFirstName') First name
+
+            .col-3
+              label(for='NewParticipantLastName') Last name
+
+            .col-1
+              label(for='Age') Age
+       
+            .col-4
+              label(for='MCID') Medical Conditions / Injuries / Disabilities
+
+          .form-row
+            .col-1
+              text#participantNumber1.form-control.form-control-sm  1   
+            .col-3
+
+              input#NewParticipantFirstName1.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-3
+
+              input#NewParticipantLastName1.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-1
+
+              input#Age1.form-control.form-control-sm(type='number', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required    
+            .col-4
+
+              select#MCID1.form-control.form-control-sm(autocomplete='false', required='')
+                option(value='Yes') Yes
+                option(selected='',value='No') No
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+
+          .form-row
+            .col-1
+              #participantNumber2.form-control.form-control-sm 2   
+            .col-3
+              input#NewParticipantFirstName2.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-3
+              input#NewParticipantLastName2.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-1
+              input#Age2.form-control.form-control-sm(type='number', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required    
+            .col-4
+                select#MCID2.form-control.form-control-sm(autocomplete='false', required='')
+                  option(value='Yes') Yes
+                  option(selected='',value='No') No
+                .valid-feedback
+                  | Looks good!
+                .invalid-feedback
+                  | Required
+
+          .form-row
+            .col-1
+              #participantNumber3.form-control.form-control-sm  3
+            .col-3
+              input#NewParticipantFirstName3.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-3
+              input#NewParticipantLastName3.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-1
+              input#Age3.form-control.form-control-sm(type='number', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required    
+            .col-4
+              select#MCID3.form-control.form-control-sm(autocomplete='false', required='')
+                option(value='Yes') Yes
+                option(selected='',value='No') No
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required           
+          
+          .form-row
+            .col-1
+              #participantNumber4.form-control.form-control-sm  4   
+            .col-3
+              input#NewParticipantFirstName4.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-3
+              input#NewParticipantLastName4.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-1
+              input#Age4.form-control.form-control-sm(type='number', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required    
+            .col-4
+              select#MCID4.form-control.form-control-sm(autocomplete='false', required='')
+                option(value='Yes') Yes
+                option(selected='',value='No') No
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required 
+
+          .form-row
+            .col-1
+              #participantNumber5.form-control.form-control-sm 5   
+            .col-3
+              input#NewParticipantFirstName5.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-3
+              input#NewParticipantLastName5.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-1
+              input#Age5.form-control.form-control-sm(type='number', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required    
+            .col-4
+              select#MCID5.form-control.form-control-sm(autocomplete='false', required='')
+                option(value='Yes') Yes
+                option(selected='',value='No') No
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required     
+        
+          .form-row
+            .col-1
+              #participantNumber6.form-control.form-control-sm 6    
+            .col-3
+              input#NewParticipantFirstName6.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-3
+              input#NewParticipantLastName6.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-1
+              input#Age6.form-control.form-control-sm(type='number', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required    
+            .col-4
+              select#MCID6.form-control.form-control-sm(autocomplete='false', required='')
+                option(value='Yes') Yes
+                option(selected='',value='No') No
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required 
+
+          .form-row
+            .col-1
+              #participantNumber7.form-control.form-control-sm 7   
+            .col-3
+              input#NewParticipantFirstName7.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-3
+              input#NewParticipantLastName7.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-1
+              input#Age7.form-control.form-control-sm(type='number', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required    
+            .col-4
+              select#MCID7.form-control.form-control-sm(autocomplete='false', required='')
+                option(value='Yes') Yes
+                option(selected='',value='No') No
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required           
+          
+          .form-row
+            .col-1
+              #participantNumber8.form-control.form-control-sm 8    
+            .col-3
+              input#NewParticipantFirstName8.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-3
+              input#NewParticipantLastName8.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-1
+              input#Age8.form-control.form-control-sm(type='number', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required    
+            .col-4
+              select#MCID8.form-control.form-control-sm(autocomplete='false', required='')
+                option(value='Yes') Yes
+                option(selected='',value='No') No
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required 
+          
+          .form-row
+            .col-1
+              #participantNumber9.form-control.form-control-sm 9   
+            .col-3
+              input#NewParticipantFirstName9.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-3
+              input#NewParticipantLastName9.form-control.form-control-sm(type='text', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required
+            .col-1
+              input#Age9.form-control.form-control-sm(type='number', placeholder='', value='', required='')
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required    
+            .col-4
+              select#MCID9.form-control.form-control-sm(autocomplete='false', required='')
+                option(value='Yes') Yes
+                option(selected='',value='No') No
+              .valid-feedback
+                | Looks good!
+              .invalid-feedback
+                | Required   
+    
+
+    //Instructor Information              
+    .card.text-white.border-success.mb-3
+      .card-header
+        .row
+          .col
+            h3.card-title Instructor 
+          .col
+            h3
+              i#instructorCompletion.fa.fa-check(aria-hidden="true" style='display:none;color:green;')
+          .col-auto
+          .col-right
+            button#showInstructorInfo.btn.btn-dark(type='button' ,onclick="$('#instructorInfo').toggle()") View
+      #instructorInfo.card-body(style='display: none;')
+        form#instructorForm.needs-validation
+          .card-text Have you checked the details of the participants above so that you can take account of each participant’s age and any medical conditions which might affect their activity?
+          .btn-group.btn-group-toggle(data-toggle='checkedDetails')
+            button#checkedDetailsNo.btn.btn-outline-primary.active(type='button', name='checkedDetailsNo', autocomplete='off') No
+            button#checkedDetailsYes.btn.btn-outline-primary(type='button', name='checkedDetailsYes', autocomplete='off') Yes
+            .valid-feedback
+              | Looks good!
+            .invalid-feedback
+              | Required
+          br
+          br
+          .card-text Do you accept full responsibility for the safety and actions of the people listed above while they are under your instruction?
+          .btn-group.btn-group-toggle(data-toggle='responsibility', required)
+            button#responsibilityNo.btn.btn-outline-primary.active(type='button', name='responsibilityNo', autocomplete='off') No
+            button#responsibilityYes.btn.btn-outline-primary(type='button', name='responsibilityYes', autocomplete='off') Yes
+          
+          hr
+          .row
+            input#instructorsName.form-control( type="text", placeholder="Instructor's Name", required)
+
+
+          hr
+          // Disclaimer
+          .card-text The above information has been given to the best of my knowledge
+          button#instructorAgreement.btn-agree.btn.btn-outline-primary(type='submit') I Agree
+
+    //Receptionist Information
+    .card.text-white.border-warning.mb-3 
+      .card-header
+        .row
+          .col
+            h3.card-title Receptionist
+          .col
+            h3
+              i#receptionistCompletion.fa.fa-check(aria-hidden="true" style='display:none;color:green;')
+          .col-auto
+          .col-right
+            button#showReceptionistInfo.btn.btn-dark(type='button' ,onclick="$('#receptionistInfo').toggle()" required='') View
+      #receptionistInfo.card-body(style='display: none;')
+        form#instructorForm.needs-validation
+          .card-text Have you checked that there is an Instructor Registration Form on file for this instructor?
+          .btn-group.btn-group-toggle(data-toggle='intructiorRegForm')
+            button#intructiorRegFormNo.btn.btn-outline-primary.active(type='button', name='intructiorRegFormNo', autocomplete='off', checked='') No
+            button#intructiorRegFormYes.btn.btn-outline-primary(type='button', name='intructiorRegFormYes', autocomplete='off') Yes  
+          .card-text Has the whole group filled in the participant’s form above?
+          .btn-group.btn-group-toggle(data-toggle='fullyCompleted')
+            button#fullyCompletedNo.btn.btn-outline-primary.active(type='button', name='fullyCompletedNo', autocomplete='off', checked='') No
+            button#fullyCompletedYes.btn.btn-outline-primary(type='button', name='fullyCompletedYes', autocomplete='off') Yes         
+          .card-text Has the Instructor completed their part of the form?
+          .btn-group.btn-group-toggle(data-toggle='instructorCompleted')
+            button#instructorCompletedNo.btn.btn-outline-primary.active(type='button', name='instructorCompletedNo', autocomplete='off', checked='') No
+            button#instructorCompletedYes.btn.btn-outline-primary(type='button', name='instructorCompletedYes', autocomplete='off') Yes
+
+          hr
+          .row
+            input#receptionistName.form-control( type="text", placeholder="Receptionist's Name", required)
+
+          hr
+          // Disclaimer
+          .card-text The above information has been given to the best of my knowledge
+          button#receptionistAgreement.btn-agree.btn.btn-outline-primary(type='submit') I Agree
+    
+    button#save.col.align-self-end.btn.btun-jumbo.btn-primary(type='button') Save
+    br
+    br
+
+
+  // Modal
+  #facilitatorModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='facilitatorModalCenterTitle', aria-hidden='true')
+    form.needs-validation.container-fluid(novalidate='')
+      .modal-dialog
+        .modal-content
+          // Modal Header
+          .modal-header
+            .modal-title
+              i.fas.fa-edit
+              | &nbsp Session Info
+            button.close(type='button', data-dismiss='modal') ×
+          // Modal body
+          .modal-body
+        
+            .col
+              .form-group
+                #facilitatorField.input-group
+                  .input-group-prepend
+                    span.input-group-text Facilitator
+                  input#facilitatorName.form-control(type='text' style='width: 200px;')
+            .form-group
+              label#sessDetails.col.form-check-label(for='SessionClimbingType', style="display: none;") Session Type
+              #sessChoice.btn-group.col.btn-group-toggle(data-toggle='buttons', style="display: none;")
+                .col-6#BSess.label.btn.btn-outline-primary
+                  input#BoulderingSession(type='radio', value='bouldering', autocomplete='off')
+                  | Bouldering
+                .col-6#TSess.label.btn.btn-outline-primary
+                  input#TopRopeSession(type='radio', value='top roping', autocomplete='off')
+                  | Top Roping
+        
+            
+                    
+            .col-12
+              .form-group
+                label(for='startOptions',style='display: none;') Session Starting Location
+                #startOptions.list-group(role='tablist', style='display: none;')
+                
+                  
+    
+
+          // Modal footer
+          .modal-footer
+            button#facilitatorSubmit.col.align-self-end.btn.btn-success(type='submit', data-dismiss='modal') Add Details
+
+
+      

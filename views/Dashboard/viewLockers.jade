@@ -22,12 +22,12 @@ block content
 			.col-md
 				div
 					table#lockers.table.table-stripped.text-nowrap(cellspacing="0" width="100%" style="display: none")
-
 						thead
 							th.th-sm Locker #
-							th.th-sm Key
+							th.th-sm Key Code
+							th.th-sm Copies
 							th.th-sm Owner
-							th.th-sm # Keys
+							th.th-sm Exipry
 
 						tbody#LockersTableBody
 		
@@ -37,7 +37,7 @@ block content
 
 						thead
 							th.th-sm Key Code
-							th.th-sm Spares
+							th.th-sm Copies
 
 						tbody#KeysTableBody
 
@@ -53,29 +53,67 @@ block content
 						button.close(type='button', data-dismiss='modal', aria-label='Close')
 							span(aria-hidden='true') ×
 					.modal-body
-						h4 Details
+
 
 						.row
 
 							.col
-
 								.md-form.mt-0
+									label(for='lockerNumberInput') Locker Number
 									input#lockerNumberInput.form-control(type='text', placeholder='Locker Number',required='')
-
 							.col
-
 								.md-form.mt-0
-									input#keyInput.form-control(type='text', placeholder='Key Code',required='')
-									input#keyID.form-control(type='text', placeholder='Key Code',required='',, style="display: none")
+									label(for='lockerUse') Locker Use
+									select#lockerUse.custom-select.mr-sm-2
+										option(selected='' value='Customer') Customer
+										|         
+										option(value='Staff') Staff
+										|         
+										option(value='Hire') Hire
+
+							
 							.col
-
 								.md-form.mt-0
-									input#ownerInput.form-control(type='text', placeholder='Owner',required='')
+									label#ownerInput(for='ownerInput', style="display: none") Owner
+									input#ownerInput.form-control(type='text', placeholder='Person',required='', style="display: none")
+							.col
+								.md-form.mt-0
+									label#ownerExpiry(for='ownerExpiry', style="display: none") Expiry Date
+									input#ownerExpiry.form-control(type='text', placeholder='Expiry',required='', style="display: none")
+						hr
+						.row
+							br
+							.col
+								.md-form.mt-0
+									.input-group.mb-3
+		
+										input#keyBatch.col-4.form-control(type='text', placeholder='Batch',required='')
+
+										input#keyNumber.col-4.form-control(type='text', placeholder='Number',required='')
+
+										input#keyInput.col-5.form-control(type='text', placeholder='Key Code',required='', disabled)
+										.valid-feedback
+											| Key Found - Key quanity will be updated
+										.invalid-feedback
+											| Key Not Found - New Key will be generated
+							.col
+								.md-form.mt-0
+									.input-group.mb-3
+										.input-group-prepend
+											button#minOne.btn.btn-outline-warning(type="button",style="display: none")
+												.fa.fa-minus
+										input#keyQuantity.col-2.form-control(type='text', placeholder='Key Quantity',required=',' aria-label="", aria-describedby="key Quantity")
+										.input-group-append
+											button#plusOne.btn.btn-outline-warning(type="button",style="display: none")
+												.fa.fa-plus
+											
+									input#keyID.form-control(type='text', placeholder='Key Code',required='', style="display: none")
+
 						
 						
 					.modal-footer
 						button.btn.btn-secondary(type='button', data-dismiss='modal',onClick='clearModal()') Close
-						submit#newLocker.btn.btn-primary(type='submit', onClick='addLocker()', style="display: none") Save changes
+						submit#newLocker.btn.btn-primary(type='submit', onClick='addLocker()') Save changes
 	//- 
 	// Modal
 	#newKeyModal.modal.fade.bd-example-modal-lg(tabindex='-1', role='dialog', aria-labelledby='addKeyModalCenterTitle', aria-hidden='true')

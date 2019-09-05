@@ -1,6 +1,5 @@
 //Access Control Functions for Dashboard
 $( document ).ready(function() {
-
   $('#loading').hide();
 
 

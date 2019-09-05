@@ -114,6 +114,11 @@ router.get('/personalTrainer', function(req, res) {
     res.render('personalTrainer', { title: 'Personal Trainer' });
 });
 
+router.get('/groups', function(req, res) {
+    res.render('groups', { title: 'Groups' });
+});
+
+
 
 
 module.exports = router;

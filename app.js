@@ -10,8 +10,8 @@ var favicon = require('serve-favicon');
 // var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var moment = require('moment');
-var popper = require('popper.js');
-var tooltip = require('tooltip.js');
+// var popper = require('popper.js');
+// var tooltip = require('tooltip.js');
 var Chart = require('chart.js');
 // var easyAutocomplete = require('easy-autocomplete');
 
@@ -37,6 +37,7 @@ var sonosBackend = require('./routes/sonosBackend');
 var sonosHistory = require('./routes/sonosHistory');
 var staff = require('./routes/staff');
 var lockers = require('./routes/lockers');
+var groups = require('./routes/groups');
 
 var app = express();
 
@@ -68,6 +69,7 @@ app.use('/homepage', homepage);
 app.use('/gardenVolunteer', gardenVolunteer);
 app.use('/thamesWater', thamesWater);
 app.use('/personalTrainer', personalTrainer);
+app.use('/groups', groups);
 
 
 
@@ -87,8 +89,8 @@ app.use('/lockers', lockers);
 
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/')); // redirect bootstrap JS
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/'));
-app.use('/popper', express.static(__dirname + '/node_modules/popper.js/dist/'));
-app.use('/tooltip', express.static(__dirname + '/node_modules/tooltip.js/dist/'));
+// app.use('/popper', express.static(__dirname + '/node_modules/popper.js'));
+// app.use('/tooltip', express.static(__dirname + '/node_modules/tooltip.js'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use('/moment', express.static(__dirname + '/node_modules/moment')); // redirect moments JS
 // app.use('/tempus', express.static(__dirname + '/node_modules/tempusdominus-bootstrap-4')); // redirect tempus JS
