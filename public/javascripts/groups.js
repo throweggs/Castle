@@ -455,7 +455,7 @@ $( document ).click(function(e){
 });
 
 $( document ).ready(function() {
-  // $("#dataProtection").modal('show');
+  $("#dataProtection").modal('show');
   getGroups();
 
 //On new group submit gather and store information
