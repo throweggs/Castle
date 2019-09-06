@@ -311,7 +311,7 @@ function viewGroup(theID){
       .done(function(results, res) {
 
 
-        $('#PinModal').on('hide.bs.modal', function (e) {
+        $('#PinModal').on('hidden.bs.modal', function (e) {
 
           if(pinAccepted === true){
             var theGroup = results[0];
@@ -396,8 +396,6 @@ var participants = group.Participants,
                       groupDate.innerHTML = moment(group.Group.Date).format('l');
                 var groupName = groupRow.insertCell(-1);
                       groupName.innerHTML = group.Group.Name;
-                var groupLeader = groupRow.insertCell(-1);
-                      groupLeader.innerHTML = group.Group.Leader.Name;
                 var groupInstructor = groupRow.insertCell(-1);
                       groupInstructor.innerHTML = group.Instructor.Name;
                 var groupParticipants = groupRow.insertCell(-1);
@@ -598,16 +596,17 @@ $( document ).ready(function() {
                 // thePin = results[0].Pin;
                 if(typedPin === thePin){
                   $('#PinModal').modal("hide");
+                  $('button#clockIn').show();
+                  $('#loading').hide();
                 } else {
-
-                  $('#firstdigit').addClass('is-invalid');
                   $('#firstdigit').val('');
-                  $('#seconddigit').addClass('is-invalid');
                   $('#seconddigit').val('');
-                  $('#thirddigit').addClass('is-invalid');
                   $('#thirddigit').val('');
-                  $('#fourthdigit').addClass('is-invalid');
                   $('#fourthdigit').val('');
+                  $('#firstdigit').addClass('is-invalid');
+                  $('#seconddigit').addClass('is-invalid');
+                  $('#thirddigit').addClass('is-invalid');
+                  $('#fourthdigit').addClass('is-invalid');
                     $('.log-status').addClass('is-invalid');
                      $('.alert').fadeIn(500);
                      $('button#clockIn').show();

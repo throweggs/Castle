@@ -15,7 +15,6 @@ block content
             thead
               th Date
               th Group Name
-              th Group Leader
               th Group Instructor
               th # Participants
               th View
@@ -34,10 +33,10 @@ block content
               .form-group
                 .row.text-center
                   .col
-                  input#firstdigit.col-2.digit.log-status.form-control.text-center(name='firstdigit', type='password', required='', size='1', maxlength='1', tabindex='0')
-                  input#seconddigit.col-2.digit.log-status.form-control.text-center(name='seconddigit', type='password', required='', size='1', maxlength='1', tabindex='1')
-                  input#thirddigit.col-2.digit.log-status.form-control.text-center(name='thirddigit', type='password', required='', size='1', maxlength='1', tabindex='2')
-                  input#fourthdigit.col-2.digit.log-status.form-control.text-center(name='fourthdigit', type='password', required='', size='1', maxlength='1', tabindex='3')
+                  input#firstdigit.col-2.digit.log-status.form-control.text-center(name='firstdigit', type='password', onfocus="this.value=''", required='', size='1', maxlength='1', tabindex='0')
+                  input#seconddigit.col-2.digit.log-status.form-control.text-center(name='seconddigit', type='password', onfocus="this.value=''", required='', size='1', maxlength='1', tabindex='1')
+                  input#thirddigit.col-2.digit.log-status.form-control.text-center(name='thirddigit', type='password', required='', onfocus="this.value=''", size='1', maxlength='1', tabindex='2')
+                  input#fourthdigit.col-2.digit.log-status.form-control.text-center(name='fourthdigit', type='password', required='', onfocus="this.value=''" ,size='1', maxlength='1', tabindex='3')
                   .col
                   .invalid-feedback
                     | Invalid Pin
