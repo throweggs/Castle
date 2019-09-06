@@ -9,11 +9,11 @@ $( document ).ready(function() {
       if(count === 4){
         $('button#clockIn').focus();
       }
-        if ($(this).next('[type="password"]').length > 0){
+        if ($(this).next('[type="password"]').length = 1){
             $(this).next('[type="password"]')[0].focus();
 
         }else{
-            if ($(this).parent().next().find('[type="password"]').length > 0){
+            if ($(this).parent().next().find('[type="password"]').length = 0){
               $(this).parent().next().find('[type="password"]')[0].focus();
               count++;
 

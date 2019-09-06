@@ -160,6 +160,7 @@ $.each(teamInfo, function(i, team){
       Access_Rights : [
         {Name :  'Visitors', Permission : $('input[id=Visitors]').prop('checked')},
         {Name :  'NCC', Permission : $('input[id=NCC]').prop('checked')},
+        {Name :  'Groups', Permission : $('input[id=Groups]').prop('checked')},      
         {Name :  'WBS', Permission : $('input[id=WBS]').prop('checked')},
         {Name :  'TheSession', Permission : $('input[id=TheSession]').prop('checked')},
         {Name :  'TW', Permission :  $('input[id=TW]').prop('checked')},

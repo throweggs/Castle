@@ -1,3 +1,5 @@
+var pinAccepted = false;
+
 function insertValues(theGroup){
   console.log(theGroup)
   $('#theID').val(theGroup._id);
@@ -296,18 +298,29 @@ function getData(theForm){
 }
 
 function viewGroup(theID){
-  console.log(theID);
+  $('#PinModal').modal('show');
+
   //Get request for session
   var getID = theID.split("_")[0];
   var theField = theID.split("_")[1];
 
     $.getJSON( '/groups/getAGroup', {_id: getID }, function(results, res) {
+
       })
+
       .done(function(results, res) {
-        var theGroup = results[0];
-                  console.log(results);
-                  insertValues(theGroup);
-        $('#createGroupModal').modal('show');
+
+
+        $('#PinModal').on('hide.bs.modal', function (e) {
+
+          if(pinAccepted === true){
+            var theGroup = results[0];
+            insertValues(theGroup);
+            $('#createGroupModal').modal('show');
+          }
+        })
+
+
 
 
 
@@ -380,7 +393,7 @@ var participants = group.Participants,
                       groupRow.id =  group._id + '_groupRow';
                       groupRow.className = 'groupRow'
                 var groupDate = groupRow.insertCell(-1);
-                      groupDate.innerHTML = moment(group.Group.Date).format('L');
+                      groupDate.innerHTML = moment(group.Group.Date).format('l');
                 var groupName = groupRow.insertCell(-1);
                       groupName.innerHTML = group.Group.Name;
                 var groupLeader = groupRow.insertCell(-1);
@@ -422,6 +435,13 @@ function updateAGroup(group){
     });
 }
 
+function showGroupForm(){
+    $("#dataProtection").modal('show');
+    $('#dataProtection').on('hidden.bs.modal', function (e) {
+      $("#createGroupModal").modal('show');
+    });
+  }
+
 function duplicateGroup(){
     var theForm = getData(theForm);
       $('#createGroupModal').modal('hide');
@@ -441,6 +461,23 @@ function duplicateGroup(){
 
   }
 
+function extraLines(doWhat){
+      if(doWhat){
+        $('.form-row#Ext1').show();
+        $('.form-row#Ext2').show();
+        $('.form-row#Ext3').show();
+        $('#HideExternals').show();
+        $('#ShowExternals').hide();
+      } else {
+        $('#Ext1').hide();
+        $('#Ext2').hide();
+        $('#Ext3').hide();
+        $('#HideExternals').hide();
+        $('#ShowExternals').show();
+      }
+  }
+
+
 $( document ).click(function(e){
   if(e.target.id == 'viewGroup'){
   $('button#groupSubmit').hide();
@@ -455,7 +492,7 @@ $( document ).click(function(e){
 });
 
 $( document ).ready(function() {
-  $("#dataProtection").modal('show');
+
   getGroups();
 
 //On new group submit gather and store information
@@ -479,5 +516,117 @@ $( document ).ready(function() {
   $('#createGroupModal').on('hidden.bs.modal', function (e) {
     clearModal();
   });
+
+});
+
+//Pin
+$( document ).ready(function() {
+
+    $(":input[type='password']").keyup(function(event){
+      count++;
+
+      if(count === 4){
+        $('button#clockIn').focus();
+      }
+        if ($(this).next('[type="password"]').length = 1){
+            $(this).next('[type="password"]')[0].focus();
+
+        }else{
+            if ($(this).parent().next().find('[type="password"]').length = 0){
+              $(this).parent().next().find('[type="password"]')[0].focus();
+              count++;
+
+            }
+        }
+
+    });
+    $('#PinModal').on('hide.bs.modal', function (e) {
+      if(pinAccepted!==true){
+        alert('incorrect Pin');
+      }
+    });
+
+    $('#PinModal').on('shown.bs.modal', function (e) {
+       count = 0;
+
+        $('input#firstdigit').focus();
+        $('button#clockIn').on('click', function(){
+        var thePin = '';
+        var typedPin = $("#firstdigit").val();
+            typedPin += $("#seconddigit").val();
+            typedPin += $("#thirddigit").val();
+            typedPin += $("#fourthdigit").val();
+          pageURL = 'Groups';
+
+
+
+
+            $.getJSON( '/staff/getAStaff', {Pin: typedPin }, function(results, res) {
+                  $('button#clockIn').hide();
+                  $('#loading').show();
+
+
+              })
+              .fail(function(results, res) {
+                console.log(res);
+                alert('Something Went Wrong');
+
+                })
+              .done(function(results, res) {
+
+                  if(results.length === 0){
+                    thePin = '';
+                  } else {
+                    thePin = results[0].Pin;
+                    theAccess = results[0].Access_Rights;
+                    $.each(theAccess, function(i, area){
+                        if(area.Name == pageURL){
+
+                            if(area.Permission === true){
+                              console.log('success');
+                            pinAccepted = true;
+                            }
+                        }
+                    });
+                      if (pinAccepted !== true){
+                        alert('Hi '+results[0].Name.First+', You are not allowed access to this page! Soz.');
+                      }
+
+
+
+                  }
+                // thePin = results[0].Pin;
+                if(typedPin === thePin){
+                  $('#PinModal').modal("hide");
+                } else {
+
+                  $('#firstdigit').addClass('is-invalid');
+                  $('#firstdigit').val('');
+                  $('#seconddigit').addClass('is-invalid');
+                  $('#seconddigit').val('');
+                  $('#thirddigit').addClass('is-invalid');
+                  $('#thirddigit').val('');
+                  $('#fourthdigit').addClass('is-invalid');
+                  $('#fourthdigit').val('');
+                    $('.log-status').addClass('is-invalid');
+                     $('.alert').fadeIn(500);
+                     $('button#clockIn').show();
+                     $('#loading').hide();
+                  $('#firstdigit').on('focus',function(){
+                      $('#firstdigit').removeClass('is-invalid');
+                      $('#firstdigit').val('');
+                      $('#seconddigit').removeClass('is-invalid');
+                      $('#seconddigit').val('');
+                      $('#thirddigit').removeClass('is-invalid');
+                      $('#thirddigit').val('');
+                      $('#fourthdigit').removeClass('is-invalid');
+                      $('#fourthdigit').val('');
+
+                  });
+                }
+              });
+        });
+    });
+
 
 });
