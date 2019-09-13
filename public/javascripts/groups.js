@@ -583,11 +583,19 @@ $( document ).ready(function() {
                             if(area.Permission === true){
                               console.log('success');
                             pinAccepted = true;
+                            $('#firstdigit').val('');
+                            $('#seconddigit').val('');
+                            $('#thirddigit').val('');
+                            $('#fourthdigit').val('');
                             }
                         }
                     });
                       if (pinAccepted !== true){
-                        alert('Hi '+results[0].Name.First+', You are not allowed access to this page! Soz.');
+                        alert('Hi '+results[0].Name.First+', You are not to view these forms! Soz.');
+                        $('#firstdigit').val('');
+                        $('#seconddigit').val('');
+                        $('#thirddigit').val('');
+                        $('#fourthdigit').val('');
                       }
 
 

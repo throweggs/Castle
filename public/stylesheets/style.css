@@ -5,6 +5,22 @@
     width: 100%;
 } */
 
+.btn-homepage{
+ border-bottom:5px solid #black;
+  position:relative;
+}
+
+.btn-homepage:hover {
+      top:2.5px;
+      border-bottom-width:2.5px;
+    }
+.btn-homepage:active {
+      top:5px;
+      border-bottom:0;
+    }
+
+
+
 .easy-autocomplete-container {
   color: black;
 }
