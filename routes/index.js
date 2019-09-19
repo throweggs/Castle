@@ -118,6 +118,9 @@ router.get('/groups', function(req, res) {
     res.render('groups', { title: 'Groups' });
 });
 
+router.get('/Sunset', function(req, res) {
+    res.render('Dashboard/Sunset', { title: 'Sunset Sunrise' });
+});
 
 
 

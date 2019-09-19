@@ -13,6 +13,7 @@ var moment = require('moment');
 // var popper = require('popper.js');
 // var tooltip = require('tooltip.js');
 var Chart = require('chart.js');
+var SunCalc = require('suncalc');
 // var easyAutocomplete = require('easy-autocomplete');
 
 
@@ -20,6 +21,8 @@ var Chart = require('chart.js');
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('co-forms:27017/forms');
+var twoN = monk('192.168.104.101/api/switch/ctrl?switch=3&action=trigger');
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -38,6 +41,8 @@ var sonosHistory = require('./routes/sonosHistory');
 var staff = require('./routes/staff');
 var lockers = require('./routes/lockers');
 var groups = require('./routes/groups');
+var sunrise = require('./routes/sunrise');
+
 
 var app = express();
 
@@ -97,6 +102,7 @@ app.use('/moment', express.static(__dirname + '/node_modules/moment')); // redir
 app.use('/daterangepicker', express.static(__dirname + '/node_modules/daterangepicker')); // redirect tempus JS
 app.use('/fontawesome', express.static(__dirname + '/node_modules/@fortawesome/fontawesome-free')); // redirect tempus JS
 app.use('/chart.js', express.static(__dirname + '/node_modules/chart.js'));
+app.use('/SunCalc', express.static(__dirname + '/node_modules/suncalc'));
 app.use('/easy-autocomplete', express.static(__dirname + '/node_modules/easy-autocomplete'));
 
 

@@ -1,0 +1,51 @@
+extends dashboard
+
+block content
+
+	.container-fluid
+		.chart-container
+
+
+
+		.row
+			.col.text-left
+				button#switchON.btn.btn-info(onclick='lights("On");') Lights ON
+			.col.text-center
+				button#switchTRIGGER.btn.btn-primary(onclick='lights("trigger");') Lights TOGGLE
+			.col.text-right
+				button#switchOFF.btn.btn-dark(onclick='lights("Off");') Lights OFF	
+		br
+		table.table.table-sm
+			thead
+				tr
+					th.col-auto.text-right Today &nbsp
+					th#Today.col-auto 
+					th.col-auto.text-right Tomorrow &nbsp
+					th#Tomorrow.col-auto 
+			tBody
+				tr
+					td(scope='row').text-right Sunrise :
+					td#sunrise
+					td(scope='row').text-right Sunrise :						
+					td#sunriseTomorrow
+				tr
+					td(scope='row').text-right  In :
+					td#srCountdownToday
+					td(scope='row').text-right  In :
+					td#srCountdownTomorrow
+				tr
+					td(scope='row').text-right Sunset : 
+					td#sunset
+					td(scope='row').text-right Sunset : 
+					td#sunsetTomorrow
+				tr
+					td(scope='row').text-right In :
+					td#ssCountdownToday
+					td(scope='row').text-right In :
+					td#ssCountdownTomorrow
+			br
+
+		p#results
+
+
+	script(src='/javascripts/Dashboard/Sunset.js')
