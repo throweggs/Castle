@@ -11,8 +11,9 @@ var watchMidnight = setInterval(midnight,1000);
 function midnight(){
 if(moment().format('LTS') === moment().startOf('day').format('LTS')) {
   getDates();
+  setDates();
   console.log('MIDNIGHT');
-  console.log(theDateToday);
+  console.log(moment(theDateToday).format('LLL');
 }
 
 }
@@ -50,6 +51,9 @@ function sunriseCountDown(){
 //SUNRISE - TURN OFF FLOODLIGHTS
   if(secondsRemain === 0){
     sunstate('rise');
+    lights('Off');
+    console.log('Sunrise');
+    console.log(moment().format('LLL');
   } else if (secondsRemain < 0){
       $('#srCountdownToday').text('Risen');
   }
@@ -83,6 +87,9 @@ function sunsetCountDown(){
 //SUNSET - TURN ON FLOODLIGHTS
   if(secondsRemain === 0){
       sunstate('set');
+      lights('On');
+      console.log('Sunset');
+      console.log(moment().format('LLL');
   } else if (secondsRemain < 0){
       $('#ssCountdownToday').text('Set');
   }
@@ -110,10 +117,19 @@ xhr.send();
 
 }
 
+function setDates(){
+  $('#Today').text(moment(theDateToday).format('L'));
+  $('#Tomorrow').text(moment(theDateTomorrow).format('L'));
+
+  $('#sunrise').text( moment(times.sunrise).format('LTS'));
+  $('#sunset').text( moment(times.sunset).format('LTS'));
+
+  $('#sunriseTomorrow').text( moment(timesTomorrow.sunrise).format('LTS'));
+  $('#sunsetTomorrow').text( moment(timesTomorrow.sunset).format('LTS'));
+}
 
 
 function lights(state){
-
 
   const xhr = new XMLHttpRequest();
   const url = 'https://192.168.104.101/api/switch/ctrl?switch=3&action='+state;
@@ -126,17 +142,6 @@ xhr.send();
 
 $(document).ready(function() {
   getDates();
-
-  $('#Today').text(moment(theDateToday).format('L'));
-  $('#Tomorrow').text(moment(theDateTomorrow).format('L'));
-
-  $('#sunrise').text( moment(times.sunrise).format('LTS'));
-  $('#sunset').text( moment(times.sunset).format('LTS'));
-
-  $('#sunriseTomorrow').text( moment(timesTomorrow.sunrise).format('LTS'));
-  $('#sunsetTomorrow').text( moment(timesTomorrow.sunset).format('LTS'));
-
-
-
+  setDates();
 
 })
