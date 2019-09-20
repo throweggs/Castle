@@ -13,7 +13,9 @@ if(moment().format('LTS') === moment().startOf('day').format('LTS')) {
   getDates();
   setDates();
   console.log('MIDNIGHT');
-  console.log(moment(theDateToday).format('LLL');
+  console.log('actual time: '+ moment().format('LLL'));
+  console.log('calculated time: '+ moment(theDateToday).format('LLL'));
+
 }
 
 }
@@ -53,7 +55,8 @@ function sunriseCountDown(){
     sunstate('rise');
     lights('Off');
     console.log('Sunrise');
-    console.log(moment().format('LLL');
+    console.log('actual time: '+ moment().format('LLL'));
+    console.log('calculated time: '+ moment(sunriseToday).format('LLL'));
   } else if (secondsRemain < 0){
       $('#srCountdownToday').text('Risen');
   }
@@ -89,7 +92,9 @@ function sunsetCountDown(){
       sunstate('set');
       lights('On');
       console.log('Sunset');
-      console.log(moment().format('LLL');
+      console.log('actual time: '+ moment().format('LLL'));
+      console.log('calculated time: '+ moment(sunsetToday).format('LLL'));
+
   } else if (secondsRemain < 0){
       $('#ssCountdownToday').text('Set');
   }
@@ -109,9 +114,9 @@ function sunsetCountDown(){
 function sunState(state){
 
   const xhr = new XMLHttpRequest();
-  const url = 'https://192.168.104.101/enu/trigger/Sun'+state;
+  const url = 'http://192.168.104.101/enu/trigger/Sun'+state+'&response=text';
 
-xhr.open('POST', url);
+xhr.open('GET', url);
 xhr.onreadystatechange = 'someHandler';
 xhr.send();
 
@@ -132,10 +137,10 @@ function setDates(){
 function lights(state){
 
   const xhr = new XMLHttpRequest();
-  const url = 'https://192.168.104.101/api/switch/ctrl?switch=3&action='+state;
+  const url = 'https://192.168.104.101/api/switch/ctrl?switch=3&action='+state+'&response=text';
 
-xhr.open('POST', url);
-xhr.onreadystatechange = 'someHandler';
+xhr.open('GET', url);
+// xhr.onreadystatechange = 'someHandler';
 xhr.send();
 
 }
