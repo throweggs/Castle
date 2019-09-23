@@ -52,7 +52,7 @@ function sunriseCountDown(){
 
 //SUNRISE - TURN OFF FLOODLIGHTS
   if(secondsRemain === 0){
-    sunstate('rise');
+    sunState('rise');
     lights('Off');
     console.log('Sunrise');
     console.log('actual time: '+ moment().format('LLL'));
@@ -89,7 +89,7 @@ function sunsetCountDown(){
 
 //SUNSET - TURN ON FLOODLIGHTS
   if(secondsRemain === 0){
-      sunstate('set');
+      sunState('set');
       lights('On');
       console.log('Sunset');
       console.log('actual time: '+ moment().format('LLL'));
