@@ -13,8 +13,7 @@ if(moment().format('LTS') === moment().startOf('day').format('LTS')) {
   getDates();
   setDates();
   console.log('MIDNIGHT');
-  console.log('actual time: '+ moment().format('LLL'));
-  console.log('calculated time: '+ moment(theDateToday).format('LLL'));
+  console.log('time: '+ moment().format('LLL'));
 
 }
 
@@ -51,12 +50,11 @@ function sunriseCountDown(){
       $('#srCountdownToday').text( secondsRemain + ' seconds');
 
 //SUNRISE - TURN OFF FLOODLIGHTS
-  if(secondsRemain === 0){
+  if (secondsRemain > 0){
+  $('#srCountdownToday').text( secondsRemain + ' seconds');
+  } else  if(secondsRemain === 0){
     sunState('rise');
     lights('Off');
-    console.log('Sunrise');
-    console.log('actual time: '+ moment().format('LLL'));
-    console.log('calculated time: '+ moment(sunriseToday).format('LLL'));
   } else if (secondsRemain < 0){
       $('#srCountdownToday').text('Risen');
   }
@@ -88,12 +86,12 @@ function sunsetCountDown(){
       $('#ssCountdownToday').text( secondsRemain + ' seconds');
 
 //SUNSET - TURN ON FLOODLIGHTS
-  if(secondsRemain === 0){
+  if (secondsRemain > 0){
+    $('#ssCountdownToday').text( secondsRemain + ' seconds');
+  } else if(secondsRemain === 0){
       sunState('set');
       lights('On');
-      console.log('Sunset');
-      console.log('actual time: '+ moment().format('LLL'));
-      console.log('calculated time: '+ moment(sunsetToday).format('LLL'));
+
 
   } else if (secondsRemain < 0){
       $('#ssCountdownToday').text('Set');
@@ -112,12 +110,17 @@ function sunsetCountDown(){
 
 
 function sunState(state){
-
+  console.log('Sun'+state);
+  console.log(moment().format('LLL'));
   const xhr = new XMLHttpRequest();
-  const url = 'http://192.168.104.101/enu/trigger/Sun'+state+'&response=text';
+  const url = 'https://192.168.104.101/enu/trigger/Sun'+state;
 
 xhr.open('GET', url);
-xhr.onreadystatechange = 'someHandler';
+// xhr.onreadystatechange = 'someHandler';
+xhr.onload = function() { console.log('success'); };
+xhr.onerror = function() {console.log('error'); };
+console.log('response=',xhr.responseText);
+
 xhr.send();
 
 }
@@ -134,13 +137,18 @@ function setDates(){
 }
 
 
-function lights(state){
 
+function lights(state){
+  console.log('Lights '+state);
+  console.log(moment().format('LLL'));
   const xhr = new XMLHttpRequest();
-  const url = 'https://192.168.104.101/api/switch/ctrl?switch=3&action='+state+'&response=text';
+  const url = 'https://192.168.104.101/api/switch/ctrl?switch=3&action='+state;
 
 xhr.open('GET', url);
 // xhr.onreadystatechange = 'someHandler';
+xhr.onload = function() { console.log('success'); };
+xhr.onerror = function() { console.log('error'); };
+console.log('response=',xhr.responseText);
 xhr.send();
 
 }
