@@ -31,14 +31,17 @@ $(function() {
   });
 });
 
+
+
 $(document).on("click", ".popover .close" , function(){
     $(this).parents(".popover").popover('hide');
 });
 
 $(document).ready(function() {
 
+//Formatting on new Locker Modal
   $(document).on('change', '#lockerUse', function (e) {
-                  console.log(this.value);
+
                   if(this.value === 'Hire'){
                     $('input#ownerInput').show();
                     $('input#ownerExpiry').show();
@@ -57,8 +60,7 @@ $(document).ready(function() {
                   }
     });
 
-
-
+//New Key Modal identity finder
   $(document).on('click', '#LockersTableBody td', function (e) {
                   theTHIS = this;
                   var html = $(this).text();
@@ -66,27 +68,29 @@ $(document).ready(function() {
                   var theField = this.id.split("_")[1];
                   theAssetValue = html;
                   if(theField !== 'keyCopies'){
-                          var input = $('<input type="text" class="form-control" id="'+theTHIS.id+'"><div class="valid-feedback">Key Found</div><div class="invalid-feedback">Key Not Found - New Key will be generated</div>');
+                          var input = $('<input type="text" class="form-control '+theTHIS.className+'" id="'+theTHIS.id+'"><div class="valid-feedback">Key Found</div><div class="invalid-feedback">Key Not Found - New Key will be generated</div>');
                           input.val(html);
                           $(this).replaceWith(input);
                           $('#LockersTableBody input').focus();
                   }
           });
 
-
-        $(document).on('click', 'button#minOne', function (e) {
+//add 1 to number of keys on modal
+  $(document).on('click', 'button#minOne', function (e) {
                   x = $('#keyQuantity').val();
                   x --;
                   $('#keyQuantity').val(x);
                 });
 
-        $(document).on('click', 'button#plusOne', function (e) {
+//minus one from number of keys on modal
+  $(document).on('click', 'button#plusOne', function (e) {
                   x = $('#keyQuantity').val();
                   x ++;
                   $('#keyQuantity').val(x);
                 });
 
-          $(document).on('keyup #ownerInput',function (e){
+//formatting of owner input on modal
+  $(document).on('keyup #ownerInput',function (e){
             var found = false;
             $('input#ownerInput').val(toTitleCase($('input#ownerInput').val()));
 
@@ -106,9 +110,8 @@ $(document).ready(function() {
 
           });
 
-
-
-          $(document).on('keyup','#keyNumber',function (e){
+//Formatting on new locker and key Modal
+  $(document).on('keyup','#keyNumber',function (e){
             var keyBatch = '',
                 keyCode = 0;
 
@@ -155,15 +158,58 @@ $(document).ready(function() {
             }
           });
 
+//Checks on Locker Key Numbers to insure correct format on code
+  $('#LockersTableBody').on({
+            keydown: function(e) {
 
-          $(document).on('keyup', '#LockersTableBody input', function(e){
+              if(e.which == 13){
+                return false;
+              }
+              $('#'+e.target.id).val($('#'+e.target.id).val().toUpperCase());
+              if($('#'+e.target.id).hasClass('lockerKey')){
+                if( e.which === 96 && $('#'+e.target.id).val()==2922){
+                    $('#'+e.target.id).val('29220-')
+                    return false;
+                }
+                if(e.which === 109 && $('#'+e.target.id).val()=='29220-'){
+                  $('#'+e.target.id).val('29220-')
+                    return false;
+                }
+
+                if (e.which === 32)
+                  return false;
+                if($('#'+e.target.id).val().includes('29220')){
+                } else {
+
+                  if($('#'+e.target.id).val().length>=5){
+                    if ( e.which == 8 || e.which == 46){
+
+                    } else {
+                      return false;
+                    }
+                  }
+                }
+
+              }
+
+
+            },
+
+            change: function(e) {
+              this.value = this.value.replace(/\s/g, "");
+            }
+
+          });
+
+//find key in array of keys
+  $(document).on('keyup', '#LockersTableBody input', function(e){
 
                   var theID = this.id.split("_")[0];
                   var theField = this.id.split("_")[1];
                   var theKey = theID+'_lockerKey';
                   theKEY = $('#'+theKey).val();
                   if(theField === 'lockerKey'){
-                    console.log(theTHIS);
+
                     var found = '';
                     theKeys.forEach(function(key){
                       var k = key[0];
@@ -173,12 +219,8 @@ $(document).ready(function() {
                       }
                       if(theField === 'lockerKey'){
                         if(found === ''){
-                          console.log('nope');
-                          console.log(theKey);
                           $('#'+theKey).removeClass( "is-valid" ).addClass( "is-invalid" );
                       } else {
-                        console.log('yep');
-                        console.log(theKey);
                         $('#'+theKey).addClass( "is-valid" ).removeClass( "is-invalid" );
                       }
 
@@ -189,23 +231,50 @@ $(document).ready(function() {
         }
       });
 
-          $(document).on('blur', '#LockersTableBody input', function(e){
+// Update Locker record
+  $(document).on('blur', '#LockersTableBody input', function(e){
+    $('#'+e.target.id).val($('#'+e.target.id).val().toUpperCase());
+    if($('#'+e.target.id).val().includes('29220')){
+      var string = $('#'+e.target.id).val().split('-');
+
+        if(string[1].length==1){
+          $('#'+e.target.id).val('29220-00'+string[1])
+        } else if(string[1].length==2){
+            $('#'+e.target.id).val('29220-0'+string[1])
+          }
+    }
+    if($('#'+e.target.id).val().includes('AJ') || $('#'+e.target.id).val().includes('CJ') || $('#'+e.target.id).val().includes('CC')){
+      var string = $('#'+e.target.id).val().split('');
+      var splitter = string[1];
+            console.log(splitter);
+      var header = string[0]+[1];
+      var footer = $('#'+e.target.id).val().split(splitter);
+      var footer = footer[footer.length-1];
+      console.log(footer);
+
+        if(footer.length===1){
+          console.log('hit');
+          $('#'+e.target.id).val(string[0]+string[1]+'00'+footer)
+        } else if(footer.length===2){
+            $('#'+e.target.id).val(string[0]+string[1]+'0'+footer)
+          }
+    }
             var theTHIS = this;
             var theID = this.id.split("_")[0];
             var theField = this.id.split("_")[1];
             var theKey = theID+'_lockerKey';
 
-              $(this).replaceWith('<td class="lockerRow" id="'+this.id+'"><span>'+this.value+'</span></td>');
+              $(this).replaceWith('<td class="lockerRow '+this.ClassName+'" id="'+this.id+'"><span>'+this.value+'</span></td>');
 
               var theKEY = '';
-              console.log(theID)
+
                   var asset = {
                               FindMe : theID,
                               Locker :  $('#'+theID+'_lockerNumber').text(),
                               Key : $('#'+theID+'_lockerKey').text(),
                               Owner : $('#'+theID+'_lockerOwner').text(),
                               }
-                              console.log(asset);
+
 
                               $.ajax({
                                   type: 'put',
@@ -214,7 +283,7 @@ $(document).ready(function() {
                                   dataType: 'JSON',
                                   contentType: 'application/json',
                               }).done(function( response, results ) {
-                                console.log(results);
+
 
                                   // Check for successful (blank) response
                                   if (results === 'success') {
@@ -294,19 +363,22 @@ function insertKey(key) {
 
           var keyRow = table.insertRow(-1);
                 keyRow.id = keyID + '_keyRow';
+                keyRow.className = 'keyRow';
           var keyCode = keyRow.insertCell(-1);
                 keyCode.innerHTML = code;
                 keyCode.id = keyID + '_keyCode';
+                keyCode.className = 'keyCode'
           var keyCopies = keyRow.insertCell(-1);
                 keyCopies.innerHTML = copies;
                 keyCopies = keyID + '_keyCopies';
+                keyCopies.className = 'keyCopies'
 
 keyID = '';
 
 }
 
 function insertLocker(locker) {
-  console.log(locker);
+
 
   var copies = 0;
       theKeys.forEach(function(key){
@@ -324,17 +396,21 @@ function insertLocker(locker) {
               var lockerNumber = lockerRow.insertCell(-1);
                     lockerNumber.innerHTML =  locker.Locker;
                     lockerNumber.id =  locker._id + '_lockerNumber';
+                    lockerNumber.className = 'lockerNumber'
               var lockerKey = lockerRow.insertCell(-1);
                     lockerKey.innerHTML = locker.Key;
                     lockerKey.id =  locker._id + '_lockerKey';
+                    lockerKey.className = 'lockerKey'
               var keyCopies = lockerRow.insertCell(-1);
                     keyCopies.innerHTML = copies;
                     keyCopies.id =  locker._id + '_keyCopies';
+                    keyCopies.className = 'keyCopies';
               var lockerOwner = lockerRow.insertCell(-1);
                       lockerOwner.innerHTML = locker.Owner;
                       lockerOwner.id =  locker._id + '_lockerOwner';
+                      lockerOwner.className = 'lockerOwner';
               var ownerExpiry = lockerRow.insertCell(-1);
-                      console.log(locker.Expiry);
+
                       if(locker.Expiry == null){
                         ownerExpiry.innerHTML = '';
                       } else {
@@ -396,14 +472,14 @@ function addKey() {
     contentType: 'application/json',
     data: JSON.stringify(info),
   }).done(function( response, results ) {
-    console.log(results);
+
 
       // Check for successful (blank) response
       if (results === 'success') {
-          console.log('success');
+
         window.location.reload();
           resetPage();
-        console.log('reset');
+
       }
       else {
           // If something goes wrong, alert the error message that our service returned
@@ -452,14 +528,14 @@ function addLocker() {
           contentType: 'application/json',
           data: JSON.stringify(lockerInfo),
         }).done(function( response, results ) {
-          console.log(results);
+
 
             // Check for successful (blank) response
             if (results === 'success') {
-                console.log('success');
+
               window.location.reload();
                 resetPage();
-              console.log('reset');
+
             }
             else {
                 // If something goes wrong, alert the error message that our service returned
@@ -477,14 +553,14 @@ if($('input#KeyID' === '')) {
             contentType: 'application/json',
             data: JSON.stringify(keyInfo),
           }).done(function( response, results ) {
-            console.log(results);
+
 
               // Check for successful (blank) response
               if (results === 'success') {
-                  console.log('success');
+
                 window.location.reload();
                   resetPage();
-                console.log('reset');
+
               }
               else {
                   // If something goes wrong, alert the error message that our service returned
@@ -494,7 +570,7 @@ if($('input#KeyID' === '')) {
               }
 
           });
-} else {
+  } else {
           $.ajax({
               type: 'put',
               data: JSON.stringify(keyInfo),
@@ -502,7 +578,7 @@ if($('input#KeyID' === '')) {
               dataType: 'JSON',
               contentType: 'application/json',
           }).done(function( response, results ) {
-            console.log(results);
+;
 
               // Check for successful (blank) response
               if (results === 'success') {
