@@ -18,10 +18,13 @@ var SunCalc = require('suncalc');
 
 
 
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('co-forms:27017/forms');
-var twoN = monk('192.168.104.101/api/switch/ctrl?switch=3&action=trigger');
+const mongo = require('mongodb');
+const monk = require('monk');
+const url = 'co-forms:27017/forms'
+const db = monk(url);
+db.then(() => {
+  console.log('Connected correctly to server, at: ' + url)
+})
 
 
 var index = require('./routes/index');

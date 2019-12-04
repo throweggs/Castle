@@ -64,6 +64,14 @@ html {
   color: #fff;
 } */
 
+.keyDel {
+    cursor: pointer;
+}
+
+.lockerDel {
+    cursor: pointer;
+}
+
 .fa-edit {
   cursor: pointer;
 }

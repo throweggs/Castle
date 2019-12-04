@@ -1,0 +1,143 @@
+extends layout
+include GDPR
+
+block content
+	script(src='/javascripts/feedback.js')
+
+	#feedbackFrom.container-fluid
+		.form-group
+			p
+			| If you wish to remain annoymous, feel free to leave to not enter your name.
+			#nameField.md-form.input-group
+				.input-group-prepend
+					span.input-group-text.md-addon Your Name
+				input#contactName.form-control(type='text' class='text-capitalize' placeholder='')
+
+			p
+			| By providing your email address or telephone number we will be able to contact you if you would like a response.
+			#contactField.md-form.input-group
+				.input-group-prepend
+					span.input-group-text.md-addon Contact Details
+				input#contactPhone.form-control(type='tel' class='text-capitalize' placeholder='Phone Number')
+				input#contactEmail.form-control(type='email' class='text-capitalize' placeholder='e-mail address')
+
+		p
+		| Which department do you wish to feedback on:
+		.dept.card-deck
+			#Cafe.dept.card
+				p
+				#Cafe.dept.text-center
+					#Cafe.i.fas.dept.fa-coffee.fa-3x
+				#Cafe.dept.card-body
+					#Cafe.dept.h5.text-center.card-title Cafe
+
+			#Climbing.dept.card
+				p
+				#Climbing.text-center
+					#Climbing.i.fas.fa-hand-rock.fa-3x
+				#Climbing.card-body
+					#Climbing.h5.text-center.card-title Climbing
+
+			#Facilities.dept.card
+				p
+				#Facilities.text-center
+					#Facilities.i.fas.fa-toilet.fa-3x
+				#Facilities.card-body
+					#Facilities.h5.text-center.card-title Facilities
+
+			#Garden.dept.card
+				p
+				#Garden.text-center
+					#Garden.i.fas.fa-tree.fa-3x
+				#Garden.card-body
+					#Garden.h5.text-center.card-title Garden
+
+			#General.dept.card
+				p
+				#General.text-center
+					#General.i.fas.fa-chess-rook.fa-3x
+				#General.card-body
+					#General.h5.text-center.card-title General
+		
+			#Shop.dept.card
+				p
+				#Shop.text-center
+					#Shop.i.fas.fa-tags.fa-3x
+				#Shop.card-body
+					#Shop.h5.text-center.card-title Shop
+
+		p
+		#Route.md-form.input-group(style='display: none;')
+			.input-group-prepend
+				span.input-group-text.md-addon Do you have a particular route in mind?
+			input#routeLine.form-control(type='number',  placeholder='Line')
+			input#routeGrade.form-control(type='text',  placeholder='Grade')
+			input#routeColour.form-control(type='text',  placeholder='Colour')
+		p
+		| Your Feedback:
+		#feedback.md-form.input-group
+			textarea#feedback.form-control(type='text')
+
+
+	
+		p
+		| How was your experience?				
+		.card-deck
+			#ReallySad.feels.card
+				p
+				#ReallySad.feels.text-center
+					#ReallySad.feels.i.fas.fa-sad-tear.fa-3x
+					p
+
+			#Sad.feels.card
+				p
+				#Sad.feels.text-center
+					#Sad.feels.i.fas.fa-frown.fa-3x
+
+
+			#OK.feels.card
+				p
+				#OK.text-center
+					#OK.i.fas.fa-meh.fa-3x
+
+
+			#Happy.feels.card
+				p
+				#Happy.text-center
+					#Happy.i.fas.fa-smile.fa-3x
+
+
+			#ReallyHappy.feels.card
+				p
+				#ReallyHappy.text-center
+					#ReallyHappy.i.fas.fa-smile-beam.fa-3x
+		p
+		.row.container-fluid
+			.col 
+				h4 Thankyou for your feedback
+			.col-1.align-self-end
+			a#cancel.btn.btn-danger(href="#",  data-target='#AreYouSure') Cancel
+			.col-1
+			button#submit.btn.btn-success(type='submit') Submit 
+		p
+
+	#welcomeModal.modal.fade.AreYouSure(tabindex='-1', role='dialog', aria-labelledby='welcome', aria-hidden='true')
+		.modal-dialog
+			.modal-content
+				.modal-header
+					.row
+						.col
+							.text-center.i.fas.fa-comments.fa-3x
+						.col.align-right
+							
+
+				.modal-body.love-ya
+					h1.text-center Your feedback, comments and suggestions are important to us. 
+					hr
+					h1.text-center We would like to here from you.
+				.modal-footer
+					.row
+						.col-auto
+							img(src='logo.png', alt='')
+						.col-auto
+							a.btn.btn-primary.btn-large.submit-btn(href='#', data-dismiss='modal', aria-label='Close') Lets Go!

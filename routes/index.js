@@ -23,6 +23,11 @@ router.get('/visitor', function(req, res) {
     res.render('visitor', { title: 'Visitor Form' });
 });
 
+/* GET visitors  page. */
+router.get('/feedback', function(req, res) {
+    res.render('feedback', { title: 'Feedback, Comments and Surgestions' });
+});
+
 /* GET homepage. */
 router.get('/', function(req, res) {
     res.render('homepage', { title: 'Welcome' });

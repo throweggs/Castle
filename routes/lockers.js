@@ -1,5 +1,14 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const monk = require('monk');
+const url = 'co-forms:27017/forms'
+const db = monk(url);
+// db.then(() => {
+//   console.log('Connected correctly to server, at: ' + url)
+// })
+// const keysCollection = db.get('keys');
+// const lockersCollection = db.get('lockers');
+// const db = req.db;
 
 
 // ADD
@@ -82,9 +91,7 @@ router.get('/getAKey', function(req, res) {
 //UPDATE SINGLE
 router.put('/updateALocker', function(req, res){
   findMe = req.body.FindMe;
-  console.log('Hit UPDATE');
-  console.log(findMe);
-  console.log(req.body);
+
   var db = req.db;
   var collection = db.get('lockers');
   collection.update(findMe,req.body,function(e,docs){
@@ -97,9 +104,7 @@ router.put('/updateALocker', function(req, res){
 //UPDATE SINGLE
 router.put('/updateAKey', function(req, res){
   findMe = req.body.FindMe;
-  console.log('Hit UPDATE');
-  console.log(findMe);
-  console.log(req.body);
+
   var db = req.db;
   var collection = db.get('keys');
   collection.update(findMe,req.body,function(e,docs){
@@ -109,6 +114,29 @@ router.put('/updateAKey', function(req, res){
   });
 });
 
+router.post('/delAKey', function(req, res){
+  console.log('del a key');
+  var id = req.body.FindMe;
+  var db = req.db;
+  var collection = db.get('keys');
+  collection.remove({"_id": db.id(id)},function(e,docs){
+      res.json(docs);
+      console.log('deleted a record');
+      console.log( docs.results);
+  });
+});
+  router.post('/delALocker', function(req, res){
+    console.log('del a Locker');
+    var id = req.body.FindMe;
+    var db = req.db;
+    var collection = db.get('lockers');
+    collection.remove({"_id": db.id(id)},function(e,docs){
+        res.json(docs);
+        console.log('deleted a record');
+        console.log( docs.results);
+    });
+
+});
 
 
 

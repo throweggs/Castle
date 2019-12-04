@@ -75,6 +75,93 @@ $(document).ready(function() {
                   }
           });
 
+//New Key Modal identity finder
+  $(document).on('click', '#KeysTableBody td', function (e) {
+                  theTHIS = this;
+                  var html = $(this).text();
+                  var theID = this.id.split("_")[0];
+                  var theField = this.id.split("_")[1];
+                  theAssetValue = html;
+                  if(theField === 'keyCopies'){
+                          var input = $('<td><input type="text" class="form-control '+theTHIS.className+'" id="'+theTHIS.id+'"></td>');
+                          // input.val(html);
+                          $(this).replaceWith(input);
+                          $('#KeysTableBody input').focus();
+                          $('#KeysTableBody input').val(html);
+                  }
+          });
+
+
+//Delete locker from Database
+  $(document).on('click', '.lockerDel', function (e) {
+
+    var theID = this.id.split("_")[0];
+    console.log(theID)
+    var contDel = confirm('are you sure you wish to delete locker: '+$('#'+theID+'_lockerNumber').text()+'?');
+    if(contDel){
+              var asset = {
+                          FindMe : theID
+                        }
+
+                          $.ajax({
+                              type: 'post',
+                              data: JSON.stringify(asset),
+                              url: 'lockers/delAlocker',
+                              dataType: 'JSON',
+                              contentType: 'application/json',
+                          }).done(function( response, results ) {
+
+
+                              // Check for successful (blank) response
+                              if (results === 'success') {
+
+                                $('tbody#LockerTableBody').html('');
+                                getLockers();
+                              }
+                              else {
+                                  // If something goes wrong, alert the error message that our service returned
+                                  alert('Error: ' + response.msg);
+
+                              }
+
+                          });
+                } else {}
+      });
+
+//Delete Key from Database
+  $(document).on('click', '.keyDel', function (e) {
+
+    var theID = this.id.split("_")[0];
+    var contDel = confirm('are you sure you wish to delete key: '+$('#'+theID+'_keyCode').text()+'?');
+    if(contDel){
+              var asset = {
+                          FindMe : theID
+                        }
+
+                          $.ajax({
+                              type: 'post',
+                              data: JSON.stringify(asset),
+                              url: 'lockers/delAKey',
+                              dataType: 'JSON',
+                              contentType: 'application/json',
+                          }).done(function( response, results ) {
+
+
+                              // Check for successful (blank) response
+                              if (results === 'success') {
+
+                                $('tbody#KeysTableBody').html('');
+                                getKeys();
+                              }
+                              else {
+                                  // If something goes wrong, alert the error message that our service returned
+                                  alert('Error: ' + response.msg);
+
+                              }
+
+                          });
+                } else {}
+      });
 //add 1 to number of keys on modal
   $(document).on('click', 'button#minOne', function (e) {
                   x = $('#keyQuantity').val();
@@ -203,7 +290,6 @@ $(document).ready(function() {
 
 //find key in array of keys
   $(document).on('keyup', '#LockersTableBody input', function(e){
-
                   var theID = this.id.split("_")[0];
                   var theField = this.id.split("_")[1];
                   var theKey = theID+'_lockerKey';
@@ -218,6 +304,7 @@ $(document).ready(function() {
                         found = i;
                       }
                       if(theField === 'lockerKey'){
+
                         if(found === ''){
                           $('#'+theKey).removeClass( "is-valid" ).addClass( "is-invalid" );
                       } else {
@@ -231,38 +318,115 @@ $(document).ready(function() {
         }
       });
 
+//Update key copies record
+  $(document).on('blur', '#KeysTableBody input', function(e){
+    var batch = '',
+        number = '',
+        string = '';
+    var theTHIS = this;
+    var theID = this.id.split("_")[0];
+    var findCode = '#'+theID+'_keyCode';
+        if($(findCode).text().includes('29220')){
+          string = $(findCode).text().split('-');
+          batch = 29220;
+          number = string[1];
+        } else {
+            string = $(findCode).text().split('');
+            batch = string[0]+string[1];
+            number = $(findCode).text().split(batch);
+            number = number[1];
+        }
+
+      $(this).replaceWith('<class="keyRow '+this.ClassName+'" id="'+this.id+'"><span>'+this.value+'</span>');
+
+      var asset = {
+                  FindMe : theID,
+                  Key: {
+                    Code: $('#'+theID+'_keyCode').text(),
+                    Batch : batch,
+                    Number : number
+                            },
+                  Copies: $('#'+theID+'_keyCopies').text(),
+
+                  }
+
+
+                  $.ajax({
+                      type: 'put',
+                      data: JSON.stringify(asset),
+                      url: 'lockers/updateAKey',
+                      dataType: 'JSON',
+                      contentType: 'application/json',
+                  }).done(function( response, results ) {
+
+
+                      // Check for successful (blank) response
+                      if (results === 'success') {
+                        staffID = '';
+
+                        $('tbody#KeysTableBody').html('');
+                        getKeys();
+
+
+                      }
+                      else {
+                          // If something goes wrong, alert the error message that our service returned
+                          alert('Error: ' + response.msg);
+
+                      }
+
+                  });
+
+  });
+
 // Update Locker record
   $(document).on('blur', '#LockersTableBody input', function(e){
+    var header = '',
+        footer = '',
+        string = '';
+
     $('#'+e.target.id).val($('#'+e.target.id).val().toUpperCase());
     if($('#'+e.target.id).val().includes('29220')){
-      var string = $('#'+e.target.id).val().split('-');
+        string = $('#'+e.target.id).val().split('-');
 
         if(string[1].length==1){
-          $('#'+e.target.id).val('29220-00'+string[1])
+          string[1] = '00'+string[1];
+          $('#'+e.target.id).val('29220-'+string[1])
         } else if(string[1].length==2){
-            $('#'+e.target.id).val('29220-0'+string[1])
+          string[1] = '0'+string[1];
+            $('#'+e.target.id).val('29220-'+string[1])
           }
     }
     if($('#'+e.target.id).val().includes('AJ') || $('#'+e.target.id).val().includes('CJ') || $('#'+e.target.id).val().includes('CC')){
-      var string = $('#'+e.target.id).val().split('');
+          string = $('#'+e.target.id).val().split('');
       var splitter = string[1];
             console.log(splitter);
-      var header = string[0]+[1];
-      var footer = $('#'+e.target.id).val().split(splitter);
-      var footer = footer[footer.length-1];
+          header = string[0]+[1];
+          footer = $('#'+e.target.id).val().split(splitter);
+          footer = footer[footer.length-1];
       console.log(footer);
 
         if(footer.length===1){
-          console.log('hit');
-          $('#'+e.target.id).val(string[0]+string[1]+'00'+footer)
+          footer = '00'+footer
+          $('#'+e.target.id).val(string[0]+string[1]+footer)
         } else if(footer.length===2){
-            $('#'+e.target.id).val(string[0]+string[1]+'0'+footer)
+          footer = '0'+footer
+            $('#'+e.target.id).val(string[0]+string[1]+footer)
           }
     }
             var theTHIS = this;
             var theID = this.id.split("_")[0];
             var theField = this.id.split("_")[1];
             var theKey = theID+'_lockerKey';
+
+            if($('#'+e.target.id).hasClass('is-invalid')){
+              var blurValues = [];
+              blurValues.keyCode  = this.value;
+              blurValues.batch = string[0];
+              blurValues.number = string[1];
+              console.log(blurValues)
+              addKey(blurValues)
+            }
 
               $(this).replaceWith('<td class="lockerRow '+this.ClassName+'" id="'+this.id+'"><span>'+this.value+'</span></td>');
 
@@ -351,6 +515,7 @@ function getAKey(key){
 
   }
 
+//Inerts key into table
 function insertKey(key) {
   keyID = key._id;
   theKeys.push([key.Key.Code,key._id,key.Copies]);
@@ -359,24 +524,30 @@ function insertKey(key) {
   copies = key.Copies;
           var table = document.getElementById("KeysTableBody");
 
-
-
-          var keyRow = table.insertRow(-1);
+          var keyRow = table.insertRow(0);
                 keyRow.id = keyID + '_keyRow';
                 keyRow.className = 'keyRow';
           var keyCode = keyRow.insertCell(-1);
-                keyCode.innerHTML = code;
                 keyCode.id = keyID + '_keyCode';
                 keyCode.className = 'keyCode'
+                keyCode.innerHTML = code;
           var keyCopies = keyRow.insertCell(-1);
-                keyCopies.innerHTML = copies;
-                keyCopies = keyID + '_keyCopies';
+                keyCopies.id = keyID + '_keyCopies';
                 keyCopies.className = 'keyCopies'
+                keyCopies.innerHTML = copies;
+          var keyDel = keyRow.insertCell(-1);
+                keyDel.id = keyID + '_keyDel';
+                keyDel.className = 'keyDel'
+                keyDel.innerHTML = '<i className="keyDel" id="'+keyID+'_keyDel" class="fas  fa-trash-alt"></i>';
 
+
+
+// <i class="fas  fa-trash-alt"></i>
 keyID = '';
 
 }
 
+//inserts locker into table
 function insertLocker(locker) {
 
 
@@ -393,6 +564,10 @@ function insertLocker(locker) {
               var lockerRow = table.insertRow(-1);
                     lockerRow.id =  locker._id + '_lockerRow';
                     lockerRow.className = 'lockerRow'
+              var lockerDel = lockerRow.insertCell(-1);
+                    lockerDel.id = locker._id + '_lockerDel';
+                    lockerDel.className = 'lockerDel'
+                    lockerDel.innerHTML = '<i className="lockerDel" id="'+locker._id+'_keyDel" class="fas  fa-trash-alt"></i>';
               var lockerNumber = lockerRow.insertCell(-1);
                     lockerNumber.innerHTML =  locker.Locker;
                     lockerNumber.id =  locker._id + '_lockerNumber';
@@ -401,16 +576,15 @@ function insertLocker(locker) {
                     lockerKey.innerHTML = locker.Key;
                     lockerKey.id =  locker._id + '_lockerKey';
                     lockerKey.className = 'lockerKey'
-              var keyCopies = lockerRow.insertCell(-1);
-                    keyCopies.innerHTML = copies;
-                    keyCopies.id =  locker._id + '_keyCopies';
-                    keyCopies.className = 'keyCopies';
+              // var keyCopies = lockerRow.insertCell(-1);
+              //       keyCopies.innerHTML = copies;
+              //       keyCopies.id =  locker._id + '_keyCopies';
+              //       keyCopies.className = 'keyCopies';
               var lockerOwner = lockerRow.insertCell(-1);
                       lockerOwner.innerHTML = locker.Owner;
                       lockerOwner.id =  locker._id + '_lockerOwner';
                       lockerOwner.className = 'lockerOwner';
               var ownerExpiry = lockerRow.insertCell(-1);
-
                       if(locker.Expiry == null){
                         ownerExpiry.innerHTML = '';
                       } else {
@@ -418,13 +592,14 @@ function insertLocker(locker) {
                       }
                       ownerExpiry.id =  locker._id + '_ownerExpiry';
 
+
       keyID = '';
 
 
 
 }
 
-
+//Gets keys from the database
 function getKeys() {
 
     // jQuery AJAX call for JSON
@@ -438,6 +613,7 @@ function getKeys() {
   });
 }
 
+//Get Lockers from the database
 function getLockers() {
 
     // jQuery AJAX call for JSON
@@ -451,19 +627,27 @@ function getLockers() {
   });
 }
 
-function addKey() {
+//Adds key to databsae
+function addKey(blurValue) {
+  var batch = $('input#keyBatchInput').val(),
+      number = $('input#keyNumberInput').val(),
+      copies = $('input#copiesInput').val();
+  if(blurValue === NaN){
+
+  } else {
+    keyCode = blurValue.keyCode;
+    batch = blurValue.batch;
+    number = blurValue.number;
+    copies = 1;
+  }
   var info = {
-    Created: {
-       Created: moment(),
-       Created_Date : moment().format('L'),
-       Created_Time : moment().format('LT'),
-              },
+
     Key: {
       Code: keyCode,
-      Batch : $('input#keyBatchInput').val(),
-      Number : $('input#keyNumberInput').val()
+      Batch : batch,
+      Number : number
               },
-    Copies: $('input#copiesInput').val()
+    Copies: copies
   }
 
   $.ajax({
@@ -484,14 +668,15 @@ function addKey() {
       else {
           // If something goes wrong, alert the error message that our service returned
           alert('Error: ' + response.msg);
-          window.location.reload();
-            resetPage();
+          // window.location.reload();
+          //   resetPage();
       }
 
   });
 
 };
 
+//Adds locker to database and key
 function addLocker() {
         var lockerInfo = {
           Created: {
@@ -508,11 +693,6 @@ function addLocker() {
         }
 
         var keyInfo = {
-          Created: {
-             Created: moment(),
-             Created_Date : moment().format('L'),
-             Created_Time : moment().format('LT'),
-                    },
                     Key: {
                       Code: $('input#keyInput').val(),
                       Batch : $('input#keyBatch').val(),
@@ -600,6 +780,7 @@ if($('input#KeyID' === '')) {
 
 };
 
+//Populates table as Pin modal is hidden
 $(document).on('hidden.bs.modal', function(e) {
 
 if(e.target.id==='PinModal'){
@@ -633,8 +814,6 @@ $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
 
 
 $(document).on('keyup',function (e){
-
-
 
   if(e.target.id === 'keyBatchInput'){
     if($("#keyBatchInput").val() === '29220'){

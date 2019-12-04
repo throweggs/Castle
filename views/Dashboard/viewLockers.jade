@@ -23,11 +23,13 @@ block content
 				div
 					table#lockers.table.table-stripped.text-nowrap(cellspacing="0" width="100%" style="display: none")
 						thead
-							th.th-sm Locker #
+							th.th-sm 
+							th.th-sm #
 							th.th-sm Key Code
-							th.th-sm Copies
+							//- th.th-sm Copies
 							th.th-sm Owner
 							th.th-sm Exipry
+
 
 						tbody#LockersTableBody
 		
@@ -37,7 +39,8 @@ block content
 
 						thead
 							th.th-sm Key Code
-							th.th-sm Copies
+							th.th-sm Qty
+							th.th-sm 
 
 						tbody#KeysTableBody
 
@@ -89,7 +92,7 @@ block content
 		
 										input#keyBatch.col-4.form-control(type='text', placeholder='Batch',required='')
 
-										input#keyNumber.col-4.form-control(type='text', placeholder='Number',required='')
+										input#keyNumber.col-4.form-control(type='number', placeholder='Number',required='')
 
 										input#keyInput.col-5.form-control(type='text', placeholder='Key Code',required='', disabled)
 										.valid-feedback
@@ -102,7 +105,7 @@ block content
 										.input-group-prepend
 											button#minOne.btn.btn-outline-warning(type="button",style="display: none")
 												.fa.fa-minus
-										input#keyQuantity.col-2.form-control(type='text', placeholder='Key Quantity',required=',' aria-label="", aria-describedby="key Quantity")
+										input#keyQuantity.col-2.form-control(type='number', placeholder='Key Quantity',required=',' aria-label="", aria-describedby="key Quantity")
 										.input-group-append
 											button#plusOne.btn.btn-outline-warning(type="button",style="display: none")
 												.fa.fa-plus
