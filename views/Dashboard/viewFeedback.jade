@@ -1,0 +1,28 @@
+extends dashboard
+
+block content
+
+
+  
+          
+  .container-fluid
+
+    .row
+      
+      .col-md
+        div
+          table#feedbackTable.table.table-hover.table-sm(cellspacing="0")
+              thead
+                th +
+                th Date 
+                th Time
+                th Name
+                th Phone Number
+                th Email Address
+                th Area
+                th Feels                
+                th Processed
+          
+              tbody#feedbackBody
+      
+  script(src='/javascripts/Dashboard/viewFeedback.js')

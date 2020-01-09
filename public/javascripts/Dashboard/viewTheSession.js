@@ -12,7 +12,6 @@ var theData = [],
 
 
 function showParticipants(theParticipant){
-  console.log('show Participants');
   theID = 'Participants_'+ theParticipant.id;
   var x = document.getElementById(theID);
   if (x.style.display === "none") {
@@ -27,7 +26,6 @@ function showParticipants(theParticipant){
 }
 
 function rotateMe(icon){
-    console.log('rotate me');
 theID = '#'+icon.id;
 
   $(theID).hover(function() {
@@ -167,6 +165,7 @@ function populateVisitorTable() {
             exportTable +='<th>Participant</th>';
             exportTable +='<th>Reason For Visit</th>';
             exportTable +='<th>First Time</th>';
+            exportTable +='<th>Left Session</th>'
             exportTable +='</tr>';
             // Stick our visitor data array into a visitorlist variable in the visitorlist object
         visitorListData = data;
@@ -253,7 +252,7 @@ function populateVisitorTable() {
               tableContent += '<tr id=Participants_'+item._id+' style="display:none; padding: 0px; margin: 0px;">';
               tableContent += '<td colspan="7" style=" padding: 0px; margin: 0px;">';
               tableContent += '<table class="table table-sm thead-light innerTable table-stripped text-nowrap table-dark"  cellspacing="0" width="100%">';
-              tableContent +=   '<th>Participant</th><th>Reason For Visit</th><th>First Time</th>';
+              tableContent +=   '<th>Participant</th><th>Reason For Visit</th><th>First Time</th><th>Left Session</th><th>Reason</th>';
                   $.each(item.Participants,function(i,person){
                     var rfvlabelFound = false;
 
@@ -280,11 +279,16 @@ function populateVisitorTable() {
                           ftChart.labels.push(person.First_Time);
                           ftChart.theData[ftChart.labels.length-1] = 1;
                         }
-
+                      var leftSession = [false,' ',' '];
+                    if('Left_Session' in person){
+                      leftSession = person.Left_Session
+                    }
                     tableContent +=   '<tr>';
                     tableContent +=     '<td>'+person.First_Name+' '+person.Last_Name+'</td>';
                     tableContent +=     '<td>'+person.Reason+'</td>';
                     tableContent +=     '<td>'+person.First_Time+'</td>';
+                    tableContent +=     '<td>' + leftSession[0] + '</td>';
+                    tableContent +=     '<td>' + leftSession[2] + '</td>';
                     tableContent +=  ' </tr>';
 
                     exportTable += '<tr>';
@@ -294,8 +298,10 @@ function populateVisitorTable() {
                     exportTable += '<td>' + toTitleCase(item.Start_Location) + '</td>';
                     exportTable += '<td>' + participantsCount + '</td>';
                     exportTable += '<td>' + person.First_Name+' '+person.Last_Name + '</td>'
-                    exportTable += '<td>' +person.Reason + '</td>';
+                    exportTable += '<td>' + person.Reason + '</td>';
                     exportTable += '<td>' + person.First_Time + '</td>';
+                    exportTable += '<td>' + leftSession[0] + '</td>';
+                    exportTable += '<td>' + leftSession[2] + '</td>';
                     exportTable +=  ' </tr>';
 
                   });
@@ -309,7 +315,7 @@ function populateVisitorTable() {
           $.each(fanChart.labels,function(i,label){
           fanChart.averagePart[i] = (fanChart.totalPart[i]/fanChart.numSessions[i]).toFixed(1);
           });
-          console.log(fanChart)
+
 
           // Inject the whole content string into our existing HTML table
           $('table#visitorTable tbody').html(tableContent);

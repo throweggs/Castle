@@ -158,9 +158,10 @@ $.each(teamInfo, function(i, team){
       Active_Staff_Member : $('input[id=activeStaff]').prop('checked'),
       Teams : selectedTeam,
       Access_Rights : [
+        {Name :  'Feedback', Permission : $('input[id=Feedback]').prop('checked')},
         {Name :  'Visitors', Permission : $('input[id=Visitors]').prop('checked')},
         {Name :  'NCC', Permission : $('input[id=NCC]').prop('checked')},
-        {Name :  'Groups', Permission : $('input[id=Groups]').prop('checked')},      
+        {Name :  'Groups', Permission : $('input[id=Groups]').prop('checked')},
         {Name :  'WBS', Permission : $('input[id=WBS]').prop('checked')},
         {Name :  'TheSession', Permission : $('input[id=TheSession]').prop('checked')},
         {Name :  'TW', Permission :  $('input[id=TW]').prop('checked')},

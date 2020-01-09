@@ -6,11 +6,11 @@ html(lang='en')
     append styles
 
       link(rel='stylesheet', href='/chart.js/dist/Chart.min.css')
-      link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+      link(id="pagestyle", rel='stylesheet', href='/stylesheets/bootstrap.min.css')
       //- link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.min.css')
       link(rel="stylesheet" type="text/css" href="daterangepicker/daterangepicker.css")
       link(rel='stylesheet', href='/easy-autocomplete/dist/easy-autocomplete.min.css')
-      link(rel='stylesheet', href='/stylesheets/style.css')
+      link(id="customstyle", rel='stylesheet', href='/stylesheets/darkStyle.css')
 
 
 
@@ -35,7 +35,7 @@ body
   //-   .container-fluid
   nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
     a.navbar-brand(href='#')
-      img.d-inline-block.align-centre(src='logo.svg', height='30', alt='')
+      img#styleSheet.d-inline-block.align-centre(src='logo.svg', height='30', alt='',onClick=('switchStyle();'))
     #navbarText.collapse.navbar-collapse
       span.navbar-text Castle Climbing Centre
       .navbar-nav.mr-auto

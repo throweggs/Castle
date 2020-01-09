@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css?family=Love+Ya+Like+A+Sister');
+
+/* [class^="icon-"], [class*="icon-"] {
+    display: inline-block;
+    width: 100%;
+} */
+
+
+td {
+  word-break: break-all;
+}
+
+.btn-homepage{
+ border-bottom:5px solid #black;
+  position:relative;
+}
+
+.btn-homepage:hover {
+      top:2.5px;
+      border-bottom-width:2.5px;
+    }
+.btn-homepage:active {
+      top:5px;
+      border-bottom:0;
+    }
+
+
+
+.easy-autocomplete-container {
+  color: black;
+}
+
+ i {
+    text-align: center;
+}
+
+/* .fa-angle-right:hover{
+color: red
+addClass: 'data-fa-transform="rotate-90"';
+}
+.fa-angle-right i:hover{
+
+}
+.fa-angle-right i before:hover{
+color: red
+} */
+
+.list-group-item-action{
+  background-color: #2B3E50
+}
+
+
+html {
+  height:100%;
+  box-sizing: border-box;
+
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.hidetext { -webkit-text-security: disc; /* Default */ }
+
+.love-ya{
+  font-family: 'Love Ya Like A Sister';
+}
+
+/* .nav-link{
+  color: #fff;
+} */
+
+.keyDel {
+    cursor: pointer;
+}
+
+.lockerDel {
+    cursor: pointer;
+}
+
+.fa-edit {
+  cursor: pointer;
+}
+
+.PT.card {
+  cursor: pointer;
+}
+
+body {
+  /* font: sans-serif; */
+  /* color: #404040 ; */
+  background: url(castleline.svg) no-repeat center center fixed #2B3E50;
+  /* background: url(castleline.svg) no-repeat center center fixed; */
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+
+.dept.card {
+  background-color: #ffffff;
+  opacity: 0.7;
+}
+.dept.card-body {
+  color: black;
+  opacity: 1;
+}
+.dept.h5 {
+margin-bottom: 0px;
+}
+
+
+.feels.card {
+  background-color: #ffffff;
+  opacity: 0.7;
+}
+.feels.card-body {
+  color: black;
+  opacity: 1;
+}
+
+
+.big-checkbox {
+    -webkit-transform: scale(2,2);
+}
+
+	.navbar{
+  padding: 0px 10px 0px 10px;
+}
+  .bg-dark {
+  background-color: black;
+}
+
+img {
+padding: 0px 10px 0px 0px;
+
+}
+.navbar-text {
+  padding: 0px 10px 0px 10px;
+}
+
+.nav-link.forms.active {
+  background-color: lightgrey;
+  font-weight: bold;
+}
+
+.fas.fa-home {
+  color: white;
+  margin: 0px 0px 0px 5px;
+
+}

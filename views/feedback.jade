@@ -4,17 +4,19 @@ include GDPR
 block content
 	script(src='/javascripts/feedback.js')
 
+
+
 	#feedbackFrom.container-fluid
 		.form-group
 			p
-			| If you wish to remain annoymous, feel free to leave to not enter your name.
+			| If you wish to remain annoymous, feel free to not enter your name.
 			#nameField.md-form.input-group
 				.input-group-prepend
 					span.input-group-text.md-addon Your Name
-				input#contactName.form-control(type='text' class='text-capitalize' placeholder='')
+				input#nameField.form-control(type='text' class='text-capitalize' placeholder='')
 
 			p
-			| By providing your email address or telephone number we will be able to contact you if you would like a response.
+			| By providing your email address or telephone number we will be able to contact you if you would like a response. 
 			#contactField.md-form.input-group
 				.input-group-prepend
 					span.input-group-text.md-addon Contact Details
@@ -25,55 +27,62 @@ block content
 		| Which department do you wish to feedback on:
 		.dept.card-deck
 			#Cafe.dept.card
-				p
-				#Cafe.dept.text-center
-					#Cafe.i.fas.dept.fa-coffee.fa-3x
 				#Cafe.dept.card-body
-					#Cafe.dept.h5.text-center.card-title Cafe
+					#Cafe.dept.text-center
+						#Cafe.dept.i.fas.dept.fa-coffee.fa-3x
+						#Cafe.dept.h6 Cafe
 
 			#Climbing.dept.card
-				p
-				#Climbing.text-center
-					#Climbing.i.fas.fa-hand-rock.fa-3x
-				#Climbing.card-body
-					#Climbing.h5.text-center.card-title Climbing
+				#Climbing.dept.card-body
+					#Climbing.dept.text-center
+						#Climbing.dept.i.fas.fa-hand-rock.fa-3x
+						#Climbing.h6 Climbing
 
 			#Facilities.dept.card
-				p
-				#Facilities.text-center
-					#Facilities.i.fas.fa-toilet.fa-3x
-				#Facilities.card-body
-					#Facilities.h5.text-center.card-title Facilities
+				#Facilities.dept.card-body
+					#Facilities.dept.text-center
+						#Facilities.dept.i.fas.fa-toilet.fa-3x
+						#Facilities.dept.h6 Facilities
+
 
 			#Garden.dept.card
-				p
-				#Garden.text-center
-					#Garden.i.fas.fa-tree.fa-3x
-				#Garden.card-body
-					#Garden.h5.text-center.card-title Garden
+				#Garden.dept.card-body
+					#Garden.dept.text-center
+						#Garden.dept.i.fas.fa-tree.fa-3x
+						#Garden.dept.h6 Garden
 
 			#General.dept.card
-				p
-				#General.text-center
-					#General.i.fas.fa-chess-rook.fa-3x
-				#General.card-body
-					#General.h5.text-center.card-title General
+				#General.dept.card-body
+					#General.dept.text-center
+						#General.dept.i.fas.fa-chess-rook.fa-3x
+						#General.dept.h6 General
 		
 			#Shop.dept.card
-				p
-				#Shop.text-center
-					#Shop.i.fas.fa-tags.fa-3x
-				#Shop.card-body
-					#Shop.h5.text-center.card-title Shop
+				#Shop.dept.card-body
+					#Shop.dept.text-center
+						#Shop.dept.i.fas.fa-tags.fa-3x
+						#Shop.dept.h6 Shop
+						
+			#Staff.dept.card
+				#Staff.dept.card-body
+					#Staff.dept.text-center
+						#Staff.dept.i.fas.fa-user.fa-3x
+						#Staff.dept.h6 Staff
 
 		p
-		#Route.md-form.input-group(style='display: none;')
+		#ClimbingFields.md-form.input-group(style='display: none;')
+			input#routeLine.form-control(type='text',  placeholder='Line Number / Boulder Area')
+			input#routeGrade.form-control(type='text',  placeholder="The Climb's Grade")
+			input#routeColour.form-control(type='text',  placeholder="The Colour")
+			input#routeSetter.form-control(type='text',  placeholder="The Setter")
+		
+		p
+		#StaffFields.md-form.input-group(style='display: none;')
 			.input-group-prepend
-				span.input-group-text.md-addon Do you have a particular route in mind?
-			input#routeLine.form-control(type='number',  placeholder='Line')
-			input#routeGrade.form-control(type='text',  placeholder='Grade')
-			input#routeColour.form-control(type='text',  placeholder='Colour')
-			input#routeSetter.form-control(type='text',  placeholder='Setter')
+				span.input-group-text.md-addon Please tell which department this staff member worked in?
+			input#StaffDepartment.form-control(type='text',  placeholder='Department')
+
+		
 		p
 		| Your Feedback:
 		#feedback.md-form.input-group
@@ -85,41 +94,43 @@ block content
 		| How was your experience?				
 		.card-deck
 			#ReallySad.feels.card
-				p
-				#ReallySad.feels.text-center
-					#ReallySad.feels.i.fas.fa-sad-tear.fa-3x
-					p
+				#General.feels.card-body
+					#ReallySad.feels.text-center
+						#ReallySad.feels.i.fas.fa-sad-tear.fa-3x
 
 			#Sad.feels.card
-				p
-				#Sad.feels.text-center
-					#Sad.feels.i.fas.fa-frown.fa-3x
+				#Sad.feels.card-body
+					#Sad.feels.text-center
+						#Sad.feels.i.fas.fa-frown.fa-3x
 
 
 			#OK.feels.card
-				p
-				#OK.text-center
-					#OK.i.fas.fa-meh.fa-3x
+				#OK.feels.card-body
+					#OK.text-center
+						#OK.i.fas.fa-meh.fa-3x
 
 
 			#Happy.feels.card
-				p
-				#Happy.text-center
-					#Happy.i.fas.fa-smile.fa-3x
+				#Happy.feels.card-body
+					#Happy.text-center
+						#Happy.i.fas.fa-smile.fa-3x
 
 
 			#ReallyHappy.feels.card
-				p
-				#ReallyHappy.text-center
-					#ReallyHappy.i.fas.fa-smile-beam.fa-3x
+				#ReallyHappy.feels.card-body
+					#ReallyHappy.text-center
+						#ReallyHappy.i.fas.fa-smile-beam.fa-3x
 		p
-		.row.container-fluid
-			.col 
-				h4 Thankyou for your feedback
-			.col-1.align-self-end
-			a#cancel.btn.btn-danger(href="#",  data-target='#AreYouSure') Cancel
-			.col-1
-			button#submit.btn.btn-success(type='submit') Submit 
+		.container-fluid
+			.row
+				.col-12
+					h4 We take your privacy seriously please visit our website for more information.
+				.col-8
+					h4 Thankyou for your feedback.
+				.col-2
+					a#cancel.btn.btn-danger(href="#",  data-target='#AreYouSure') Cancel
+				.col-2
+					button#submit.btn.btn-success(type='submit') Submit 
 		p
 
 	#welcomeModal.modal.fade.AreYouSure(tabindex='-1', role='dialog', aria-labelledby='welcome', aria-hidden='true')

@@ -103,6 +103,10 @@ router.get('/viewTW', function(req, res) {
     res.render('Dashboard/viewTW', { title: 'Thames Water' });
 });
 
+router.get('/viewFeedback', function(req, res) {
+    res.render('Dashboard/viewFeedback', { title: 'Feedback' });
+});
+
 router.get('/viewTeams', function(req, res) {
     res.render('Dashboard/viewTeams', { title: 'Teams' });
 });

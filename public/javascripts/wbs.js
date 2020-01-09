@@ -30,8 +30,6 @@ var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
       boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Outdoor Boulders" data-toggle="list" href="#list-OutdoorBoulders" role="tab" aria-controls="OutdoorBoulders">Outdoor Boulders</a>';
 
 
-
-
 //ADDS the session info to the page
   function showSession(){
       if(facilitatorName === ''){
@@ -44,7 +42,7 @@ var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
 
         $( "#showSession" ).html( sessionDetails );
         $('#FacilitatorWarning').hide();
-        $('#addMe').show();
+        $('#participants').show();
 
       }
 
@@ -71,7 +69,6 @@ var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
 
 facilitatorNameList.data = theData;
 options.data = theData;
-console.log(options);
 return theData;
   });
 
@@ -98,31 +95,96 @@ var options = {
 }
 };
 
-  //List all the stored Participants, and creates a new entry field
-  function ShowParticipants(){
+function participantLeft(arrayNum){
+ $('#leavingModal').modal('show');
+console.log('left modal')
+      $('#leavingModal').on('click',function(e){
+        var reason = e.target.id
+        $('#leavingSubmit').show();
+        if(reason === 'otherReason'){
+          $('#otherReasonDiag').show();
+          $('#leadingDiag').hide();
+          $('#leavingDiag').hide();
+        } else if (reason === 'leading'){
+          $('#otherReasonDiag').hide();
+          $('#leadingDiag').show();
+          $('#leavingDiag').hide();
+        } else if (reason === 'leaving'){
+          $('#otherReasonDiag').hide();
+          $('#leadingDiag').hide();
+          $('#leavingDiag').show();
+        }
+      $('.diags').addClass('btn-outline-primary').removeClass('btn-primary');
+      $('#'+reason).addClass('btn-primary').removeClass('btn-outline-primary');
+console.log(participantsArray)
+      $('#leavingSubmit').on('click',function(e){
+            participantsArray[arrayNum].Left_Session = [true, moment().format(),reason];
+          $('#participantTable tbody').html('')
+console.log(participantsArray)
+          updateParticipantLeft()
 
-        $.each(participantsArray, function( index, value ) {
-          var participant = value.First_Name + ' ' + value.Last_Name;
-       var PName = toTitleCase(firstNameLastInital(participant));
-          var i = index + 1;
-
-      $('#participantTable tr:last').after('<tr><th scope="row">'+i+'</th><td>'+PName+'</td><td>'+value.Reason+'</td><td>'+value.First_Time+'</td></tr>');
         });
-      i = numParticipants+1;
 
-      }
+      });
 
 
-$(document).on('keyup blur change', function(e){
-  var data = e.target.id;
+}
 
-  if($('#'+data).hasClass('is-invalid')==true){
-    if($('#'+data).val().length > 1){
-      $('#'+data).removeClass('is-invalid');
-      $('#'+data).addClass('is-valid');
-    }
-  }
-});
+//List all the stored Participants, and creates a new entry field
+function ShowParticipants(){
+          $.each(participantsArray, function( index, value ) {
+            var participant = value.First_Name + ' ' + value.Last_Name;
+         var pName = toTitleCase(firstNameLastInital(participant));
+            var i = index + 1;
+            var remained = '';
+            if(value.Left_Session[0] === true){
+              remained = 'Left The Session at '+ moment(value.Left_Session[1]).format('LT');
+            } else if (value.Left_Session[0] === false){
+              remained = '<button type="button" onclick="participantLeft('+index+');" class="btn btn-outline-danger btn-sm">Leaving Session</button>';
+            } else {
+              remained = '<button type="button" onclick="participantLeft('+index+');" class="btn btn-outline-danger btn-sm">Leaving Session</button>';
+            }
+        var table = document.getElementById("participantTableBody");
+
+        var participantRow = table.insertRow(0);
+              participantRow.id = i
+              participantRow.className = 'participantRow';
+        var partindex = participantRow.insertCell(-1);
+              partindex.id = i;
+              partindex.className = 'partIndex'
+              partindex.innerHTML = i;
+        var partName = participantRow.insertCell(-1);
+              partName.id = i +'_partName'
+              partName.className = 'partName'
+              partName.innerHTML = pName;
+        var partReason = participantRow.insertCell(-1);
+              partReason.id = i + '_partReason';
+              partReason.className = 'partReason'
+              partReason.innerHTML = value.Reason;
+        var partFT = participantRow.insertCell(-1);
+              partFT.id = i + '_keyDel';
+              partFT.className = 'keyDel'
+              partFT.innerHTML = value.First_Time;
+        var partLeft = participantRow.insertCell(-1);
+              partLeft.id = i + '_partLeft';
+              partLeft.className = 'partLeft'
+              partLeft.innerHTML = remained;
+
+          });
+        i = numParticipants+1;
+
+        }
+
+
+        $(document).on('keyup blur change', function(e){
+          var data = e.target.id;
+          if($('#'+data).hasClass('is-invalid')==true){
+            if($('#'+data).val().length > 1){
+              $('#'+data).removeClass('is-invalid');
+              $('#'+data).addClass('is-valid');
+            }
+          }
+        });
 
   function submitLine(e){
     var theCount = 0;
@@ -173,6 +235,7 @@ $(document).on('keyup blur change', function(e){
           Reason: $('#NewReason option:selected').val(),
           Arrival_Time : moment().format(),
           First_Time : $('#NewFirstTime option:selected').val(),
+          Left_Session : [false,0],
           iPad : getKioskId() }}},
         };
 
@@ -201,9 +264,9 @@ $(document).on('keyup blur change', function(e){
 
 
       $('input#facilitatorName').on('click keyup keydown blur change',function(){
-        if($('input#facilitatorName').val().length > 1){
-        $('input#facilitatorName').val(toTitleCase($('input#facilitatorName').val()));
-        }
+          if($('input#facilitatorName').val().length > 1){
+            $('input#facilitatorName').val(toTitleCase($('input#facilitatorName').val()));
+          }
 
       });
 
@@ -274,7 +337,7 @@ $(document).on('keyup blur change', function(e){
       });
 
       $("#facilitatorSubmit").on('click',function(e){
-        console.log('hit');
+
           var item = document.getElementsByClassName("list-group-item active");
           startLocation = (item[0].id);
           facilitatorName = $('#facilitatorName').val();
@@ -297,7 +360,6 @@ $(document).on('keyup blur change', function(e){
         submitLine();
       });
       $("#facilitatorName").on('click',function(){
-          console.log('click');
       });
 
 
@@ -309,22 +371,61 @@ $(document).on('keyup blur change', function(e){
 
   //----------- DATABASE CALLS ------------//
 
+  function updateParticipantLeft(){
+    var updates = {
+        FindDate: {Created_Date: moment().format('LL')},
+        Details : {
+                  $set:  {
+
+                    Participants: participantsArray,
+                    iPadIn : getKioskId()
+                          }
+                    },
+                };
+
+console.log(updates.Details)
+    $.ajax({
+      type: "put",
+      url: "wbs/updateSession",
+      contentType: 'application/json',
+      data: JSON.stringify(updates)
+    }).done(function( response, results ) {
+        // Check for successful (blank) response
+        if (results === 'success') {
+          resetPage();
+            // Clear the form inputs
+            // $('#addSession input').val('');
+
+            // // Update the table
+            // populateTable();
+
+        }
+        else {
+
+            // If something goes wrong, alert the error message that our service returned
+            alert( response.msg);
+
+
+        }
+    });
+  }
+
   //Post request to create the session
   function addSession() {
     createdDate = moment().format('LL');
     createdTime = moment().format('LTS');
 
       var newSession = {
-        'Created_Date': moment().format('LL'),
-        'Created_Time': moment().format('LTS'),
-        'created': moment().format(),
-          'Facilitator': facilitatorName.trim(),
-          'Session_Type': sessionType,
-          'Start_Location': startLocation,
-          'Participants': participantsArray,
-          'iPadin' : getKioskId(),
+        Created_Date: moment().format('LL'),
+        Created_Time: moment().format('LTS'),
+        created: moment().format(),
+        Facilitator: toTitleCase(facilitatorName),
+        Session_Type: sessionType,
+        Start_Location: startLocation,
+        Participants: participantsArray,
+        iPadIn : getKioskId(),
       };
-      console.log(newSession);
+
     var myJSON = JSON.stringify(newSession);
 
 
@@ -388,7 +489,7 @@ $(document).on('keyup blur change', function(e){
 
     //Put request to update to Participants, on  pre made sesion
   function updateParticipants(update){
-      console.log('UPDATE: ' + moment().format('LL'));
+
 
 
       $.ajax({
@@ -415,7 +516,6 @@ $(document).on('keyup blur change', function(e){
 
     //Put request to update to Participants, on  pre made sesion
   function updateSession(){
-        console.log('UPDATE: ' + moment().format('LL'));
         var updates = {
             FindDate: {Created_Date: moment().format('LL')},
             Details : { $set:  {
@@ -424,7 +524,7 @@ $(document).on('keyup blur change', function(e){
             Start_Location: startLocation,
             iPadIn : iPadIn }},
         };
-  console.log(updates);
+
         $.ajax({
           type: "put",
           url: "wbs/updateSession",

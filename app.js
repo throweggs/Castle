@@ -45,6 +45,7 @@ var staff = require('./routes/staff');
 var lockers = require('./routes/lockers');
 var groups = require('./routes/groups');
 var sunrise = require('./routes/sunrise');
+var feedback = require('./routes/feedback');
 
 
 var app = express();
@@ -78,6 +79,7 @@ app.use('/gardenVolunteer', gardenVolunteer);
 app.use('/thamesWater', thamesWater);
 app.use('/personalTrainer', personalTrainer);
 app.use('/groups', groups);
+app.use('/feedback', feedback);
 
 
 

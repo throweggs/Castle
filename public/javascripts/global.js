@@ -1,6 +1,7 @@
 // moment.locale('en-GB'); ?
 
 var checksOut = false;
+var darkMode = true;
 function toTitleCase(str) {
     return str.replace(/(?:^|\s)\w/g, function(match) {
         return match.toUpperCase();
@@ -54,6 +55,24 @@ function toTitleCase(str) {
 //             }
 //         );
 //     }
+
+
+function switchStyle(){
+
+         if(darkMode===true){
+          document.getElementById("pagestyle").setAttribute("href", "/stylesheets/bootstrapLight.min.css");
+          document.getElementById("customstyle").setAttribute("href", "/stylesheets/lightStyle.css");
+          darkMode = false;
+
+
+        } else if(darkMode===false){
+          document.getElementById("pagestyle").setAttribute("href", "/stylesheets/bootstrap.min.css");
+          document.getElementById("customstyle").setAttribute("href", "/stylesheets/darkStyle.css");
+          darkMode = true;
+
+        }
+      }
+
 
 function resetPage() {
     location.reload();

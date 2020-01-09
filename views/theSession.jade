@@ -85,7 +85,40 @@ block content
             th(scope='col') Name
             th(scope='col') Reason for participating
             th(scope='col') First time on the session
-        tbody
+            th(scope='col') Left The Session
+        tbody#participantTableBody
+
+  // Modal
+  #leavingModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='leavingModalCenterTitle', aria-hidden='true')
+    form.needs-validation.container-fluid(novalidate='')
+      .modal-dialog
+        .modal-content
+          // Modal Header
+          .modal-header
+            .modal-title
+             h5 &nbsp Can we ask why are your leaving The Session?
+            button.close(type='button', data-dismiss='modal') ×
+          // Modal body
+          .modal-body
+            p.text-center.love-ya Your reason for leaving will not be shown.
+            .row
+              .col.btn-group(role="group", aria-label="Basic example")
+                button#leaving.col.diags.btn.btn-outline-primary(type='button') I'm Going Home
+                button#leading.col.diags.btn.btn-outline-primary(type='button') I'm Leading
+                button#otherReason.col.diags.btn.btn-outline-primary(type='button') Other Reasons  
+            
+                    
+            .col-12
+              .form-group
+                br
+
+                p#otherReasonDiag(style="display: none;") If you would like to speak to some one about the reason you have left The Session, a Duty manager would be happy to help, or alternatively please leave feedback in the comments box at reception.          
+                p#leadingDiag(style="display: none;") I am no longer taking part in The Session. I understand that leading is not an activity that the session facilitates and it is my responsibility to ensure my leading partner is competent in all aspects of lead climbing. 
+                p#leavingDiag(style="display: none;") Hope to see you again soon.
+
+          // Modal footer
+          .modal-footer
+            button#leavingSubmit.col.align-self-end.btn.btn-success(type='submit', data-dismiss='modal',style="display: none;") Submit
 
 
   // Modal
