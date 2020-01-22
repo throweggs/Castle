@@ -13,6 +13,50 @@ td {
   word-break: break-all;
 }
 
+.btn-lg, .btn-group-lg>.btn {
+    padding: 0.5rem 1rem;
+    font-size: 1.15rem;
+    line-height: 1.25;
+    border-radius: 0.5rem;
+    margin: 0.5rem
+  }
+
+.btn-pink {
+  color: #fff;
+  background-color: #c15bde;
+  border-color: #c15bde;
+}
+
+.btn-pink:hover {
+  color: #fff;
+  background-color: #78398a;
+  border-color: #78398a;
+}
+
+.btn-pink:focus, .btn-pink.focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(228, 128, 60, 0.5);
+          box-shadow: 0 0 0 0.2rem rgba(228, 128, 60, 0.5);
+}
+
+.btn-pink.disabled, .btn-pink:disabled {
+  color: #fff;
+  background-color: #DF691A;
+  border-color: #DF691A;
+}
+
+.btn-pink:not(:disabled):not(.disabled):active, .btn-pink:not(:disabled):not(.disabled).active,
+.show > .btn-pink.dropdown-toggle {
+  color: #fff;
+  background-color: #9947b1;
+  border-color: #9947b1;
+}
+
+.btn-pink:not(:disabled):not(.disabled):active:focus, .btn-pink:not(:disabled):not(.disabled).active:focus,
+.show > .btn-pink.dropdown-toggle:focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(228, 128, 60, 0.5);
+          box-shadow: 0 0 0 0.2rem rgba(228, 128, 60, 0.5);
+}
+
 .btn-homepage{
  border-bottom:5px solid #black;
   position:relative;

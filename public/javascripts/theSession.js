@@ -340,6 +340,8 @@ function participantLeft(arrayNum){
           var item = document.getElementsByClassName("list-group-item active");
           startLocation = (item[0].id);
           facilitatorName = $('#facilitatorName').val();
+          facilitatorName = facilitatorName.replace(/[^a-zA-Z ]/g, "")
+          facilitatorName = facilitatorName.trim()
           sessionType = sessionType;
 
 
@@ -411,6 +413,9 @@ function updateParticipantLeft(){
 
   //Post request to create the session
   function addSession() {
+
+
+
       createdDate = moment().format('LL');
       createdTime = moment().format('LTS');
 

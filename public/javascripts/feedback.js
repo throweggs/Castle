@@ -46,6 +46,7 @@ $( document ).ready(function() {
 
 
 function addFeedback(){
+
   var theFeedback = [];
     theFeedback = { created : moment(),
                     person : {
@@ -63,6 +64,7 @@ function addFeedback(){
                     feedback : $('textarea#feedback').val(),
                     area_of_feedback :  theForm.area_of_feedback,
                     feels : theForm.feels,
+                    contact_me : $('input#contactMe').val(),
                     processed : [false, moment()]
                   }
 
@@ -81,8 +83,13 @@ $.ajax({
     // Check for successful (blank) response
     if (response.msg === null) {
 
-     resetPage();
-     location.reload();
+
+       $("#thankyouModal").modal('show');
+       setTimeout(function () {
+         location.reload();
+              resetPage();
+       }, 10000);
+
 
     }
     else {

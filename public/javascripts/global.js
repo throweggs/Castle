@@ -125,6 +125,8 @@ jQuery.fn.tableToCSV = function() {
 
 };
 
+
+
 function toTitleCase(str) {
     return str.replace(
         /\w\S*/g,

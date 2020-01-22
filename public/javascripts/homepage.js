@@ -37,7 +37,7 @@ function createList(results){
     $.each(results, function( index, value ) {
         var i = index;
         var theLink = "'/"+results[i].formLink+"'"
-        output += '<p><a onclick="buttonClicked('+theLink +')" id="welcomeFormRow" onclick="playAudio()" class="col-10 btn-homepage button btn '+ results[i].colour +' btn-lg">'+ results[i].formName +'</a></p>';
+        output += '<a onclick="buttonClicked('+theLink +')" id="welcomeFormRow" onclick="playAudio()" class="col-10 btn-homepage button btn '+ results[i].colour +' btn-lg">'+ results[i].formName +'</a>';
       });
   output +='</center>';
       $('#formList').html(output);

@@ -16,12 +16,21 @@ block content
 				input#nameField.form-control(type='text' class='text-capitalize' placeholder='')
 
 			p
-			| By providing your email address or telephone number we will be able to contact you if you would like a response. 
+			| By providing your email address or telephone number we will be able to contact you. If you would like a response, please select 'Contact Me'.
 			#contactField.md-form.input-group
 				.input-group-prepend
 					span.input-group-text.md-addon Contact Details
 				input#contactPhone.form-control(type='tel' class='text-capitalize' placeholder='Phone Number')
 				input#contactEmail.form-control(type='email' class='text-capitalize' placeholder='e-mail address')
+
+				.input-group-append
+					.input-group-text
+					.input-group-text.custom-control.custom-checkbox		
+						input#contactMe.big-checkbox.custom-control-input(type='checkbox', name='contactMe', value='Contact Me')
+						label.custom-control-label(for='contactMe') Contact Me
+
+
+
 
 		p
 		| Which department do you wish to feedback on:
@@ -79,7 +88,7 @@ block content
 		p
 		#StaffFields.md-form.input-group(style='display: none;')
 			.input-group-prepend
-				span.input-group-text.md-addon Please tell which department this staff member worked in?
+				span.input-group-text.md-addon Please tell us which department this staff member works in?
 			input#StaffDepartment.form-control(type='text',  placeholder='Department')
 
 		
@@ -124,15 +133,34 @@ block content
 		.container-fluid
 			.row
 				.col-12
-					h4 We take your privacy seriously please visit our website for more information.
+					h4 We take your privacy seriously please visit our website for more information, or <a href="https://www.castle-climbing.co.uk/Privacy-Notice">Click Here</a> .
+					BR
 				.col-8
-					h4 Thankyou for your feedback.
+
+					h4 Thank you for your feedback.
 				.col-2
 					a#cancel.btn.btn-danger(href="#",  data-target='#AreYouSure') Cancel
 				.col-2
 					button#submit.btn.btn-success(type='submit') Submit 
 		p
+	#thankyouModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='welcome', aria-hidden='true')
+		.modal-dialog
+			.modal-content
+					
 
+				.modal-body.love-ya
+					h1.text-center Thank You
+					h3.text-center Your feedback is important to us. 
+					hr
+
+				.modal-footer
+					.row
+						.col-auto
+							img(src='logo.png', alt='')
+						.col-auto
+							a.btn.btn-primary.btn-large.submit-btn(href='#', data-dismiss='modal', aria-label='Close') Close
+							
+								
 	#welcomeModal.modal.fade.AreYouSure(tabindex='-1', role='dialog', aria-labelledby='welcome', aria-hidden='true')
 		.modal-dialog
 			.modal-content

@@ -29,17 +29,18 @@ router.get('/visitorlist5', function(req, res) {
 });
 
 
+
+
 router.get('/wbslist', function(req, res) {
   var findMe = req.query;
   console.log(findMe);
     var db = req.db;
     var collection = db.get('wbs');
 
-    collection.find(findMe,{sort: {created: -1}},{$limit: 5},function(e,docs){
+    collection.find(findMe,{sort: {created: 1}},function(e,docs){
         res.json(docs);
     });
 });
-
 
 router.get('/theSessionlist', function(req, res) {
   var findMe = req.query;

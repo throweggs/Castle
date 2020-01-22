@@ -180,6 +180,10 @@ console.log(data);
                                   feels.id = item._id + '_feels';
                                   feels.className = 'feels'
                                   feels.innerHTML = emoji[item.feels];
+                            var contactNeeded = feedbackRow.insertCell(-1);
+                                  contactNeeded.id = item._id + '_contactNeeded';
+                                  contactNeeded.className = 'contactNeeded'
+                                  contactNeeded.innerHTML = item.contact_me;
                             var processed = feedbackRow.insertCell(-1);
                                   processed.id = item._id + '_processedCell';
                                   processed.className = 'processed'
