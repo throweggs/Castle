@@ -1,14 +1,11 @@
 jQuery.fn.tableToCSV = function() {
-      console.log('toCSV');
-    var clean_text = function(text){
-        console.log('clean_texct');
-        text = text.replace(/"/g, '""');
-        return '"'+text+'"';
 
+    var clean_text = function(text){
+        text = text.replace(/"/g, '\\"').replace(/'/g, "\\'");
+        return '"'+text+'"';
     };
 
 	$(this).each(function(){
-      console.log('repear');
 			var table = $(this);
 			var caption = $(this).find('caption').text();
 			var title = [];

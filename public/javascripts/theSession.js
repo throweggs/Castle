@@ -1,216 +1,399 @@
-var Paticipants = {},
-    SessionAreas = '',
+var startLocation = '',
+    facilitatorName = '',
+    facilitatorNameList = {},
+    participantsArray = [],
+    createdTime = '',
+    createdDate = '',
     numParticipants = 0,
-    FoundSession = false,
-    MyArray = [],
-    findMe = '',
-    DateOnly = '',
-    Facilitator = '1',
+    foundSession = false,
     theID = '',
-    SessionType =  '',
-    StartLocation = '',
-    FoundSession = true,
-    ParticipantsArray = [];
+    iPadIn = '',
+    sessionType = '';
 
-var TopropingAreas = [
-    'Auto Belays',
-    'Stacks',
-    'Quarry',
-    'Tall_Walls'
-    ];
+var theSearch = {Facilitator: { $regex: '', $options: 'i' }},
+    searchChoice = 'Facilitator';
 
-var BoulderingAreas = [
-    'Catacombs',
-    'Competition_Wall',
-    'Loft',
-    'Panels',
-    'Pen',
-    'Mez',
-    'Traverse_Boulders',
-    'Outdoor_Boulders'
-  ];
+// FIll in options for the Facilitator Modals
+  var topRopingAreas = ' <a class="list-group-item list-group-item-action" id="Auto Belays" data-toggle="list" href="#list-AutoBelays" role="tab" aria-controls="AutoBelays">Auto Belays</a>';
+      topRopingAreas += ' <a class="list-group-item list-group-item-action" id="Stacks" data-toggle="list" href="#list-Stacks" role="tab" aria-controls="Stacks">Stacks</a>';
+      topRopingAreas += ' <a class="list-group-item list-group-item-action " id="Quarry" data-toggle="list" href="#list-Quarry" role="tab" aria-controls="Quarry">Quarry</a>';
+      topRopingAreas += ' <a class="list-group-item list-group-item-action" id="TallWalls" data-toggle="list" href="#list-TallWalls" role="tab" aria-controls="TallWalls">Upstairs Slabs & Tall Walls</a>';
+
+  var boulderingAreas = ' <a class="list-group-item list-group-item-action" id="Catacombs" data-toggle="list" href="#list-Catacombs" role="tab" aria-controls="Catacombs">Catacombs</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Competition Wall" data-toggle="list" href="#list-CompetitionWall" role="tab" aria-controls="CompetitionWall">Competition Wall</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Loft" data-toggle="list" href="#list-Loft" role="tab" aria-controls="Loft">Loft</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Panels" data-toggle="list" href="#list-Panels" role="tab" aria-controls="Panels">Panels</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Pen" data-toggle="list" href="#list-Pen" role="tab" aria-controls="Pen">Pen</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Mez" data-toggle="list" href="#list-Mez" role="tab" aria-controls="Mez">Mez</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Traverse Boulders" data-toggle="list" href="#list-TraverseBoulders" role="tab" aria-controls="TraverseBoulders">Traverse Boulders</a>';
+      boulderingAreas += ' <a class="list-group-item list-group-item-action" id="Outdoor Boulders" data-toggle="list" href="#list-OutdoorBoulders" role="tab" aria-controls="OutdoorBoulders">Outdoor Boulders</a>';
 
 
-// SETTING DATE AND TIME FOR FINDING SESSIONS
+//ADDS the session info to the page
+  function showSession(){
+    if(facilitatorName === ''){
+      $('#facilitatorModal').modal('show');
+    }
+        var sessionDetails = " <h1>The Session Facilitator: <strong>" + facilitatorName +"</strong></h1>";
+            sessionDetails += ' <h3>Your '+ sessionType +' session, will be starting in the ' + startLocation + '.</h3>';
+            sessionDetails += ' <ul>';
 
-var dt = new Date();
-var curDate = dt.toString();
-var DateOnly = curDate.split(" ", 4);
-var output = "";
-  $.each(DateOnly, function( index, value ) {
-    output += value + " ";
+
+        $( "#showSession" ).html( sessionDetails );
+        $('#FacilitatorWarning').hide();
+        $('#participants').show();
+
+      }
+
+      function findFacilitator(){
+         var theData = [];
+         optons = {};
+        $.getJSON( '/users/theSessionlist', function( data ) {
+
+          })
+            .done(function( data ) {
+
+              $.each(data,function(li,litem){
+              var found = false;
+                $.each(theData,function(fi,fitem){
+                  if(litem.Facilitator === fitem)
+                  found = true;
+                  });
+                  if(found === false){
+                    theData.push(litem.Facilitator);
+                  }
+              });
+
+    facilitatorNameList.data = theData;
+    options.data = theData;
+
+    return theData;
+      });
+
+    }
+
+    var options = {
+      data: findFacilitator(),
+      placeholder: "Facilitator Name",
+      list: {
+      showAnimation: {
+        type: "fade", //normal|slide|fade
+        time: 400,
+        callback: function() {}
+      },
+
+      hideAnimation: {
+        type: "slide", //normal|slide|fade
+        time: 400,
+        callback: function() {}
+      },
+      match: {
+    			enabled: true
+    		}
+    }
+    };
+
+
+function participantLeft(arrayNum){
+ $('#leavingModal').modal('show');
+
+      $('#leavingModal').on('click',function(e){
+        var reason = e.target.id
+        $('#leavingSubmit').show();
+        if(reason === 'otherReason'){
+          $('#otherReasonDiag').show();
+          $('#leadingDiag').hide();
+          $('#leavingDiag').hide();
+        } else if (reason === 'leading'){
+          $('#otherReasonDiag').hide();
+          $('#leadingDiag').show();
+          $('#leavingDiag').hide();
+        } else if (reason === 'leaving'){
+          $('#otherReasonDiag').hide();
+          $('#leadingDiag').hide();
+          $('#leavingDiag').show();
+        }
+      $('.diags').addClass('btn-outline-primary').removeClass('btn-primary');
+      $('#'+reason).addClass('btn-primary').removeClass('btn-outline-primary');
+
+      $('#leavingSubmit').on('click',function(e){
+            participantsArray[arrayNum].Left_Session = [true, moment().format(),reason];
+          $('#participantTable tbody').html('')
+          updateParticipantLeft()
+
+        });
+
+      });
+
+
+}
+
+  //List all the stored Participants, and creates a new entry field
+  function ShowParticipants(){
+
+            $.each(participantsArray, function( index, value ) {
+              var participant = value.First_Name + ' ' + value.Last_Name;
+           var pName = toTitleCase(firstNameLastInital(participant));
+              var i = index + 1;
+              var remained = '';
+              if(value.Left_Session[0] === true){
+                remained = 'Left The Session at '+ moment(value.Left_Session[1]).format('LT');
+              } else if (value.Left_Session[0] === false){
+                remained = '<button type="button" onclick="participantLeft('+index+');" class="btn btn-outline-danger btn-sm">Leaving Session</button>';
+              } else {
+                remained = '<button type="button" onclick="participantLeft('+index+');" class="btn btn-outline-danger btn-sm">Leaving Session</button>';
+              }
+          var table = document.getElementById("participantTableBody");
+
+          var participantRow = table.insertRow(0);
+                participantRow.id = i
+                participantRow.className = 'participantRow';
+          var partindex = participantRow.insertCell(-1);
+                partindex.id = i;
+                partindex.className = 'partIndex'
+                partindex.innerHTML = i;
+          var partName = participantRow.insertCell(-1);
+                partName.id = i +'_partName'
+                partName.className = 'partName'
+                partName.innerHTML = pName;
+          var partReason = participantRow.insertCell(-1);
+                partReason.id = i + '_partReason';
+                partReason.className = 'partReason'
+                partReason.innerHTML = value.Reason;
+          var partFT = participantRow.insertCell(-1);
+                partFT.id = i + '_keyDel';
+                partFT.className = 'keyDel'
+                partFT.innerHTML = value.First_Time;
+          var partLeft = participantRow.insertCell(-1);
+                partLeft.id = i + '_partLeft';
+                partLeft.className = 'partLeft'
+                partLeft.innerHTML = remained;
+
+            });
+          i = numParticipants+1;
+
+          }
+
+
+          $(document).on('keyup blur change', function(e){
+            var data = e.target.id;
+            if($('#'+data).hasClass('is-invalid')==true){
+              if($('#'+data).val().length > 1){
+                $('#'+data).removeClass('is-invalid');
+                $('#'+data).addClass('is-valid');
+              }
+            }
+          });
+
+            function submitLine(e){
+              var theCount = 0;
+              event.preventDefault();
+
+                  if($('#NewParticipantFirstName').val().length > 1){
+                    theCount = theCount + 1;
+                     $('#NewParticipantFirstName').addClass('is-valid');
+                     $('#NewParticipantFirstName').removeClass('is-invalid');
+                  } else {
+                       $('#NewParticipantFirstName').addClass('is-invalid');
+                       $('#NewParticipantFirstName').removeClass('is-valid');
+                    }
+                  if($('#NewParticipantLastName').val().length > 1){
+                    theCount = theCount + 1;
+                    $('#NewParticipantLastName').addClass('is-valid');
+                    $('#NewParticipantLastName').removeClass('is-invalid');
+                  } else {
+                    $('#NewParticipantLastName').addClass('is-invalid');
+                    $('#NewParticipantLastName').removeClass('is-valid');
+                  }
+                  if($('#NewReason option:selected').val().length > 1){
+                    theCount = theCount + 1;
+                    $('#NewReason').addClass('is-valid');
+                    $('#NewReason').removeClass('is-invalid');
+                  } else {
+                    $('#NewReason').addClass('is-invalid');
+                    $('#NewReason').removeClass('is-valid');
+                  }
+                  if($('#NewFirstTime option:selected').val().length > 1){
+                    theCount = theCount + 1;
+                    $('#NewFirstTime').addClass('is-valid');
+                    $('#NewFirstTime').removeClass('is-invalid');
+                  } else {
+                    $('#NewFirstTime').addClass('is-invalid');
+                    $('#NewFirstTime').removeClass('is-valid');
+                  }
+                  if(theCount === 4){
+                  var update = {
+                   FindDate: {Created_Date: moment().format('LL')},
+                    Details : { $push: { Participants : {
+                    First_Name : toTitleCase($('#NewParticipantFirstName').val()),
+                    Last_Name :  toTitleCase($('#NewParticipantLastName').val()),
+                    Name: [
+                      {First : toTitleCase($('#NewParticipantFirstName').val())},
+                      {Last :  toTitleCase($('#NewParticipantLastName').val())},
+                    ],
+                    Reason: $('#NewReason option:selected').val(),
+                    Arrival_Time : moment().format(),
+                    First_Time : $('#NewFirstTime option:selected').val(),
+                    Left_Session : [false,0],
+                    iPad : getKioskId() }}},
+                  };
+
+                  updateParticipants(update);
+                }
+
+
+              // } else if (formCheck < 4){
+              //   alert('Please fill in all the fields');
+              // }
+
+            }
+
+// ----------------------------------------- DOM READY ----------------------------------------- //
+  $( document ).ready(function() {
+      findFacilitator();
+      $("#dataProtection").modal('show');
+
+      //Database call to get details of session if already entered.
+      getSession();
+      ShowParticipants();
+
+
+      $('input#facilitatorName').on('click keyup keydown blur change',function(){
+          if($('input#facilitatorName').val().length > 1){
+            $('input#facilitatorName').val(toTitleCase($('input#facilitatorName').val()));
+          }
+      });
+      //adds the session information in to the options of the modal, so it makes sence when editing details.
+      $('#openFacilitatorModal').on('click',function(){
+
+        var text = document.getElementById('facilitatorName');
+        text.value = facilitatorName;
+
+        if($('input#facilitatorName').val().length > 1){
+          $('label#sessDetails').show();
+          $('#sessChoice').show();
+          $('label#startOptions').show();
+          $('#startOptions').show();
+        }
+
+
+        if(sessionType === 'bouldering'){
+            document.getElementById("BSess").classList.add("active");
+            document.getElementById("TSess").classList.remove("active");
+        } else if(sessionType === 'top roping'){
+            document.getElementById("BSess").classList.remove("active");
+            document.getElementById("TSess").classList.add("active");
+        } else {
+          document.getElementById("BSess").classList.remove("active")
+          document.getElementById("TSess").classList.remove("active");
+        }
+        if(startLocation===''){
+
+        } else if(startLocation!==''){
+        document.getElementById(startLocation).classList.add("active");
+        }
+      });
+
+      $('#startOptions').html(boulderingAreas);
+
+      $('input#facilitatorName').keyup(function(){
+        if($('input#facilitatorName').val().length > 1){
+          $('label#sessDetails').show();
+          $('#sessChoice').show();
+        } else if($('input#facilitatorName').val().length <= 1){
+            $('label#sessDetails').hide();
+            $('#sessChoice').hide();
+            $('label#startOptions').hide();
+            $('#startOptions').hide();
+          }
+      });
+
+      //Sets Bouldering Options
+      $('input#BoulderingSession').on('change',function(){
+        if ($('input#BoulderingSession').is(":checked")){
+
+          $('#startOptions').show();
+          sessionType = $('input#BoulderingSession').val();
+
+          $('#startOptions').html(boulderingAreas);
+
+        }
+      });
+
+      //Sets Top Rope Options
+      $('input#TopRopeSession').on('change',function(){
+        if ($('input#TopRopeSession').is(":checked")){
+          $('#startOptions').show();
+          sessionType = $('input#TopRopeSession').val();
+
+          $('#startOptions').html(topRopingAreas);
+        }
+      });
+
+      //Allows submit once option has be selected
+      $('#startOptions').click(function(){
+          $('button#facilitatorSubmit').prop('disabled', false);
+      });
+
+      $("#facilitatorSubmit").on('click',function(e){
+
+          var item = document.getElementsByClassName("list-group-item active");
+          startLocation = (item[0].id);
+          facilitatorName = $('#facilitatorName').val();
+          facilitatorName = facilitatorName.replace(/[^a-zA-Z ]/g, "")
+          facilitatorName = facilitatorName.trim()
+          sessionType = sessionType;
+
+
+
+        //displays session information
+          showSession();
+
+
+          if(foundSession === false){
+          addSession();
+        } else if (foundSession === true){
+          updateSession();
+        }
+      });
+
+      $('button#addMe').click(function(){
+        submitLine();
+      });
+      $("#facilitatorName").on('click',function(){
+
+      });
+
+
+    $("#facilitatorName").easyAutocomplete(options);
+
+
   });
-  DateOnly = output;
 
 
+  //----------- DATABASE CALLS ------------//
 
+function updateParticipantLeft(){
+  var updates = {
+      FindDate: {Created_Date: moment().format('LL')},
+      Details : {
+                $set:  {
 
-// COMPARING CHOICE OF SESSION TYPE TO LIST OF STARTING LOCATIONS
-function SetSessionAreas(SessionAreas){
-    var output = '<select id="sessionStartingArea" class="custom-select mb-2 mr-sm-2 mb-sm-0">';
-    $.each(SessionAreas, function( index, value ) {
-      var readable = value.replace("_"," ");
-      output += '<option value='+ value +' selected="">'+ readable +'</option>';
-    });
-    output += '</div>';
-      $('#SessionStartChoices').html(output);
-}
-//Get request for Session, if already created
-function getSession(){
-$.getJSON( '/theSession/getSession', {createdDate: DateOnly}, function(results, res) {
-})
-.done(function(results, res) {
-      var theResults = JSON.stringify(results);
-        if (theResults === '[]') {
-              FoundSession = false;
-      } else {
-              Facilitator = results[0].Facilitator;
-              theID = results[0]._id;
-              SessionType =  results[0].Session_Type;
-              StartLocation = results[0].Start_Location;
-              FoundSession = true;
-              ParticipantsArray = results[0].Participants;
+                  Participants: participantsArray,
+                  iPadIn : getKioskId()
+                        }
+                  },
+              };
 
-              ShowSession();
-              updatetheSession();
-
-      }
-  });
-}
-// Replaces the input feilds with Text field, of the Session
-function ShowSession(){
-var SessionDetails = '<div class="col-12">';
-    SessionDetails += ' <h1>The Session Facilitator: <strong>' + Facilitator +'</strong></h1>';
-    SessionDetails += ' <h3>It is a '+ SessionType +' session, starting in the ' + (StartLocation.replace("_"," ")) + '.</h3>';
-    SessionDetails += ' <ul>';
-    SessionDetails += '   <li><strong>Participants of The Session must be registered roped climbers</strong> and therefore confident putting on a harness correctly, tying in with the correct knot and belaying competently.</li>';
-    SessionDetails += '   <li>Women With Altitude and the wednesday mixed bouldering Session may be attended by those registered as bouldering only. If you’re not sure about which session you can join, please ask a receptionist who will be happy to help you. <strong>The Session is not suitable for novice climbers.</strong></li>';
-    SessionDetails += '   <li><strong>IMPORTANT INFORMATION: <u>This is not a teaching session</u>, <u>nor is it supervised</u>. Participants are still responsible for their own safety.  It is up to each participant to decide for themselves who they wish to climb with.</strong></li>';
-    SessionDetails += '</div>';
-
-$( "#addFacilitator" ).replaceWith( SessionDetails );
-ShowParticipants();
-  }
-//List all the stored Participants, and creates a new entry field
-function ShowParticipants(){
-    var output = '<hr>';
-    $.each(ParticipantsArray, function( index, value ) {
-     var newName = toTitleCase(firstNameLastInital(value.Participant));
-
-      var PName = newName;
-      var Reason = value.Reason;
-      var FirstTime = value.First_Time;
-      var i = index + 1;
-          numParticipants = numParticipants + 1;
-      var selectMe0 = '',
-          selectMe1 = '',
-          selectMe2 = '',
-          selectMe3 = '';
-      var selectMe00 = '',
-          selectMe01 = '',
-          selectMe02 = '';
-
-      if (Reason === "") {
-        selectMe0 = 'selected=""';
-        selectMe1 = '';
-        selectMe2 = '';
-        selectMe3 = '';
-      } else if (Reason === "Climbing Partner") {
-        selectMe0 = '';
-        selectMe1 = 'selected=""';
-        selectMe2 = '';
-        selectMe3 = '';
-      } else if (Reason === "New") {
-        selectMe0 = '';
-        selectMe1 = '';
-        selectMe2 = 'selected=""';
-        selectMe3 = '';
-      } else if (Reason === "Other") {
-        selectMe0 = '';
-        selectMe1 = '';
-        selectMe2 = '';
-        selectMe3 = 'selected=""';
-      }
-      if (FirstTime === "Yes") {
-        selectMe01 = 'selected=""';
-        selectMe02 = '';
-      } else if (FirstTime === "No") {
-        selectMe01 = '';
-        selectMe02 = 'selected=""';
-      }
-
-      output += '<div class="input-group">';
-      output += '<span id="Participant'+i+'" class="col-2 input-group-addon">Participant '+i+'</span>';
-      output += '   <input disabled id="Participant'+i+'" type="text" placeholder="'+PName+'" aria-label="Participant Name" aria-describedby="sizing-addon2" class="row'+i+ ' form-control col-4"/>';
-      output += ' <select disabled id="Reason'+i+'" class="custom-select">';
-      output += '     <option '+ selectMe0 +' value="">Im joining the session...</option>';
-      output += '     <option '+ selectMe1 +' value="Climbing Partner">I have no climbing partner today</option>';
-      output += '     <option '+ selectMe2 +' value="New">I am new to the Centre</option>';
-      output += '     <option '+ selectMe3 +' value="Other">Other</option>';
-      output += ' </select>';
-      output += ' <select disabled id="FirstTime'+i+'" class="custom-select">';
-      output += '     <option '+ selectMe00 +' value="">First Time?</option>';
-      output += '     <option '+ selectMe01 +'  value="Yes">Yes</option>';
-      output += '     <option '+ selectMe02 +'  value="No">No</option>';
-      output += ' </select>';
-      output += '</div>';
-    });
-    i = numParticipants+1;
-
-var ActiveLine = output;
-    ActiveLine += '<hr>';
-    ActiveLine += '<div class="input-group">';
-    ActiveLine += '<span id="ParticipantRow'+i+'" class="ActiveLine col-2 input-group-addon">Participant '+i+'</span>';
-    ActiveLine += '   <input id="Participant'+i+'" type="text" placeholder="Name" aria-label="Participant Name" aria-describedby="sizing-addon2" class="row'+i+ ' form-control col-4"/>';
-    ActiveLine += ' <select id="Reason'+i+'" class="row'+i+ ' custom-select">';
-    ActiveLine += '     <option value="">Im joining the session...</option>';
-    ActiveLine += '     <option value="Climbing Partner">I have no climbing partner today</option>';
-    ActiveLine += '     <option value="New">I am new to the Centre</option>';
-    ActiveLine += '     <option value="Other">Other </option>';
-    ActiveLine += ' </select>';
-    ActiveLine += ' <select  id="FirstTime'+i+'" class="row'+i+ ' custom-select">';
-    ActiveLine += '     <option value="">First Time?</option>';
-    ActiveLine += '     <option value="Yes">Yes</option>';
-    ActiveLine += '     <option value="No">No</option>';
-    ActiveLine += ' </select>';
-    ActiveLine += '</div>';
-    ActiveLine += '<br>';
-    ActiveLine += '<a href="/" onclick="updatetheSession()" id="Done" name="Done" class="btn btn-success" role="button">Done</a>';
-
-      $('#ShowParticipants').html(ActiveLine);
-}
-
-//Post request to create the session
-function addSession(event) {
-  event.preventDefault();
-  createdDate = DateOnly;
-  Facilitator = $('input#FacilitatorsName').val();
-  SessionType = $('#SessionClimbingType option:selected').val();
-  StartLocation = $('#sessionStartingArea option:selected').val();
-
-  var newSession = {
-      'createdDate': DateOnly,
-      'Facilitator': Facilitator,
-      'Session_Type': SessionType,
-      'Start_Location': StartLocation,
-      'Participants': ParticipantsArray,
-  };
-
-var myJSON = JSON.stringify(newSession);
-
-
-
-  // Use AJAX to post the object to our adduser service
   $.ajax({
-      type: 'POST',
-      data: myJSON,
-      url: 'theSession/addSession',
-      dataType: 'JSON',
-      contentType: 'application/json',
+    type: "put",
+    url: "theSession/updateSession",
+    contentType: 'application/json',
+    data: JSON.stringify(updates)
   }).done(function( response, results ) {
       // Check for successful (blank) response
-      if (response.msg === '') {
-
+      if (results === 'success') {
+        resetPage();
           // Clear the form inputs
           // $('#addSession input').val('');
 
@@ -221,110 +404,153 @@ var myJSON = JSON.stringify(newSession);
       else {
 
           // If something goes wrong, alert the error message that our service returned
-          alert('Error: ' + response.msg);
+          alert( response.msg);
+
 
       }
   });
-  ShowSession($('input#FacilitatorsName').val(), $('#SessionClimbingType option:selected').val(), $('#sessionStartingArea option:selected').val());
 }
-//Put request to update to Participants, on  pre made sesion
-function updatetheSession(){
-console.log('DATE: ' + DateOnly);
-var updates = {
-    'FindDate': {createdDate: DateOnly},
-    'createdDate': DateOnly,
-    'Facilitator': Facilitator,
-    'Session_Type': SessionType,
-    'Start_Location': StartLocation,
-    'Participants': ParticipantsArray
-};
 
-$.ajax({
-  type: "put",
-  url: "theSession/updateSession",
-  contentType: 'application/json',
-  data: JSON.stringify(updates)
-});
-}
-// this will be called when the DOM is ready
-$(function(){
+  //Post request to create the session
+  function addSession() {
 
-  //Load GDPR statment
-    $( document ).ready(function() {
-        $("#dataProtection").modal('show');
-    });
 
-getSession();//GET SESSION!
-// CALL FUNCTION TO CHANGE OPTIONS ACCORDING TO SESSION TYPE CHOICE
-$('#SessionClimbingType').change(function(SessionAreas) {
-  var SessionClimbingType = $( "#SessionClimbingType option:selected" ).text();
-      if (SessionClimbingType === 'Top-Roping'){
-          SessionAreas = TopropingAreas;
-      } else if (SessionClimbingType === 'Bouldering'){
-          SessionAreas = BoulderingAreas;
-      }
-      SetSessionAreas(SessionAreas);
-});
 
-// SET CHOOSEN START AREA TO VARIABLE
-$('#SessionStartChoices').change(function(SessionAreas) {
-  var StartingArea = $( "#SessionStartChoices option:selected" ).text();
-});
+      createdDate = moment().format('LL');
+      createdTime = moment().format('LTS');
 
-// TRIGGER SUBMIT
-$('#submit').click(function() {
-  event.preventDefault();
-  addSession(event);
+      var newSession = {
+          Created_Date: moment().format('LL'),
+          Created_Time: moment().format('LTS'),
+          created: moment().format(),
+          Facilitator: toTitleCase(facilitatorName),
+          Session_Type: sessionType,
+          Start_Location: startLocation,
+          Participants: participantsArray,
+          iPadIn : getKioskId(),
+      };
+
+    var myJSON = JSON.stringify(newSession);
+
+
+        // Use AJAX to post the object to our adduser service
+        $.ajax({
+            type: 'POST',
+            data: myJSON,
+            url: 'theSession/addSession',
+            dataType: 'JSON',
+            contentType: 'application/json',
+        }).done(function( response, results ) {
+            // Check for successful (blank) response
+            if (response.msg === '') {
+
+                // Clear the form inputs
+                // $('#addSession input').val('');
+
+                // // Update the table
+                // populateTable();
+
+            }
+            else {
+
+                // If something goes wrong, alert the error message that our service returned
+                alert('Error: ' + response.msg);
+
+            }
         });
 
-// COLLECT INPUTS FROM PARTICIPANTS
-$('#ShowParticipants').on('change blur click', function(event){
-  var targetID = (event.target.id);
-  var check = $("#"+targetID).val();
-  if (check === ''){}
-  var field = (event.target.classList[0]);
-  var Row = (field.slice(3,4));
-  var ArrayVal = Row-1;
-  ParticipantsArray[ArrayVal]=({ "Participant": $('input#Participant'+Row).val(), "Reason": $('#Reason'+Row+' option:selected').val(), "First_Time":$('#FirstTime'+Row+' option:selected').val()});
-  updatetheSession();
-  // < ---- AND NOW INSERT IN TO ARRAY
-    });
+        foundSession = true;
+    }
 
-// CHANGE INPUT TO TEXT FIELD -- NOT USING JUST USEFUL
-$('#ShowParticipants').on('blur', function(){
+  //Get request for session
+  function getSession(){
+    // var DateOnly = moment().format('MMMM Do YYYY');
+    $.getJSON( '/theSession/getSession', {Created_Date: moment().format('LL')}, function(results, res) {
+      })
+      .done(function(results, res) {
+            var theResults = JSON.stringify(results);
+              if (theResults === '[]') {
+                    foundSession = false;
+            } else {
+                    facilitatorName = results[0].Facilitator;
+                    createdTime = results[0].Created_Time;
+                    theID = results[0]._id;
+                    sessionType =  results[0].Session_Type;
+                    startLocation = results[0].Start_Location;
+                    foundSession = true;
+                    participantsArray = results[0].Participants;
+                    iPadIn = results[0].iPadIn;
+                    showSession();
+                    ShowParticipants();
+                    // updateWWA();
 
-  var $el = $(this);
+            }
+        });
+    }
 
-  var $input = $('<input />').val( $el.text() );
-  $el.replaceWith( $input );
+    //Put request to update to Participants, on  pre made sesion
+  function updateParticipants(update){
 
-  var save = function(){
-    var $p = $('<text contentEditable/>').text( $input.val() );
-    $input.replaceWith( $p );
-  };
+      $.ajax({
+        type: "put",
+        url: "theSession/updateParticipant",
+        contentType: 'application/json',
+        data: JSON.stringify(update)
+      }).done(function( response, results ) {
+          // Check for successful (blank) response
+          if (results === 'success') {
+            resetPage();
+              // Clear the form inputs
+              // $('#addSession input').val('');
 
-  $input.one('blur', save).focus();
+              // // Update the table
+              // populateTable();
 
-});
+          }
+          else {
 
-$('input[name=ids]').val(function(index, value) {
- return value.replace('54,', '');
-  });
+              // If something goes wrong, alert the error message that our service returned
+              alert( response.msg);
 
-$('#ShowParticipants').on('change blur', function(event){
-  var targetID = (event.target.id);
-  var check = $("#"+targetID).val();
-  var $el = $('<input />');
-  var $valid = $('<input is-valid />');
-  var $invalid = $('<input is-invalid />');
 
-  if (check === ''){
-    console.log('invalid');
-    $this.$el.replaceWith( $invalid );
-  } else if (check !== ''){
-    console.log('valid');
-  $valid.replaceWith( $invalid );
-  }
-});
+          }
+      });
+    }
 
-});
+  //Put request to update to Participants, on  pre made sesion
+  function updateSession(){
+
+      var updates = {
+          FindDate: {Created_Date: moment().format('LL')},
+          Details : { $set:  {
+          Facilitator: facilitatorName,
+          Session_Type: sessionType,
+          Start_Location: startLocation,
+          iPadIn : iPadIn }},
+      };
+
+      $.ajax({
+        type: "put",
+        url: "theSession/updateSession",
+        contentType: 'application/json',
+        data: JSON.stringify(updates)
+      }).done(function( response, results ) {
+          // Check for successful (blank) response
+          if (results === 'success') {
+            resetPage();
+              // Clear the form inputs
+              // $('#addSession input').val('');
+
+              // // Update the table
+              // populateTable();
+
+          }
+          else {
+
+              // If something goes wrong, alert the error message that our service returned
+              alert( response.msg);
+
+
+          }
+      });
+    }

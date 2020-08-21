@@ -1,0 +1,44 @@
+extends dashboard
+
+block content
+
+	.container-fluid
+		.row
+			.col-8
+				.chart-container
+					canvas#myChart
+				br
+				.chart-container
+					canvas#rfvChart 
+			.col-4
+				h4#theDates.text-center
+				.chart-container
+					table#rfvTable.table.table-sm.table-stripped.text-nowrap(cellspacing="0" width="100%")
+						thead
+							th.th-sm Reason
+							th.th-sm Number
+						tbody
+			
+
+
+		.row
+			.col-md
+				div
+					table#visitorTable.table.table-stripped.text-nowrap(cellspacing="0" width="100%" style="display: none")
+
+						thead
+							th.th-sm Date
+							th.th-sm Time
+							th.th-sm Full Name
+							th.th-sm Reason
+							th.th-sm
+								i.fas.fa-child
+							th.th-sm
+								i.fas.fa-camera
+							th.th-sm
+								i.fas.fa-tablet-alt
+
+						tbody
+
+
+	script(src='/javascripts/Dashboard/viewVisitors.js')

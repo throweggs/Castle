@@ -1,0 +1,58 @@
+extends dashboard
+
+block content
+
+
+  
+          
+  .container-fluid
+    .row
+      .col-6
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;") # of Participants
+          canvas#dateChart  
+      .col-2
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;") Reason for Visit
+          canvas#rfvChart 
+          br
+          br
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;") First Time
+          canvas#ftChart 
+      .col-2
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;") # session run by
+          canvas#fChart   
+          br
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;") Average &nbsp
+            i.fas.fa-user.fa-.5x
+            | / session / Facilitator
+          canvas#fanChart  
+      .col-2
+        .chart-container
+          p.text-center(style="margin-block: 0px; margin-bottom: 0px;") 
+            i.fas.fa-user.fa-.5x
+            | &nbsp / day of week
+          canvas#dayofWeekChart   
+
+    .row
+      
+      .col-md
+        div
+          table#visitorTable.table.table-hover.table-striped.text-nowrap(cellspacing="0" width="100%")
+              thead
+                th.th-sm
+                  i.fas.fa-plus
+                th  Date
+
+                th Facilitator
+                th Session Type
+                th Start Location
+                th # Participants
+                th iPad
+          
+              tbody
+      
+  script(src='/javascripts/Dashboard/viewWBS.js')

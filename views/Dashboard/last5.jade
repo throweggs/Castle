@@ -1,0 +1,30 @@
+extends dashboard
+
+block content
+
+	.container-fluid
+		.chart-container
+
+
+
+		.row
+			.col-md
+				div
+					table#visitorTable.table.table-stripped.text-nowrap(cellspacing="0" width="100%" style="display: none")
+
+						thead
+							th.th-sm Date
+							th.th-sm Time
+							th.th-sm Full Name
+							th.th-sm Reason
+							th.th-sm
+								i.fas.fa-child
+							th.th-sm
+								i.fas.fa-camera
+							th.th-sm
+								i.fas.fa-tablet-alt
+
+						tbody
+
+
+	script(src='/javascripts/Dashboard/last5.js')

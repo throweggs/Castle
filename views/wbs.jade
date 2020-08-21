@@ -1,0 +1,162 @@
+extends layout
+
+block content
+  script(src='/javascripts/wbs.js')
+  
+  br
+  // Button Facilitator modal
+  .container-fluid
+    .row
+      .col-10
+        //Session INFORMATION
+        #showSession
+      .col-2.text-right
+        button#openFacilitatorModal.btn.btn-outline-success(type='button', data-toggle='modal', data-target='#facilitatorModal')
+          i.fas.fa-edit &nbsp
+          | &nbsp Set Up WBS
+  .col
+    li <strong>The Session is not suitable for novice climbers.</strong> You need to be a registered bouldering member. Please ask reception who will be able to guide you through the registration process.
+    li <u>This is not a teaching session</u>, <u>nor is it supervised</u>. 
+    li Participants are still responsible for their own safety. It is up to each participant to decide for themselves who they wish to climb with.
+    li If you have any questions or concerns please speak to the facilitator or reception so that they can assist you.
+
+  
+  //Participants    
+  hr
+  #FacilitatorWarning.alert.alert-danger( role="alert")
+    h1.text-center Registration for the Women's Bouldering Social is not yet open.
+    h4.text-center   Please ask at Reception.
+    
+  form#participants.needs-validation.container-fluid(novalidate='', style="display: none;")
+    .form-row
+      .col
+        label(for='NewParticipantFirstName') First name
+        input#NewParticipantFirstName.form-control(type='text', placeholder='', value='', required='')
+        .valid-feedback
+          | Looks good!
+        .invalid-feedback
+          | Required
+      .col
+        label(for='NewParticipantLastName') Last name
+        input#NewParticipantLastName.form-control(type='text', placeholder='', value='', required='')
+        .valid-feedback
+          | Looks good!
+        .invalid-feedback
+          | Required
+      .col
+        label(for='NewReason') Reason for participanting
+        select#NewReason.form-control.row2.custom-select(autocomplete='false', required='')
+          option(selected='', value='')
+          option(value='I am new to the Castle') I am new to the Castle
+          option(value='I have no climbing partner today') I have no climbing partner today
+          option(value='I enjoy The Sessions') I enjoy The Session
+          option(value='for staff input') for staff input
+          option(value='other reasons') other reasons
+        .valid-feedback
+          | Looks good!
+        .invalid-feedback
+          | Required     
+      .col 
+        label(for='NewReason') First time on the session
+        select#NewFirstTime.form-control.row2.custom-select(autocomplete='false', required='')
+          option(selected='', value='')
+          option(value='Yes') Yes
+          option(value='No') No
+        .valid-feedback
+          | Looks good!
+        .invalid-feedback
+          | Required
+    br
+    button#addMe.col.align-self-end.btn.btn-primary(type='submit') Add Me
+    
+    hr
+    p
+
+    h2 Currently signed in participants...
+    table#participantTable.table.table-striped.table-hover.table-sm
+      thead
+        tr
+          th(scope='col') #
+          th(scope='col') Name
+          th(scope='col') Reason for participating
+          th(scope='col') First time on the session
+          th(scope='col') Left The Session
+      tbody#participantTableBody
+
+  // Modal
+  #leavingModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='leavingModalCenterTitle', aria-hidden='true')
+    form.needs-validation.container-fluid(novalidate='')
+      .modal-dialog
+        .modal-content
+          // Modal Header
+          .modal-header
+            .modal-title
+             h5 &nbsp Can we ask why are your leaving The Session?
+            button.close(type='button', data-dismiss='modal') ×
+          // Modal body
+          .modal-body
+            p.text-center.love-ya Your reason for leaving will not be shown.
+            .row
+              .col.btn-group(role="group", aria-label="Basic example")
+                button#leaving.col.diags.btn.btn-outline-primary(type='button') I'm Going Home
+                button#leading.col.diags.btn.btn-outline-primary(type='button') I'm Leading
+                button#otherReason.col.diags.btn.btn-outline-primary(type='button') Other Reasons  
+            
+                    
+            .col-12
+              .form-group
+                br
+
+                p#otherReasonDiag(style="display: none;") If you would like to speak to some one about the reason you have left The Session, a Duty manager would be happy to help, or alternatively please leave feedback in the comments box at reception.          
+                p#leadingDiag(style="display: none;") I am no longer taking part in The Session. I understand that leading is not an activity that the session facilitates and it is my responsibility to ensure my leading partner is competent in all aspects of lead climbing. 
+                p#leavingDiag(style="display: none;") Hope to see you again soon.
+
+          // Modal footer
+          .modal-footer
+            button#leavingSubmit.col.align-self-end.btn.btn-success(type='submit', data-dismiss='modal',style="display: none;") Submit  
+  
+  // Modal
+  #facilitatorModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='facilitatorModalCenterTitle', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        // Modal Header
+        .modal-header
+          .modal-title
+            i.fas.fa-edit
+            | &nbsp Session Info
+          button.close(type='button', data-dismiss='modal') ×
+        // Modal body
+        .modal-body
+    
+          .col
+            .form-group
+              #facilitatorField.input-group
+                .input-group-prepend
+                  span.input-group-text Facilitator
+                input#facilitatorName.form-control(type='text' style='width: 200px;')
+          .form-group#sessionType
+            label.col.form-check-label(for='SessionClimbingType') Session Type
+            .btn-group.col.btn-group-toggle(data-toggle='buttons')
+              .col-6#BSess.label.btn.btn-outline-secondary.active
+                input#BoulderingSession(type='radio', value='bouldering', autocomplete='off', checked='', disabled='true')
+                | Bouldering
+              .col-6#TSess.label.btn.btn-outline-secondary
+                input#TopRopeSession(type='radio', value='top roping', autocomplete='off', disabled='true')
+                | Top Roping
+      
+          
+                  
+          .col-12
+            .form-group
+              label(for='startOptions') Session Starting Location
+              #startOptions.list-group(role='tablist',, style="display: none;")
+                
+                  
+    
+
+        // Modal footer
+        .modal-footer
+          button#facilitatorSubmit.col.align-self-end.btn.btn-success(type='submit', data-dismiss='modal') Add Details
+          
+
+ 

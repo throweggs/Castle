@@ -1,0 +1,94 @@
+extends DMlayout
+
+block content
+
+  // Page Heading
+
+  h1.mb-4.text-gray-800 
+    i.nav-link-icon.fa.fa-walking
+    | &nbsp Floor Walking
+  p.mb-4.text-gray-800 Capturing all near misses of climbers while in the centre
+  form
+    .card.shadow.mb-4.sm-12
+      .card-body
+        #toolbar
+          button#addNewIssue.btn.btn-secondary(style='display:none;', type='button', data-toggle='modal',data-target='modal#newIssueModal') Add Issue
+
+        table#FloorWalking.table.table-sm.table-hover(
+            data-toolbar='#toolbar',
+            data-toggle='table',
+            data-show-toggle="true",
+            data-search="true",
+            data-click-to-select="true",
+            data-id-field="id",
+            data-select-item-name="id",
+          )
+          thead
+            tr
+              th(style='', data-field='id') ID
+              th(style='', data-field='catergory', data-sortable="true",data-width="5", data-width-unit="%") Catergory
+              th(style='', data-field='subcatergory') Subcatergory
+              th(style='', data-field='issue') Issue
+              th(data-field="state", data-checkbox="true") 
+
+      .card-footer
+        button(type='submit').btn.btn-pink.btn-lg.btn-block Submit
+  
+  
+  modal#newIssueModal.modal.fade.show(tabindex='-1', role='dialog', aria-modal='true')
+    form#newIssueForm.needs-validation.container-fluid(novalidate='', name="newIssue")
+      .modal-dialog
+        .modal-content
+          .modal-header
+            h2.modal-title + New Issue
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') × 
+          .modal-body
+            h4 Enter the issue you wish to track
+            br
+
+            .form-row
+              .col-md-12.mb-3
+                label(for='catergory') Catergory
+                .input-group.mb-3
+                  .input-group-prepend
+                    button#catSelect.btn.btn-outline-secondary.dropdown-toggle.dropdown-toggle-split(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                      .sr-only Toggle Dropdown
+                    .dropdown-menu
+                      #catOptions
+                  input#catergory.form-control(type='text', aria-describedby='catergory', min reqired='' )
+                .valid-feedback
+                  | Looks good!
+                .invalid-feedback
+                  | Please enter a catergory.
+            .form-row
+              .col-md-12.mb-3
+                label(for='subcatergory') Subcatergory
+                .input-group.mb-3
+                  .input-group-prepend
+                    button#subcatSelect.btn.btn-outline-secondary.dropdown-toggle.dropdown-toggle-split(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                      .sr-only Toggle Dropdown
+                    .dropdown-menu
+                      #subcatOptions
+                  input#subcatergory.form-control(type='text', aria-describedby='subcatergory', reqired )
+                .valid-feedback
+                  | Looks good!
+                .invalid-feedback
+                  | Please enter a subcatergory.
+            .form-row
+              .col-md-12.mb-3
+                label(for='issue') The issue you wish to track
+                input#issue.form-control(type='text', aria-describedby='issue', reqired )
+                .valid-feedback
+                  | Looks good!
+                .invalid-feedback
+                  | Please enter the issue you wish to track.
+          .modal-footer
+            button#newIssue.btn.btn-primary(type='submit') Go
+
+
+
+
+  script(src='/javascripts/DMs/DMFloorWalking.js') 
+
+  

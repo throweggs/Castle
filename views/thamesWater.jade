@@ -15,7 +15,7 @@ block content
 				.col.text-right
 					// Button to Open the Modal
 					button.btn.btn-primary(type='button', data-toggle='modal', data-target='#addPerson')
-						| Add Me		
+						| Add Me    
 			#workerList
 				table.table.table-striped.table-hover
 						thead
@@ -27,41 +27,30 @@ block content
 	
 		// The Modal
 		#addPerson.modal
-			.modal-dialog
-				.modal-content
-					// Modal Header
-					.modal-header
-						h4.modal-title.fas.fa-user-plus
-						button.close(type='button', data-dismiss='modal') ×
-					// Modal body
-					.modal-body
-											
-						.col
+			form#addWorker.needs-validation.container-fluid(novalidate='', name="addWorker") 
+				.modal-dialog
+					.modal-content
+						// Modal Header
+						.modal-header
+							.modal-title
+								i.fas.fa-user-plus
+								| &nbsp; Thame Water Worker
+							button.close(type='button', data-dismiss='modal') ×
+						// Modal body
+						.modal-body
 							.form-group
-								#nameField.input-group
+								.input-group
 									.input-group-prepend
-										span.input-group-text Name:
-									input#workerName.form-control(type='text')
-										
-						.col
-							#Disclaimer
-								.disclaimer-text
-									p <b> I will not climb in the centre unless I have registered and signed in to do so.</b>
-									p I have read and understood The Castle Garden Risk Assessment & the Castle Garden Work Checklist, and agree to follow the recommendations in these documents.
-									p I will be responsible for my own safety whilst working in the Castle Garden and point out any safety issues to the garden co-ordinator.
-									p
-					
-						.col						
-							label.requiredField(for='disclaimer') <b> I have read and agree to the above conditions*: </b>
-							input#disclaimer.offset-1.big-checkbox.checkbox-inline(type='checkbox', name='disclaimer', disabled='true' value='Agreed')
+										span.input-group-text Name
+									input#workerName.form-control(type='text', placeholder='Full Name', aria-label='Full Name', aria-describedby='basic-addon1', required='true')    
+							.col
+								.custom-control.custom-checkbox
+									input#disclaimer.big-checkbox.custom-control-input(type='checkbox')
+									label.custom-control-label(for='disclaimer')<h6> I will not climb in the centre or use the centre unless I have registered or signed in appropriately to do so.</h6>
 
-
-										
-									
-
-					// Modal footer
-					.modal-footer
-						button#submit.btn.btn-danger(type='submit', data-dismiss='modal', disabled='true') Submit
+						// Modal footer
+						.modal-footer
+							button#submit.col.align-self-end.btn.btn-success(type='submit', data-dismiss='modal', disabled='true') Submit
 	
 	
 		

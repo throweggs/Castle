@@ -1,0 +1,164 @@
+extends DMlayout
+//- include GDPR
+
+block content
+
+	script(src='/javascripts/DMCheckSheet.js')
+	br
+	// Morning Tasks ---------
+	.card.mb-3
+		.card-header
+			.row
+				.col
+					h3.card-title Morning Tasks 
+				.col-auto
+				.col-right
+					button#showMT.btn.btn-dark(type='button' ,onclick="$('#MT').toggle()" required='') View				
+		#MT.card-body(style='display:show;')
+			.row
+				.col
+					//admin tasks
+					.card
+						.card-header
+							.row
+								h3.col.card-title Admin 
+								.col-auto
+								.col-right
+									button#showAdmin.btn.btn-dark(type='button' ,onclick="$('#Admin').toggle()" required='') View
+									
+						#Admin.card-body(style='display:show;')
+							select#a1.custom-select.col-s-12.col-m-12.col-lg-2
+								option.selected 
+								option(value="Gordon") Gordon
+								option(value="Nick") Nick
+								option(value="Jakub") Jakub
+							label.col-xs-12.col-lg-10 Cashing up and Safe Ledger 
+			
+							select#a2.custom-select.col-s-12.col-lg-2
+								option.selected 
+								option(value="Gordon") Gordon
+								option(value="Nick") Nick
+								option(value="Jakub") Jakub
+							label.col-xs-12.col-lg-10 Cafe Cashing up and Safe ledger(Float £122.00)							
+
+							select#a3.custom-select.cols-12.col-m-12.col-lg-2
+								option.selected 
+								option(value="Gordon") Gordon
+								option(value="Nick") Nick
+								option(value="Jakub") Jakub
+							label.col-xs-12.col-lg-10 Take Cafe Radio (on chan 1) and cashdraw out 
+						
+							select#a4.custom-select.col-s-12.col-lg-2
+								option.selected 
+								option(value="Gordon") Gordon
+								option(value="Nick") Nick
+								option(value="Jakub") Jakub
+							label.col-xs-12.col-lg-10  Check Cafe Ledger is correct from previous day		
+
+							select#a5.custom-select.col-s-12.col-m-12.col-lg-2
+								option.selected 
+								option(value="Gordon") Gordon
+								option(value="Nick") Nick
+								option(value="Jakub") Jakub
+							label.col-xs-12.col-lg-10 Admin Folder
+			
+							select#a6.custom-select.col-s-12.col-lg-2
+								option.selected 
+								option(value="Gordon") Gordon
+								option(value="Nick") Nick
+								option(value="Jakub") Jakub
+							label.col-xs-12.col-lg-10 Diary for staff and bookings - today							
+
+							select#a7.custom-select.col-s-12.col-m-12.col-lg-2
+								option.selected 
+								option(value="Gordon") Gordon
+								option(value="Nick") Nick
+								option(value="Jakub") Jakub
+							label.col-xs-12.col-lg-10 Diary 3 days in advance - staffing/other issues
+						
+							select#a8.custom-select.col-s-12.col-lg-2
+								option.selected 
+								option(value="Gordon") Gordon
+								option(value="Nick") Nick
+								option(value="Jakub") Jakub
+							label.col-xs-12.col-lg-10  Collect Radio		
+							
+					//Health and Safety Task
+
+					.card
+						.card-header
+							.row
+								.col
+									h3.card-title Health and Safety 
+								.col-auto
+								.col-right
+									button#showHnS.btn.btn-dark(type='button' ,onclick="$('#HnS').toggle()" required='') View
+						#HnS.card-body(style='display:none;')
+					
+					//Other Pre 10am Tasks
+
+					.card
+						.card-header
+							.row
+								.col
+									h3.card-title Pre 10am Tasks 
+								.col-auto
+								.col-right
+									button#showPre10.btn.btn-dark(type='button' ,onclick="$('#Pre10').toggle()" required='') View
+						#Pre10.card-body(style='display:none;')
+					
+					//Fire Safety	
+
+					.card
+						.card-header
+							.row
+								.col
+									h3.card-title Fire Safety 
+								.col-auto
+								.col-right
+									button#showFS.btn.btn-dark(type='button' ,onclick="$('#FS').toggle()" required='') View
+						#FS.card-body(style='display:none;')
+						
+
+				.col-sm-12.col-md-12.col-lg-6
+					//Other Daily Tasks	
+					
+					.card
+						.card-header
+							.row
+								.col
+									h3.card-title Other Daily Tasks 
+								.col-auto
+								.col-right
+									button#showOther.btn.btn-dark(type='button' ,onclick="$('#Other').toggle()" required='') View
+						#Other.card-body()					
+	
+	// Weekly Tasks ---------
+	.card.text-white.bg-outline-primary.mb-3
+		.card-header
+			.row
+				.col
+					h3.card-title Weekly Tasks 
+				.col-auto
+				.col-right
+					button#showWT.btn.btn-dark(type='button' ,onclick="$('#WT').toggle()" required='') View
+						
+		#WT.card-body(style='display:none;')
+			.card-text Your privacy is important to us at The Castle &amp; we will only use your personal information to set-up and administer your membership, provide &amp; improve the services you request from us and <span>(if you agree)</span> provide news/updates regarding events and service that may be of interest to you.
+			br
+			.card-text Your information will only be shared with other organisations if it is necessary to do so in order to provide the services requested, comply with a legal obligation to which we are subject, or where there is a vital interest in doing so <span>(e.g. if you suffer a medical emergency while climbing here)</span> or some other legitimate interest. We will not share your information for marketing purposes outside of the Castle.
+			br
+			.card-text For further information please see: https://www.castle-climbing.co.uk/privacy-notice or if you have any questions please email dpo@castle-climbing.co.uk        
+
+
+	//Evening Tasks -----------
+	.card.text-white.border-primary.mb-3
+		.card-header  
+			.row
+				.col  
+					h3.card-title Evening Tasks
+				.col-auto
+				.col-right
+					button#showET.btn.btn-dark(type='button' ,onclick="$('#ET').toggle()" required='') View
+		#ET.card-body(style='display: none;')
+		

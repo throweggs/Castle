@@ -1,0 +1,153 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    append styles
+
+
+      link(rel='stylesheet', href='/chart.js/dist/Chart.min.css')
+      link(rel='stylesheet', href='/stylesheets/bootstrapLight.min.css')
+      //- link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.min.css')
+      link(rel="stylesheet" type="text/css", href="daterangepicker/daterangepicker.css")
+      link(rel='stylesheet',type="text/css", href='/stylesheets/lightStyle.css')
+
+      script(src='/moment/min/moment-with-locales.min.js')
+      script(src='/chart.js/dist/Chart.min.js')
+      script(src='/jquery/dist/jquery.min.js')
+
+      script(src='/fontawesome/js/all.js')
+        
+      script(src='/bootstrap/dist/js/bootstrap.bundle.min.js')
+        //- script(src='/popper/dist/umd/popper.min.js')
+        //- script(src='/tooltip/dist/umd/tooltip.min.js')
+      script(src='/javascripts/Pin.js')   
+
+      //- script(src='/tempus/build/js/tempusdominus-bootstrap-4.min.js')
+      script(src="/javascripts/jquery.tabletoCSV.js")
+      script(src="/daterangepicker/daterangepicker.js")
+
+      script(src='/javascripts/global.js')
+      script(src='/javascripts/dashboard.js')
+
+
+
+
+
+body
+  nav.navbar.navbar-dark.sticky-top.bg-dark.flex-md-nowrap.p-0
+    a.navbar-brand(href='#') Castle Climbing Centre
+    .input-group
+      .input-group-prepend
+        select#searchOptions.custom-select
+
+      #reportrange(style=' width:50%; display: none; cursor: pointer; padding: 5px 10px; border: 1px solid')
+        .row
+          .col
+            i.align-right.fa.fa-caret-down
+            i.fa.fa-calendar
+          .col
+            span#dateRange
+
+
+      input#searchText.form-control(type='text', aria-label='search', placeholder='Search',style='display: none; ')
+    #listCount
+    button#export.btn.btn-info(data-export="export" type='button') Export
+    | &nbsp
+    i.fas.fa-user-alt
+    #userName
+  .container-fluid
+    .row
+      nav.col-md-2.d-none.d-md-block.bg-light.sidebar
+        .sidebar-sticky
+          ul.nav.flex-column
+            li.nav-item
+              a#feedbackLink.nav-link.forms(href='/viewFeedback')
+                i.fas.fa-user
+                |                   Feedback
+
+            li.nav-item
+              a#visitorLink.nav-link.forms(href='/viewVisitors')
+                i.fas.fa-user
+                |                   Visitors
+            li.nav-item
+              a#wbsLink.nav-link.forms(href='/viewWBS')
+                i.fas.fa-user-circle
+                |                   Women's Bouldering Social
+            li.nav-item
+              a#theSessionLink.nav-link.forms(href='/viewTheSession')
+                i.fas.fa-user-circle
+                |                   The Session
+            li.nav-item
+              a#nonClimbingChildLink.nav-link.forms(href='/viewNCC')
+                i.fas.fa-child
+                |                   Non-Climbing Child
+            li.nav-item
+              a#thamesWaterLink.nav-link.forms(href='/viewTW')
+                i.fas.fa-tint
+                |                   Thames Water
+            li.nav-item
+              a#gardenLink.nav-link.forms(href='/viewGarden')
+                i.fas.fa-leaf
+                |                   Garden and Mini Plotter
+            li.nav-item
+              a#lockersLink.nav-link.forms(href='/viewLockers')
+                i.fas.fa-lock
+                |                   Lockers
+
+
+          h4.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted
+            span Admin
+
+          ul.nav.flex-column.mb-2
+            li.nav-item
+              a#TeamsLink.nav-link(href='/viewTeams', style="display: none")
+                i.fas.fa-users-cog 
+                |                    Teams
+            li.nav-item
+              a#StaffLink.nav-link(href='/viewStaff', style="display: none")
+                i.fas.fa-user-edit
+                |                    Staff
+            li.nav-item
+              a#VolunteerLink.nav-link(href='/viewVolunteer', style="display: none")
+                i.fas.fa-user-edit
+                |                    Volunteer
+
+
+
+      main.col-md-9.ml-sm-auto.col-lg-10.pt-3.px-4(role='main')
+        #mainPage
+          #loading.text-center( style="display: show")
+            #loading.fas.fa-cog.fa-spin.fa-8x
+
+        block content
+
+        table#exportTable.table(style="display: none")
+
+
+#PinModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='digitPasswordlbl', aria-hidden='true')
+  .vertical-alignment-helper
+    .modal-dialog.modal-sm.vertical-align-center
+      .modal-content
+        .modal-header
+          h4#digitPasswordlbl.modal-title.love-ya Enter your pin:
+        .modal-body(style='.row {text-align: center}')
+          input(type='hidden', name='formType', value='confirmPassword')
+          .form.needs-validation(novalidate='', name="addVisitor")
+            .form-group
+              .row.text-center
+                .col
+                input#firstdigit.col-2.digit.log-status.form-control.text-center(name='firstdigit', type='password', required='', size='1', maxlength='1', tabindex='0')
+                input#seconddigit.col-2.digit.log-status.form-control.text-center(name='seconddigit', type='password', required='', size='1', maxlength='1', tabindex='1')
+                input#thirddigit.col-2.digit.log-status.form-control.text-center(name='thirddigit', type='password', required='', size='1', maxlength='1', tabindex='2')
+                input#fourthdigit.col-2.digit.log-status.form-control.text-center(name='fourthdigit', type='password', required='', size='1', maxlength='1', tabindex='3')
+                .col
+                .invalid-feedback
+                  | Invalid Pin
+        .modal-footer
+          .d-flex.justify-content-center
+            #loading.spinner-border.text-primary(role='status')
+              span.sr-only(style='display:none;') Loading...
+
+
+          button#clockIn.btn.btn-primary.digit(type='submit', tabindex='4') Confirm

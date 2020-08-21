@@ -27,7 +27,7 @@ router.get('/getDay', function(req, res) {
     });
 });
 
-//Updates an theSession
+//Check the person out
 router.put('/updatePerson', function(req, res){
   thePerson = req.body.FindPerson;
   console.log(req.body);

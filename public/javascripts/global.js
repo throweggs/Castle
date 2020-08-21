@@ -1,3 +1,13 @@
+// moment.locale('en-GB'); ?
+
+var checksOut = false;
+var darkMode = true;
+function toTitleCase(str) {
+    return str.replace(/(?:^|\s)\w/g, function(match) {
+        return match.toUpperCase();
+    });
+}
+
 (function (global) {
 
     if(typeof (global) === "undefined") {
@@ -37,10 +47,36 @@
 })(window);
 
 
+// function toTitleCase(str) {
+//         return str.replace(
+//             /\w\S*/g,
+//             function(txt) {
+//                 return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+//             }
+//         );
+//     }
+
+
+function switchStyle(){
+
+         if(darkMode===true){
+          document.getElementById("pagestyle").setAttribute("href", "/stylesheets/bootstrapLight.min.css");
+          document.getElementById("customstyle").setAttribute("href", "/stylesheets/lightStyle.css");
+          darkMode = false;
+
+
+        } else if(darkMode===false){
+          document.getElementById("pagestyle").setAttribute("href", "/stylesheets/bootstrap.min.css");
+          document.getElementById("customstyle").setAttribute("href", "/stylesheets/darkStyle.css");
+          darkMode = true;
+
+        }
+      }
 
 
 function resetPage() {
     location.reload();
+
 }
 //create Exportable table
 jQuery.fn.tableToCSV = function() {
@@ -88,6 +124,8 @@ jQuery.fn.tableToCSV = function() {
 	});
 
 };
+
+
 
 function toTitleCase(str) {
     return str.replace(
@@ -152,9 +190,9 @@ function successAlert(theText, alertType, removeMe){
   $('#TheText').html(theText);
 }
 
-var dt = moment();
-var DateOnly = moment().format("ddd MMM Do YYYY");
-var TimeOnly = moment().format("h:mm:ss a");
+// var dt = moment();
+// var DateOnly = moment().format("ddd MMM Do YYYY");
+// var TimeOnly = moment().format("h:mm:ss a");
 
 
 $(function(){ // this will be called when the DOM is ready
@@ -167,26 +205,74 @@ $(function(){ // this will be called when the DOM is ready
       $('#AreYouSure').modal('show');
     });
 
+    kp_Vars_DidInject();
+
 });
 
 
-// //sets the Date
-//
-// var dt = new Date();
-// var curDate = dt.toString();
-// var DateOnly = curDate.split(" ", 4);
-// var output = "";
-//   $.each(DateOnly, function( index, value ) {
-//     output += value + " ";
-//   });
-//   DateOnly = $.trim(output);
-//
-//
-// //Set the Time
-// var DateRemoved = curDate.replace(DateOnly, '');
-// var TimeOnly = DateRemoved.split(" ", 2);
-// var output = "";
-//   $.each(TimeOnly, function( index, value ) {
-//     output += value + " ";
-//   });
-//   TimeOnly = $.trim(output);
+//sets the Date
+
+var dt = new Date();
+var curDate = dt.toString();
+var DateOnly = curDate.split(" ", 4);
+var output = "";
+  $.each(DateOnly, function( index, value ) {
+    output += value + " ";
+  });
+  DateOnly = $.trim(output);
+
+
+//Set the Time
+var DateRemoved = curDate.replace(DateOnly, '');
+var TimeOnly = DateRemoved.split(" ", 2);
+var output = "";
+  $.each(TimeOnly, function( index, value ) {
+    output += value + " ";
+  });
+  TimeOnly = $.trim(output);
+
+
+
+  //Get Kisk Pro // IDEA: function kp_Vars_DidInject() {
+  function kp_Vars_DidInject() {
+    updatePage();
+  }
+
+  function updatePage() {
+
+    document.getElementById("kioskIdValue").innerHTML = "<i>" + getKioskId() + "</i>";
+  }
+
+  function getKioskId() {
+
+    try {
+      return window.kioskpro_id.toString();
+    }
+    catch(error) {
+      return "Non Kiosk iPad";
+    }
+  }
+
+  window.addEventListener('load', function() {
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.getElementsByClassName('needs-validation');
+  // Loop over them and prevent submission
+  var validation = Array.prototype.filter.call(forms, function(form) {
+  form.addEventListener('submit', function(event) {
+  if (form.checkValidity() === false) {
+      console.log(event);
+  event.preventDefault();
+  event.stopPropagation();
+  }
+  if (form.checkValidity() === true) {
+  checksOut = true;
+  if(event.target.id !== 'newStaff'){
+  event.preventDefault();
+  event.stopPropagation();
+}
+  }
+
+  form.classList.add('was-validated');
+  }, false);
+  });
+  }, false);

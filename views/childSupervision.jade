@@ -1,51 +1,74 @@
 extends layout
 
 block content 
-	script(src='/javascripts/childSupervision.js') 
-	script(src='/javascripts/global.js')
+  script(src='/javascripts/childSupervision.js') 
+  script(src='/javascripts/global.js')
 
-	#Disclaimer.container-fluid
-		.disclaimer-text.row.align-centre
-			.col-12
-				text-left.h1 Supervision of non-climbing children
-				h4.text-left This form is to be completed by registered adult climbers and boulderers who are also supervising a non-climbing child while in the centre
-				p.text-left
-				text-left For the safe enjoyment of the centre, please read the rules below outlining our guidelines for supervising children in the centre. 
-				p You must complete this form every time that you attend with a non-climbing child. 
-				<p>
-				.text-left <strong>Guidelines:</strong>
+  #Disclaimer.container-fluid
+    .disclaimer-text.row.align-centre
+      .col-12
+        text-left.h1 Supervision of non-climbing children
+        h4.text-left This form is to be completed by registered adult climbers and boulderers who are also supervising a non-climbing child while in the centre
+        p.text-left
+        text-left For the safe enjoyment of the centre, please read the rules below outlining our guidelines for supervising children in the centre. 
+        p You must complete this form every time that you attend with a non-climbing child. 
+        <p>
+        .text-left <strong>Guidelines:</strong>
       
-			ul.text-left
-				li <b> Each adult climber can only supervise one non-climbing child at a time.</b>	This is to ensure that children are adequately supervised in a dangerous environment. 
-				li Each child should have <b>one designated responsible adult</b>	who completes the form below and is responsible for ensuring the proper supervision of that child at all times. 
-				li <b>You are responsible for the safety of the child under your supervision.</b>
-				li Proper supervision means that the child is with you at all times and that you are always aware of their actions and able to prevent them from coming to harm or endangering other users. 
-				li Non-climbing children may not climb anywhere within the centre or in the garden. 
-				li Children must not be in a climbing or bouldering landing zone and they must not distract belayers. 
-				li Please ensure that buggies, toys, etc. do not pose an additional hazard for other users.
-				li Children are not permitted in The Gym. 
+      ul.text-left
+        li <b> Each adult climber can only supervise one non-climbing child at a time.</b>  This is to ensure that children are adequately supervised in a dangerous environment. 
+        li Each child should have <b>one designated responsible adult</b>  who completes the form below and is responsible for ensuring the proper supervision of that child at all times. 
+        li <b>You are responsible for the safety of the child under your supervision.</b>
+        li Proper supervision means that the child is with you at all times and that you are always aware of their actions and able to prevent them from coming to harm or endangering other users. 
+        li Non-climbing children may not climb anywhere within the centre or in the garden. 
+        li Children must not be in a climbing or bouldering landing zone and they must not distract belayers.  Climbing areas are any area with black matting or soft matting.
+        li Please ensure that buggies, toys, etc. do not pose an additional hazard for other users.
+        li Children are not permitted in The Gym. 
       
-		.text-left.p If you are unable to supervise the child to the standards expected, you will be asked to leave the centre. 
-		br
+    .text-left.p If you are unable to supervise the child to the standards expected, you will be asked to leave the centre. 
+    br
 
-	form#addSupervisor.container-fluid(name="addSupervisor",method="post",action="/addSupervisor")
-		// Child Name
-		.form-group.row
-				label.col-lg-2.col-sm-12.col-form-label(for='Supervised Child') Name of Supervised Child*
-				.col-lg-8.col-sm-12
-					input#childName.form-control(type='text' name='childName' placeholder='Child Name' autocomplete='off')
-					hr
-				
-		// Designated Responsible Adult
-		.form-group.row
-				label.col-lg-2.col-sm-12.col-form-label(for='Designated Adult') Designated Responsible Adult
-				.col-lg-8.col-sm-12
-					input#designatedAdult.form-control(type='text' name='designatedAdult' placeholder='Designated Adult' autocomplete='off')
+  form#addSupervisor.container-fluid(novalidate='',name="addSupervisor",method="post",action="/addSupervisor")
+    // Child Name
+    .form-group.row
+        label.col-lg-5.col-sm-12.col-form-label(for='Supervised Child') The name of supervised child
+        .col-lg-6.col-sm-12
+          input#childName.form-control(type='text', name='childName', placeholder='', autocomplete='off')
+          .invalid-feedback
+            | Please add the required information
+          
+        
+    // Designated Responsible Adult
+    .form-group.row
+        label.col-lg-5.col-sm-12.col-form-label(for='Designated Adult') The designated responsible adult
+        .col-lg-6.col-sm-12
+          input#designatedAdult.form-control(type='text' name='designatedAdult', placeholder='', autocomplete='off', required='')
+          .invalid-feedback
+            | Please add the required information
+    // Disclaimer
+    .form-group.row
+      label.col-lg-5.col-md-6.col-sm-10.custom-control-label(for='disclaimer') I have read and agree to the above conditions
+      .col-2
+        button#disclaimer.container.btn.btn-outline-primary(type='button', data-toggle='modal', data-target='#disclaimerModal', required='') I Agree
 
-		//Disclaimer
-		.form-check.row
-			label.col-lg-6.col-md-6.col-sm-6.col-xs-10.requiredField(for='disclaimer') I have read and agree to the above conditions*:
-			input#disclaimer.offset-1.big-checkbox.checkbox-inline(type='checkbox', disabled='', name='disclaimer' value='Agreed')
-			a#cancel.offset-lg-1.offset-md-1.offset-sm-1.btn.btn-danger.btn-xl.submit-btn(href='/') Cancel
-			input#submit.offset-1.offset-sm-0.btn.btn-success.btn-xl.submit-btn(type='Submit', disabled='true')
-					
+    .form-group.row.container-fluid
+      .col.align-self-end
+      a#cancel.btn.btn-danger(href="#", data-toggle='modal', data-target='#AreYouSure') Cancel
+      .col-1
+      button#submit.btn.btn-success(data-toggle='modal',type='submit', style='display: none;') Submit - Staff Only
+      .col-1 
+    
+          
+      #disclaimerModal.modal.fade.AreYouSure(tabindex='-1', role='dialog', aria-labelledby='Disclaimer', aria-hidden='true')
+        .modal-dialog
+          .modal-content
+            .modal-header.h1
+              #theMessage
+            .modal-body
+              h5 Please hand this tablet back to the receptionist, so they can check the form.
+            .modal-footer
+              .row
+                .col
+                  img(src='logo.png', alt='')
+                .col.align-self-end
+                  a.btn.btn-success.btn-xl.submit-btn(href='#', data-dismiss='modal', aria-label='Close') Close

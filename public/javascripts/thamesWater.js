@@ -1,5 +1,4 @@
-  var GardenChoice = ''; //Choice between Mini Plot or Garden Volunteer
-  var GardenVisitorListData = []; //Setting up array for GardenVisitors
+  var iPadIn = '';
 
   // DOM Ready =============================================================
   $(document).ready(function() {
@@ -73,8 +72,6 @@
 
          updatePerson(thisVisitorObject);
 
-      console.log(visitorListData[arrayPosition]);
-      console.log("did it work?");
       }
 
   function updatePerson(thisVisitorObject){
@@ -85,8 +82,10 @@
           'createdDate': thisVisitorObject.createdDate,
           'Person' : thisVisitorObject.Person,
           'ArrivalTime' : thisVisitorObject.ArrivalTime,
-          'DepartureTime' : TimeOnly,
+          'DepartureTime' : moment().format(),
           'Disclaimer' : thisVisitorObject.Disclaimer,
+          'iPadIn' : iPadIn,
+          'iPadOut' : getKioskId(),
       };
 
       $.ajax({
@@ -129,7 +128,7 @@
       var tableContent = '';
 
       // jQuery AJAX call for JSON
-      $.getJSON( '/thamesWater/getDay', {createdDate: DateOnly}, function( data ) {
+      $.getJSON( '/thamesWater/getDay', {createdDate: moment().format('DD MM YYYY')}, function( data ) {
 
         // Stick our visitor data array into a visitorlist variable in the visitorlist object
         visitorListData = data;
@@ -142,14 +141,16 @@
 
            var newName = toTitleCase(firstNameLastInital(this.Person));
 
+           iPadIn = this.iPadIn;
+
               tableContent += '<tr>';
               tableContent += '<td>' + newName + '</td>';
-              tableContent += '<td>' + this.ArrivalTime + '</td>';
+              tableContent += '<td>' + moment(this.ArrivalTime).format('hh:mm:ss') + '</td>';
                 if (this.DepartureTime === '') {
 
                   tableContent += '<td><button type="button" rel="' + this._id + '" class="CheckOut btn btn-warning btn-sm">Check Out</button></td>';
                 } else {
-                  tableContent += '<td>' + this.DepartureTime + '</td>';
+                  tableContent += '<td>' + moment(this.DepartureTime).format('hh:mm:ss') + '</td>';
                 }
               // tableContent += '<td><a href="#" class="linkdeletevisitor " rel="' + this._id + '">delete</a></td>';
               tableContent += '</tr>';
@@ -168,15 +169,15 @@ function addPerson(event) {
 
 
     var newPerson = {
-      'createdDate': DateOnly,
+      'createdDate': moment().format('DD MM YYYY'),
       'Person' : $('input#workerName').val(),
-      'ArrivalTime' : TimeOnly,
+      'ArrivalTime' : moment().format(),
       'DepartureTime' : "",
       'Disclaimer' : $('input#Disclaimer').val(),
+      'iPadIn' : getKioskId(),
     };
 
   var myJSON = JSON.stringify(newPerson);
-
 
 
     // Use AJAX to post the object to our adduser service

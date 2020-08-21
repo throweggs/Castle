@@ -1,5 +1,6 @@
 var GardenChoice = ''; //Choice between Mini Plot or Garden Volunteer
 var GardenVisitorListData = []; //Setting up array for GardenVisitors
+var iPadIn = ''; //Records iPad infomation
 
 // DOM Ready =============================================================
 $(document).ready(function() {
@@ -19,20 +20,16 @@ $(document).ready(function() {
 
       $('#submit').on('click', addPerson);
 
-      $('#timeIn').datetimepicker({
-        useCurrent: true,
-        format: 'LT'
-      });
-      $('#timeOut').datetimepicker({
-        useCurrent: false,
-        format: 'LT'
-      });
-      $("#timeIn").on("change.datetimepicker", function (e) {
-          $('#timeOut').datetimepicker('minDate', e.date);
-      });
-      $("#timeOut").on("change.datetimepicker", function (e) {
-          $('#timeIn').datetimepicker('maxDate', e.date);
-      });
+      // $('#timeIn').moment().format('LT');
+      // $('#timeOut').moment().format('LT');
+      // $('#timeOut').text($('#timeOut').format('LT');
+      //
+      // $("#timeIn").on("change.datetimepicker", function (e) {
+      //     $('#timeOut').datetimepicker('minDate', e.date);
+      // });
+      // $("#timeOut").on("change.datetimepicker", function (e) {
+      //     $('#timeIn').datetimepicker('maxDate', e.date);
+      // });
 
 
       $('input#VolunteerChoice').on('change',function(){
@@ -87,20 +84,21 @@ function TiggerCheckOut(event) {
        updatePerson(thisVisitorObject);
 
     console.log(visitorListData[arrayPosition]);
-    console.log("did it work?");
+
     }
 
 function updatePerson(thisVisitorObject){
-    console.log('DATE: ' + DateOnly);
 
     var updates = {
-        'FindPerson': thisVisitorObject._id,
-        'createdDate': thisVisitorObject.createdDate,
-        'Person' : thisVisitorObject.Person,
-        'Reason' : thisVisitorObject.Reason,
-        'ArrivalTime' : thisVisitorObject.ArrivalTime,
-        'DepartureTime' : TimeOnly,
-        'Disclaimer' : thisVisitorObject.Disclaimer,
+        FindPerson: thisVisitorObject._id,
+        createdDate: thisVisitorObject.createdDate,
+        Person : thisVisitorObject.Person,
+        Reason : thisVisitorObject.Reason,
+        ArrivalTime : thisVisitorObject.ArrivalTime,
+        DepartureTime : moment().format('LT'),
+        Disclaimer : thisVisitorObject.Disclaimer,
+        iPadOut : getKioskId(),
+        iPadIn : iPadIn,
     };
 
     $.ajax({
@@ -143,7 +141,7 @@ function populateTable() {
     var tableContent = '';
 
     // jQuery AJAX call for JSON
-    $.getJSON( '/gardenVolunteer/getDay', {createdDate: DateOnly}, function( data ) {
+    $.getJSON( '/gardenVolunteer/getDay', {createdDate: moment().format('L')}, function( data ) {
 
       // Stick our visitor data array into a visitorlist variable in the visitorlist object
       visitorListData = data;
@@ -158,7 +156,8 @@ $('#ListCount').text(visitorListData.length);
             tableContent += '<tr>';
             tableContent += '<td>' + newName + '</td>';
             tableContent += '<td>' + this.Reason + '</td>';
-            tableContent += '<td>' + this.ArrivalTime + '</td>';
+            tableContent += '<td>' +this.ArrivalTime + '</td>';
+            iPadIn = this.iPadIn;
 
               if (this.DepartureTime === '') {
                 console.log(this._id + 'No Depart');
@@ -184,12 +183,14 @@ function addPerson(event) {
 
 
   var newPerson = {
-    'createdDate': DateOnly,
-    'Person' : $('input#volunteerName').val(),
-    'Reason' : GardenChoice,
-    'ArrivalTime' : TimeOnly,
-    'DepartureTime' : "",
-    'Disclaimer' : $('input#Disclaimer').val(),
+    createdDate: moment().format('L'),
+    created: moment().format(),
+    Person : $('input#volunteerName').val(),
+    Reason : GardenChoice,
+    ArrivalTime : moment().format('LT'),
+    DepartureTime : "",
+    Disclaimer : $('input#Disclaimer').val(),
+    iPadIn : getKioskId(),
   };
 
 var myJSON = JSON.stringify(newPerson);

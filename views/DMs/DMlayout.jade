@@ -1,0 +1,168 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='Content-Language', content='en')
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    title
+     | DMs Dashboard for the Castle Climbing Centre
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no')
+    meta(name='description', content='DMs Dashboard for the Castle Climbing Centre.')
+    meta(name='msapplication-tap-highlight', content='no')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    append styles
+
+      //- link(rel='stylesheet', href='/chart.js/dist/Chart.min.css')
+      link(id="pagestyle", rel='stylesheet', href='/theme/css/sb-admin-2.min.css')
+      link(rel='stylesheet', href='https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css')
+      //- link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.min.css')
+      //- link(rel="stylesheet" type="text/css" href="daterangepicker/daterangepicker.css")
+      //- link(rel='stylesheet', href='/easy-autocomplete/dist/easy-autocomplete.min.css')
+      link(id="customstyle", rel='stylesheet', href='/stylesheets/lightStyle.css')
+
+
+      // Core plugin JavaScript
+      script(src='theme/vendor/jquery/jquery.min.js')
+      script(src='theme/vendor/jquery-easing/jquery.easing.min.js')
+      // Bootstrap core JavaScript
+      script(src='theme/vendor/bootstrap/js/bootstrap.bundle.min.js')
+      //- script(src='/jquery/dist/jquery.min.js')
+      //- script(src='/popper/umd/popper.min.js')
+      //- script(src='/tooltip/umd/tooltip.min.js')
+
+      // Custom scripts for all pages
+      script(src='/fontawesome/js/all.js')
+
+      script(src='/moment/min/moment.min.js')
+      //- script(src='/chart.js/dist/Chart.min.js')
+      //- script(src='/bootstrap/dist/js/bootstrap.bundle.min.js')
+      script(src='https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js')
+
+      //- script(src='/easy-autocomplete/dist/jquery.easy-autocomplete.min.js')
+
+      //- script(src='/tempus/build/js/tempusdominus-bootstrap-4.min.js')
+
+      //- script(src="/daterangepicker/daterangepicker.js")
+      //- script(scr='/javascripts/jquery.tabletoCSV.js')
+
+  body#page-top(onresize="effectNavBar()")
+            
+    #wrapper
+          // Sidebar
+          ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordion
+            // Sidebar - Brand
+            a.sidebar-brand.d-flex.align-items-center.justify-content-center(href='/Dashboard')
+              .sidebar-brand-icon.rotate-n-15
+                img(src='/logo.png')
+              .sidebar-brand-text.mx-3
+                | Dashboard
+            // Divider
+            hr.sidebar-divider.my-0
+            // Nav Item - Pages Collapse Menu
+            li.nav-item
+              a.nav-link.collapsed(href='/DMFloorWalking',)
+                i.nav-link-icon.fa.fa-walking
+                span &nbsp Floor Walking
+
+            li.nav-item
+              a.nav-link.collapsed(href='/DMCheckSheet',)
+                i.nav-link-icon.fas.fa-tasks
+                span &nbsp Check Sheet
+
+
+              // Divider
+            hr.sidebar-divider.d-none.d-md-block
+            // Sidebar Toggler (Sidebar)
+            .text-center.d-none.d-md-inline
+              button#sidebarToggleTop.rounded-circle.border-0
+                i.nav-link-icon.fa.fa-arrow-left.text-gray-400
+            // End of Sidebar
+            // Content Wrapper
+          #content-wrapper.d-flex.flex-column
+            // Main Content
+            #content
+              // Topbar
+              nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow
+                // Sidebar Toggle (Topbar)
+                button#sidebarToggleTop.btn.btn-link.d-md-none.rounded-circle.mr-3
+                  i.fa.fa-bars
+                // Topbar Search
+                h4.font-weight-bold.text-primary.d-none.d-sm-inline-block.mr-auto.ml-md-3.my-2.my-md-0 Duty Manager Dashboard
+                  
+
+                ul.navbar-nav.ml-auto
+                  // Nav Item - User Information
+                  li.nav-item.dropdown.no-arrow
+                    
+                    a#userDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                      i.fas.fa-user.fa-sm.fa-fw.mr-2.fa-2x
+                      span#UserName.mr-2.d-none.d-lg-inline.text-gray-600.small Not Logged In
+                      
+                    // Dropdown - User Information
+                    .dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby='userDropdown')
+                      a.dropdown-item(href='#')
+                        i.fas.fa-user.fa-sm.fa-fw.mr-2.text-gray-400
+                        |                   Profile
+                      a.dropdown-item(href='#')
+                        i.fas.fa-cogs.fa-sm.fa-fw.mr-2.text-gray-400
+                        |                   Settings
+                      a.dropdown-item(href='#')
+                        i.fas.fa-list.fa-sm.fa-fw.mr-2.text-gray-400
+                        |                   Activity Log
+                      .dropdown-divider
+                      a#login.dropdown-item(href='#', data-toggle='modal', data-target='#PinModal', style="display:show;")
+                        i.fas.fa-sign-out-alt.fa-sm.fa-fw.mr-2.text-gray-400
+                        |                   Login
+                      a#logout.dropdown-item(href='/Dashboard', style="display:none;")
+                        i.fas.fa-sign-out-alt.fa-sm.fa-fw.mr-2.text-gray-400
+                        |                   Logout
+              // End of Topbar
+
+  
+              // Begin Page Content
+              .container-fluid
+                block content  
+              // End of Main Content
+              // Footer
+              footer.sticky-footer.bg-white
+                .container.my-auto
+                  .copyright.text-center.my-auto
+                    span Copyright © Clive Fitzsimons 2020
+                    // End of Footer
+                    // End of Content Wrapper
+                    // End of Page Wrapper
+                    // Scroll to Top Button
+                    a.scroll-to-top.rounded(href='#page-top')
+      
+
+    
+
+      #PinModal.modal.fade.show(tabindex='-1', role='dialog', aria-modal='true')
+
+        .modal-dialog.modal-sm
+          .modal-content
+            .modal-header
+              h4#digitPasswordlbl.modal-title.love-ya Enter your pin:
+              button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+            .modal-body(style='.row {text-align: center}')
+              .form.needs-validation(novalidate='', name="addVisitor")
+                .form-group
+                  .row.text-center
+                    .col
+                    input#firstdigit.col-2.digit.log-status.form-control.text-center(name='firstdigit', type='password', required='', size='1', maxlength='1', tabindex='0')
+                    input#seconddigit.col-2.digit.log-status.form-control.text-center(name='seconddigit', type='password', required='', size='1', maxlength='1', tabindex='1')
+                    input#thirddigit.col-2.digit.log-status.form-control.text-center(name='thirddigit', type='password', required='', size='1', maxlength='1', tabindex='2')
+                    input#fourthdigit.col-2.digit.log-status.form-control.text-center(name='fourthdigit', type='password', required='', size='1', maxlength='1', tabindex='3')
+                    .col
+                    .invalid-feedback
+                      | Invalid Pin
+            .modal-footer
+              button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+              button#Go.btn.btn-primary(type='button',, tabindex='4') Go
+              #Loading.spinner-border.text-primary(role='status' style='display:none;')
+                span.sr-only Loading...
+                
+    script(src='/theme/js/sb-admin-2.min.js')                  
+                
+    script(src='/javascripts/DMs/DMlayout.js') 

@@ -1,71 +1,54 @@
 var express = require('express');
 var path = require('path');
+// var request = require('request');
+// var rp = require('request-promise');
 var $ = require('jquery');
 var jquery = require('jquery');
 var jQuery = require('jquery');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
+// var logger = require('morgan');
+// var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var moment = require('moment');
-var popper = require('popper.js');
-var tooltip = require('tooltip.js');
-var passport = require('passport');
-var Strategy = require('passport-local').Strategy;
+// var popper = require('popper.js');
+// var tooltip = require('tooltip.js');
+var Chart = require('chart.js');
+var SunCalc = require('suncalc');
+// var easyAutocomplete = require('easy-autocomplete');
 
 
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/Castle');
+
+const mongo = require('mongodb');
+const monk = require('monk');
+const url = 'co-forms:27017/forms'
+const db = monk(url);
+db.then(() => {
+  console.log('Connected correctly to server, at: ' + url)
+})
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var childSupervisor = require('./routes/childSupervisor');
 var theSession = require('./routes/theSession');
 var visitor = require('./routes/visitor');
+var visitorTestnTrace = require('./routes/visitorTestnTrace');
 var dashboard = require('./routes/dashboard');
-var wwa = require('./routes/wwa');
+var wbs = require('./routes/wbs');
 var homepage = require('./routes/homepage');
 var gardenVolunteer = require('./routes/gardenVolunteer');
+var personalTrainer = require('./routes/personalTrainer');
 var thamesWater = require('./routes/thamesWater');
-var login = require('./routes/login');
+var sonosBackend = require('./routes/sonosBackend');
+var sonosHistory = require('./routes/sonosHistory');
+var staff = require('./routes/staff');
+var lockers = require('./routes/lockers');
+var groups = require('./routes/groups');
+var sunrise = require('./routes/sunrise');
+var feedback = require('./routes/feedback');
 
-
-// Configure the local strategy for use by Passport.
-//
-// The local strategy require a `verify` function which receives the credentials
-// (`username` and `password`) submitted by the user.  The function must verify
-// that the password is correct and then invoke `cb` with a user object, which
-// will be set at `req.user` in route handlers after authentication.
-passport.use(new Strategy(
-  function(username, password, cb) {
-    login.users.findByUsername(username, function(err, user) {
-      if (err) { return cb(err); }
-      if (!user) { return cb(null, false); }
-      if (user.password != password) { return cb(null, false); }
-      return cb(null, user);
-    });
-  }));
-
-  // Configure Passport authenticated session persistence.
-//
-// In order to restore authentication state across HTTP requests, Passport needs
-// to serialize users into and deserialize users out of the session.  The
-// typical implementation of this is as simple as supplying the user ID when
-// serializing, and querying the user record by ID from the database when
-// deserializing.
-passport.serializeUser(function(user, cb) {
-  cb(null, user.id);
-});
-
-passport.deserializeUser(function(id, cb) {
-  login.users.findById(id, function (err, user) {
-    if (err) { return cb(err); }
-    cb(null, user);
-  });
-});
-
-
+var dmCheckSheet = require('./routes/DMs/DMCheckSheet');
+var dmFloorWalking = require('./routes/DMs/DMFloorWalking');
 
 var app = express();
 
@@ -73,47 +56,13 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
+
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(require('morgan')('combined'));
-app.use(require('cookie-parser')());
-app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.get('/',
-  function(req, res) {
-    res.render('home', { user: req.user });
-  });
-
-app.get('/login',
-  function(req, res){
-    res.render('login');
-  });
-
-app.post('/login',
-  passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
-
-app.get('/logout',
-  function(req, res){
-    req.logout();
-    res.redirect('/');
-  });
-
-app.get('/profile',
-  require('connect-ensure-login').ensureLoggedIn(),
-  function(req, res){
-    res.render('profile', { user: req.user });
-  });
-
 
 // Make our db accessible to our router
 app.use(function(req,res,next){
@@ -125,18 +74,48 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/childSupervisor', childSupervisor);
 app.use('/theSession', theSession);
-app.use('/dashboard', dashboard);
 app.use('/visitor', visitor);
-app.use('/wwa', wwa);
+app.use('/visitorTestnTrace', visitorTestnTrace);
+app.use('/wbs', wbs);
 app.use('/homepage', homepage);
 app.use('/gardenVolunteer', gardenVolunteer);
 app.use('/thamesWater', thamesWater);
+app.use('/personalTrainer', personalTrainer);
+app.use('/groups', groups);
+app.use('/feedback', feedback);
 
-app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
-app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
+
+
+//DMs
+app.use('/DMCheckSheet', dmCheckSheet);
+app.use('/DMFloorWalking', dmFloorWalking);
+
+//Staff
+app.use('/staff', staff);
+
+//Dashboard
+app.use('/dashboard', dashboard);
+app.use('/lockers', lockers);
+
+
+
+app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/')); // redirect bootstrap JS
+app.use('/jquery', express.static(__dirname + '/node_modules/jquery/'));
+// app.use('/popper', express.static(__dirname + '/node_modules/popper.js'));
+// app.use('/tooltip', express.static(__dirname + '/node_modules/tooltip.js'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use('/moment', express.static(__dirname + '/node_modules/moment')); // redirect moments JS
-app.use('/tempus', express.static(__dirname + '/node_modules/tempusdominus-bootstrap-4')); // redirect tempus JS
+// app.use('/tempus', express.static(__dirname + '/node_modules/tempusdominus-bootstrap-4')); // redirect tempus JS
+app.use('/daterangepicker', express.static(__dirname + '/node_modules/daterangepicker')); // redirect tempus JS
+app.use('/fontawesome', express.static(__dirname + '/node_modules/@fortawesome/fontawesome-free')); // redirect tempus JS
+app.use('/chart.js', express.static(__dirname + '/node_modules/chart.js'));
+app.use('/SunCalc', express.static(__dirname + '/node_modules/suncalc'));
+app.use('/easy-autocomplete', express.static(__dirname + '/node_modules/easy-autocomplete'));
+
+
+
+// app.use('/request', express.static(__dirname + '/node_modules/request')); // redirect tempus JS
+
 
 
 
@@ -156,6 +135,9 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error', { title: 'Error' });
+
 });
+
+
 
 module.exports = app;

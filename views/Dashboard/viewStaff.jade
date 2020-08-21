@@ -1,0 +1,148 @@
+extends dashboard
+
+block content
+  script(src='/javascripts/Dashboard/viewStaff.js')
+
+
+  .container
+    .row
+      .col-md-6
+        .h1 All Staff
+      .col
+        |  
+      .col
+        button#staffModal.newStaff.btn.btn-outline-primary(type='button', data-toggle='modal', data-target='#addStaffModal')
+          i.fas.fa-user-plus 
+          |   Staff
+
+
+  table#StaffMembersTable.table.table-stripped.text-nowrap
+    thead
+      tr
+        th Edit
+        th Active
+        th Super
+        th Staff Member
+        th Pin
+        
+
+    tbody#StaffMembersTableBody
+
+    br
+
+
+
+
+
+    // Modal
+    #addStaffModal.modal.fade.bd-example-modal-lg(tabindex='-1', role='dialog', aria-labelledby='addStaffModalCenterTitle', aria-hidden='true')
+      .modal-dialog.modal-dialog-centered.modal-lg(role='document')
+        .modal-content
+          form#newStaff.needs-validation(novalidate='')
+            .modal-header
+              h1#addStaffModalLongTitle.modal-title Add Staff Member
+              h1#modalStaffID.modal-title( style="display: none")
+              button.close(type='button', data-dismiss='modal', aria-label='Close')
+                span(aria-hidden='true') ×
+            .modal-body
+              h4 Details
+
+              .row
+                // Grid column
+                .col
+                  // Material input
+                  .md-form.mt-0
+                    input#firstNameInput.form-control(type='text', placeholder='First name',required='')
+                // Grid column
+                .col
+                  // Material input
+                  .md-form.mt-0
+                    input#lastNameInput.form-control(type='text', placeholder='Last name',required='')
+                .col
+                  // Material input
+                  .md-form.mt-0
+                    input#pinInput.form-control(type='password',maxlength="4", placeholder='Passcode 4 digits only',required='')
+              
+              p
+          
+              p
+              .row
+                .col  
+                  .custom-control.custom-checkbox
+                    input#superAdmin.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='superAdmin') Super admin
+                
+                .col  
+                  .custom-control.custom-checkbox
+                    input#activeStaff.custom-control-input(type='checkbox' checked='')
+                    label.custom-control-label(for='activeStaff') Active Staff Member
+
+          
+        
+            
+                      
+              p
+              hr
+              hr
+              h4 Teams
+
+              #TeamList
+              p
+              hr              
+              h4 Form Access
+
+              .row
+                .col
+                  .custom-control.custom-checkbox
+                    input#Feedback.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='Feedback') Feedback
+                .col
+                  .custom-control.custom-checkbox
+                    input#Visitors.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='Visitors') Visitors        
+                .col
+                  .custom-control.custom-checkbox
+                    input#NCC.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='NCC') Non Climbing Child
+              .row
+                .col
+                  .custom-control.custom-checkbox
+                    input#Groups.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='Groups') Groups Under Instruction
+            
+                .col
+                  .custom-control.custom-checkbox
+                    input#WBS.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='WBS') Womens Bouldering Social
+                              
+                .col
+                  .custom-control.custom-checkbox
+                    input#TheSession.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='TheSession') The Session
+
+              .row
+                .col
+                  .custom-control.custom-checkbox
+                    input#TW.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='TW')  Thames Water
+                              
+                .col
+                  .custom-control.custom-checkbox
+                    input#Gardeners.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='Gardeners') Gardener And Mini Plotter
+
+                .col
+                  .custom-control.custom-checkbox
+                    input#PersonalTrainer.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='PersonalTrainer')  Personal Trainer
+              .row
+                .col
+                  .custom-control.custom-checkbox
+                    input#Lockers.custom-control-input(type='checkbox')
+                    label.custom-control-label(for='Lockers') Locker Database
+
+
+            .modal-footer
+              button.btn.btn-secondary(type='button', data-dismiss='modal',onClick='clearModal()') Close
+              button.btn.btn-primary(type='submit', onClick='addStaff()') Save changes
+  //- 

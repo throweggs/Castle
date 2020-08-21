@@ -7,6 +7,7 @@ var router = express.Router();
  */
 router.post('/addSession', function(req, res) {
     var db = req.db;
+    console.log('hit');
     var collection = db.get('theSession');
     collection.insert(req.body, function(err, result){
         res.send(
@@ -27,16 +28,34 @@ router.get('/getSession', function(req, res) {
     });
 });
 
+
 //Updates an theSession
 router.put('/updateSession', function(req, res){
-  theID = req.body.FindDate;
-  console.log(theID);
+  theDate = req.body.FindDate;
+  theUpdate = req.body.Details;
+  console.log(theDate);
+    console.log(theUpdate);
   var db = req.db;
   var collection = db.get('theSession');
-  collection.update(theID,req.body,function(e,docs){
+  collection.findOneAndUpdate(theDate,theUpdate,function(e,docs){
       res.json(docs);
   });
 });
+
+//Updates an Participants
+router.put('/updateParticipant', function(req, res){
+  console.log('hit');
+  theDate = req.body.FindDate;
+  theUpdate = req.body.Details;
+  console.log(theDate);
+    console.log(theUpdate);
+  var db = req.db;
+  var collection = db.get('theSession');
+  collection.update(theDate, theUpdate,function(e,docs){
+      res.json(docs);
+  });
+});
+
 
 
 module.exports = router;

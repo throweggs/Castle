@@ -1,0 +1,38 @@
+extends layout
+//- include GDPR
+
+block content
+	script(src='/javascripts/sonosBackend.js')
+	script(src='/javascripts/sonosHistory.js')
+	
+	br
+	// VISITOR LIST
+	.col
+		.visitor-list
+			.row
+				.col
+					h2 History of Tracks Played: <span id='ListCount'></span>
+				.col
+				.col.text-right
+					// Button to Open the Modal
+					button#refreshTable.btn.btn-primary(type='button')
+						| Refresh	
+						
+			#trackList
+				table.table.table-striped.table-hover.table-sm
+						thead
+							th Date and Time
+							th Playing In
+							th artwork
+							th Title
+							th Artist
+							th Album
+							th # of Skips	
+						tbody
+	
+
+	
+
+		
+		
+			

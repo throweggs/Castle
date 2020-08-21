@@ -31,46 +31,48 @@ block content
 				.modal-content
 					// Modal Header
 					.modal-header
-						h4.modal-title.fas.fa-user-plus
+						h2.modal-title.fas.fa-user-plus.fa-2x
+						| &nbsp &nbsp Clock In
 						button.close(type='button', data-dismiss='modal') ×
 					// Modal body
 					.modal-body
-											
+			
+						label.col-form-label(for='VolunteerChoice') I am here as a
+						br
+						.col.btn-group.btn-group-toggle(data-toggle='buttons')
+							.col-6.label.btn.btn-outline-success Garden Volunteer
+								input#VolunteerChoice(type='radio', value='Volunteer', autocomplete='off', checked='')
+
+							.col-6.label.btn.btn-outline-success Mini Plotter
+								input#miniPlotsChoice(type='radio', value='Mini Plotter', autocomplete='off')
+
+
 						.form-group
-							label.col.form-check-label(for='VolunteerChoice') I am here:
-							.btn-group.col.btn-group-toggle(data-toggle='buttons')
-								.col-6.label.btn.btn-outline-secondary
-									input#VolunteerChoice(type='radio', value='Volunteer', autocomplete='off', checked='')
-									| as a Garden Volunteer
-								.col-6.label.btn.btn-outline-secondary
-									input#miniPlotsChoice(type='radio', value='Mini Plotter', autocomplete='off')
-									| for a Mini Plot	
+							label.col-form-label(for='inputDefault') Name
+							.col
+								input#volunteerName.form-control(type='text', placeholder='Full name')
+
+				
+
+
+
+							
+										
+
+						.disclaimer-text
+							hr
+							h3 <b>Important information </b>
+							label.col-form-label I will not climb in the centre unless I have registered and signed in to do so.
+							label.col-form-label I will be responsible for my own safety whilst working in the Castle Garden and point out any safety issues to the garden co-ordinator.
+							p
+
+						hr
+						.form-group
+							.custom-control.custom-checkbox
+								input#disclaimer.custom-control-input(type='checkbox', name='disclaimer', disabled='true', value='Agreed')
+								label.custom-control-label.requiredField(for='disclaimer') <h6>I have read and agree to the above conditions</h6>				
 								
-
-										
-						
-						.col
-							.form-group
-								#nameField.input-group
-									.input-group-prepend
-										span.input-group-text Name:
-									input#volunteerName.form-control(type='text')
-										
-						.col
-							#Disclaimer
-								.disclaimer-text
-									p <b> I will not climb in the centre unless I have registered and signed in to do so.</b>
-									p I have read and understood The Castle Garden Risk Assessment & the Castle Garden Work Checklist, and agree to follow the recommendations in these documents.
-									p I will be responsible for my own safety whilst working in the Castle Garden and point out any safety issues to the garden co-ordinator.
-									p
-					
-						.col						
-							label.requiredField(for='disclaimer') <b> I have read and agree to the above conditions*: </b>
-							input#disclaimer.offset-1.big-checkbox.checkbox-inline(type='checkbox', name='disclaimer', disabled='true' value='Agreed')
-
-
-										
-									
+							
 
 					// Modal footer
 					.modal-footer
