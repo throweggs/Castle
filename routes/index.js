@@ -93,6 +93,9 @@ router.get('/viewTheSession', function(req, res) {
     res.render('Dashboard/viewTheSession', { title: 'TheSession' });
 });
 
+router.get('/viewTheSocial', function(req, res) {
+    res.render('Dashboard/viewTheSocial', { title: 'TheSocial' });
+});
 
 router.get('/viewStaff', function(req, res) {
     res.render('Dashboard/viewStaff', { title: 'Staff' });
