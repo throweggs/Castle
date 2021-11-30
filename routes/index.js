@@ -13,9 +13,17 @@ router.get('/childSupervision', function(req, res) {
     res.render('childSupervision', { title: 'Non-Climbing Child Supervision' });
 });
 
-/* GET theSession page. */
+/*
+
+ GET theSession page. */
 router.get('/theSession', function(req, res) {
     res.render('theSession', { title: 'The Session' });
+});
+
+
+/* GET theSocial page. */
+router.get('/theSocial', function(req, res) {
+    res.render('theSocial', { title: 'The Social' });
 });
 
 /* GET visitors  page. */

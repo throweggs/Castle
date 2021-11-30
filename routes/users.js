@@ -100,6 +100,16 @@ router.post('/addSession', function(req, res) {
     });
 });
 
+router.post('/addSocial', function(req, res) {
+    var db = req.db;
+    var collection = db.get('theSocial');
+    collection.insert(req.body, function(err, result){
+        res.send(
+            (err === null) ? { msg: '' } : { msg: err }
+        );
+    });
+});
+
 /*
  * GET userlist.
  */
@@ -112,12 +122,31 @@ router.get('/theSession', function(req, res) {
     });
 });
 
+router.get('/theSocial', function(req, res) {
+    findMe = req.query;
+    var db = req.db;
+    var collection = db.get('theSocial');
+    collection.find(findMe,{},function(e,docs){
+        res.json(docs);
+    });
+});
+
 //Updates an theSession
 router.put('/updateSession', function(req, res){
   theID = req.body.FindDate;
   console.log(theID);
   var db = req.db;
   var collection = db.get('theSession');
+  collection.update(theID,req.body,function(e,docs){
+      res.json(docs);
+  });
+});
+
+router.put('/updateSocial', function(req, res){
+  theID = req.body.FindDate;
+  console.log(theID);
+  var db = req.db;
+  var collection = db.get('theSocial');
   collection.update(theID,req.body,function(e,docs){
       res.json(docs);
   });
